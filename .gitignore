@@ -1,0 +1,83 @@
+#############################################################
+# ignore OS generated files
+#############################################################
+*.DS_Store
+ehthumbs.db
+Thumbs.db
+
+#############################################################
+# ignore Editor files
+#############################################################
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+.idea
+
+#############################################################
+# ignore backup files
+#############################################################
+backup_sitemap/
+cgi-bin/
+*.bak*
+*_bak-*
+*_backup*
+*_DEPRECATED*
+*.htaccess_*
+.htaccess.swo
+~*
+sxd/
+tmp/
+
+#############################################################
+# ignore some configuration files
+#############################################################
+robots.txt
+.htaccess
+.htpasswd
+.htpass
+.passwd
+wp-config.php
+wp-env-config.php
+wp-config-sample.php
+
+#############################################################
+# ignore most everything in the "wp-content" directory
+#############################################################
+wp-content/*
+!wp-content/mu-plugins/
+!wp-content/plugins/
+!wp-content/themes/
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/wp-cache-config.php
+blog-old/
+sync-staging-with-production.php
+sync-local-with-production.php
+
+#############################################################
+# ignore these plugins
+#############################################################
+wp-content/plugins/hello.php
+
+#############################################################
+# ignore specific themes
+#############################################################
+
+#############################################################
+# ignore these file types
+#############################################################
+*.sql
+*.log
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
