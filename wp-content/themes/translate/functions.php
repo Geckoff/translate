@@ -62,3 +62,9 @@ add_action('wp_ajax_test', 'test'); //Ajax check string
 
 // Lists
 add_action('wp_ajax_createList', 'createList'); // Create list
+add_action('wp_ajax_deleteList', 'deleteList'); // Delete list
+add_action('wp_ajax_updateList', 'updateList'); // Update list
+add_action('wp_ajax_getList', 'getList'); // Get list
+add_action('wp_ajax_getLists', 'getLists'); // Get list
+
+add_action('wp_ajax_addWord', 'addWord'); // Add word

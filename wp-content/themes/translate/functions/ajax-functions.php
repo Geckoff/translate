@@ -3,25 +3,29 @@
 require_once "Ajax.php";
 
 /**
+ * @param class $class
+ * 
  * @return object
 */
-function instAjax() {
-    return new TranslateAjax($_POST['userId'], $_POST['security'], $_POST['data']);
+function instAjax($class) {
+    return new $class($_POST['userId'], $_POST['security'], $_POST['data']);
 }
 
 /**
  * Ajax function call
  * 
+ * @param function $callback
+ * @param class $class
+ * 
  * @return void
 */
-function initApi($callback) {
+function initApi($callback, $class) {
     try {
-        $trajax = instAjax();
-        call_user_func(array($trajax, $callback));
-        
+        $trajax = instAjax($class);
+        call_user_func(array($trajax, $callback));        
     }
     catch (Error $e) {
-        echo $e->getMessage();
+        echo "Translation application API error! - ".$e->getMessage();
     }
     die();   
 }
@@ -29,13 +33,48 @@ function initApi($callback) {
 /**
  * @return void
 */
-function test() {
-    initApi(__FUNCTION__);
-}
+// function test() {
+//     initApi(__FUNCTION__);
+// }
 
 /**
  * @return void
 */
 function createList() {
-    initApi(__FUNCTION__);  
+    initApi(__FUNCTION__, 'Lists');  
+}
+
+/**
+ * @return void
+*/
+function deleteList() {
+    initApi(__FUNCTION__, 'Lists');  
+}
+
+/**
+ * @return void
+*/
+function updateList() {
+    initApi(__FUNCTION__, 'Lists');  
+}
+
+/**
+ * @return void
+*/
+function getList() {
+    initApi(__FUNCTION__, 'Lists');  
+}
+
+/**
+ * @return void
+*/
+function getLists() {
+    initApi(__FUNCTION__, 'Lists');  
+}
+
+/**
+ * @return void
+*/
+function addWord() {
+    initApi(__FUNCTION__, 'Words');  
 }

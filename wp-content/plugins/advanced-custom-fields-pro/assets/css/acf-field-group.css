@@ -1,3 +1,16 @@
+/*--------------------------------------------------------------------------------------------
+*
+*	Vars
+*
+*--------------------------------------------------------------------------------------------*/
+/* colors */
+/* acf-field */
+/* responsive */
+/*--------------------------------------------------------------------------------------------
+*
+*	Mixins
+*
+*--------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------
 *
 *  Global
@@ -5,6 +18,17 @@
 *---------------------------------------------------------------------------------------------*/
 #adv-settings .show-field-keys label {
   padding: 0 5px;
+}
+#acf-field-group-fields > .inside,
+#acf-field-group-locations > .inside,
+#acf-field-group-options > .inside {
+  padding: 0;
+  margin: 0;
+}
+.acf-field p.description {
+  font-style: normal;
+  font-size: 12px;
+  color: #777777;
 }
 /*---------------------------------------------------------------------------------------------
 *
@@ -29,135 +53,162 @@
 *  Postbox: Fields
 *
 *---------------------------------------------------------------------------------------------*/
-#acf-field-group-fields > .inside,
-#acf-field-group-locations > .inside,
-#acf-field-group-options > .inside {
-  padding: 0;
-  margin: 0;
-}
 #acf-field-group-fields {
   border: 0 none;
   box-shadow: none;
+  /* metabox */
+  /* links */
+  /* table header */
+  /* show keys */
+  /* fields */
 }
 #acf-field-group-fields > .handlediv,
 #acf-field-group-fields > .hndle {
   display: none;
 }
-.no-fields-message {
-  padding: 15px 15px;
-}
-.acf-field-list-wrap {
-  border: #DFDFDF solid 1px;
-}
-/* table header */
-.li-field-order {
-  width: 22%;
-  padding-right: 0 !important;
-}
-.li-field-label {
-  width: 28%;
-}
-.li-field-name {
-  width: 25%;
-}
-.li-field-type {
-  width: 25%;
-}
-/* field list */
-.acf-field-list {
-  background: #F9F9F9;
-  border-top: #E1E1E1 solid 1px;
-  margin-top: -1px;
-}
-.acf-field-list a {
+#acf-field-group-fields a {
   text-decoration: none;
 }
-.acf-field-list a:active,
-.acf-field-list a:focus {
+#acf-field-group-fields a:active,
+#acf-field-group-fields a:focus {
   outline: none;
   box-shadow: none;
+}
+#acf-field-group-fields .li-field-order {
+  width: 20%;
+}
+#acf-field-group-fields .li-field-label {
+  width: 30%;
+}
+#acf-field-group-fields .li-field-name {
+  width: 25%;
+}
+#acf-field-group-fields .li-field-type {
+  width: 25%;
+}
+#acf-field-group-fields .li-field-key {
+  display: none;
+}
+#acf-field-group-fields.show-field-keys .li-field-label,
+#acf-field-group-fields.show-field-keys .li-field-name,
+#acf-field-group-fields.show-field-keys .li-field-type,
+#acf-field-group-fields.show-field-keys .li-field-key {
+  width: 20%;
+}
+#acf-field-group-fields.show-field-keys .li-field-key {
+  display: block;
+}
+#acf-field-group-fields .acf-field-list-wrap {
+  border: #DFDFDF solid 1px;
+}
+#acf-field-group-fields .acf-field-list {
+  background: #F9F9F9;
+  margin-top: -1px;
+  /* no fields */
+  /* empty */
+}
+#acf-field-group-fields .acf-field-list .no-fields-message {
+  padding: 15px 15px;
+  background: #fff;
+  display: none;
+}
+#acf-field-group-fields .acf-field-list.-empty .no-fields-message {
+  display: block;
 }
 /* field object */
 .acf-field-object {
   border-top: #F0F0F0 solid 1px;
   background: #fff;
-}
-.acf-field-object:first-child {
-  border-top: 0 none;
+  /* sortable */
+  /* meta */
+  /* handle */
+  /* open */
+  /*
+	// debug
+	&[data-save="meta"] {
+		> .handle {
+			border-left: #ffb700 solid 5px !important;
+		}
+	}
+	
+	&[data-save="settings"] {
+		> .handle {
+			border-left: #0ec563 solid 5px !important;
+		}
+	}
+*/
+  /* hover */
+  /* settings */
+  /* conditional logic */
 }
 .acf-field-object.ui-sortable-helper {
   border-top-color: #fff;
-  box-shadow: 0 0 0 1px #dfdfdf, 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0 1px #DFDFDF, 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 .acf-field-object.ui-sortable-placeholder {
-  box-shadow: 0 -1px 0 0 #dfdfdf;
+  box-shadow: 0 -1px 0 0 #DFDFDF;
   visibility: visible !important;
   background: #F9F9F9;
   border-top-color: transparent;
+  min-height: 54px;
 }
-.acf-field-object[data-key="acfcloneindex"] {
-  display: none !important;
+.acf-field-object.ui-sortable-placeholder:after,
+.acf-field-object.ui-sortable-placeholder:before {
+  visibility: hidden;
 }
-/* field object (open) */
-.acf-field-object.open + .acf-field-object {
-  border-top-color: #E1E1E1;
-}
-/* field object meta */
-.acf-field-object .meta {
+.acf-field-object > .meta {
   display: none;
 }
-/* field object handle */
-.acf-field-object .handle li {
+.acf-field-object > .handle a {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
+}
+.acf-field-object > .handle li {
   padding-top: 10px;
   padding-bottom: 10px;
   word-wrap: break-word;
 }
-.acf-field-object .handle .acf-icon {
-  margin: 1px 5px 0 0;
+.acf-field-object > .handle .acf-icon {
+  margin: 1px 0 0;
   cursor: move;
   background: transparent;
   float: left;
   height: 28px;
-  line-height: 27px;
+  line-height: 28px;
   width: 28px;
   font-size: 13px;
   color: #444;
+  position: relative;
+  z-index: 1;
 }
-.acf-field-object .handle strong {
+.acf-field-object > .handle strong {
   display: block;
   padding-bottom: 6px;
   font-size: 14px;
   line-height: 14px;
   min-height: 14px;
 }
-.acf-field-object .handle .row-options {
+.acf-field-object > .handle .row-options {
   visibility: hidden;
 }
-.acf-field-object:hover > .handle .row-options {
-  visibility: visible;
-}
-.acf-field-object .handle .row-options a {
+.acf-field-object > .handle .row-options a {
   margin-right: 4px;
 }
-.acf-field-object .handle .delete-field:hover {
+.acf-field-object > .handle .row-options a.delete-field {
+  color: #a00;
+}
+.acf-field-object > .handle .row-options a.delete-field:hover {
   color: #f00;
 }
-/* field object handle (open) */
+.acf-field-object.open + .acf-field-object {
+  border-top-color: #E1E1E1;
+}
 .acf-field-object.open > .handle {
-  background: #3595BC;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#46afdb), to(#3199c5));
-  /* Safari 4+, Chrome */
-  background-image: -webkit-linear-gradient(top, #46afdb, #3199c5);
-  /* Chrome 10+, Safari 5.1+, iOS 5+ */
-  background-image: -moz-linear-gradient(top, #46afdb, #3199c5);
-  /* Firefox 3.6-15 */
-  background-image: -o-linear-gradient(top, #46afdb, #3199c5);
-  /* Opera 11.10+ */
-  background-image: linear-gradient(to bottom, #46afdb, #3199c5);
-  /* Firefox 16+ */
-  border: #268FBB solid 1px;
+  background: #2a9bd9;
+  border: #2696d3 solid 1px;
   text-shadow: #268FBB 0 1px 0;
-  box-shadow: inset #5FC8F4 0 1px 0 0;
   color: #fff;
   position: relative;
   margin: -1px -1px 0 -1px;
@@ -165,78 +216,69 @@
 .acf-field-object.open > .handle a {
   color: #fff !important;
 }
+.acf-field-object.open > .handle a:hover {
+  text-decoration: underline !important;
+}
 .acf-field-object.open > .handle .acf-icon {
   border-color: #fff;
   color: #fff;
 }
-/* field object settings */
-.acf-field-object .settings {
+.acf-field-object.open > .handle .acf-required {
+  color: #fff;
+}
+.acf-field-object:hover > .handle .row-options,
+.acf-field-object.-hover > .handle .row-options {
+  visibility: visible;
+}
+.acf-field-object > .settings {
   display: none;
   width: 100%;
 }
-.acf-field-object .location-groups {
-  margin-top: 10px;
+.acf-field-object > .settings > .acf-table {
+  border: none;
 }
-/* field object keys */
-.acf-field-object .handle .pre-field-key {
-  background: #F9F9F9;
-  border: #E1E1E1 solid 1px;
-  padding: 5px;
-  font: inherit;
-  margin: 3px 0 0;
-  float: left;
-  border-radius: 3px;
-  display: none;
-}
-.acf-field-object.open > .handle .pre-field-key {
-  border-color: #268FBB;
-  background: transparent;
-}
-.show-field-keys .acf-field-object .handle .pre-field-key {
-  display: block;
-}
-.show-field-keys .li-field-order {
-  width: 24%;
-}
-.show-field-keys .li-field-label {
-  width: 26%;
+.acf-field-object .rule-groups {
+  margin-top: 20px;
 }
 /*---------------------------------------------------------------------------------------------
 *
 * Postbox: Locations
 *
 *---------------------------------------------------------------------------------------------*/
-.location-groups h4 {
+.rule-groups h4 {
   margin: 15px 0 5px;
 }
-.location-groups .location-group {
+.rule-groups .rule-group {
   margin: 0 0 5px;
+  /* Don't allow user to delete the first field group */
 }
-.location-groups .location-group h4 {
+.rule-groups .rule-group h4 {
   margin: 0 0 3px;
 }
-.location-groups .location-group td.param {
+.rule-groups .rule-group td.param {
   width: 35%;
 }
-.location-groups .location-group td.operator {
+.rule-groups .rule-group td.operator {
   width: 20%;
 }
-.location-groups .location-group td.add {
+.rule-groups .rule-group td.add {
   width: 40px;
 }
-.location-groups .location-group td.remove {
+.rule-groups .rule-group td.remove {
   width: 28px;
   vertical-align: middle;
 }
-.location-groups .location-group tr .location-remove-rule {
-  display: none;
+.rule-groups .rule-group td.remove a {
+  visibility: hidden;
 }
-.location-groups .location-group tr:hover .location-remove-rule {
-  display: block;
+.rule-groups .rule-group tr:hover td.remove a {
+  visibility: visible;
 }
-/* Don't allow user to delete the first field group */
-.location-groups .location-group:first-child tr:first-child .location-remove-rule {
-  display: none !important;
+.rule-groups .rule-group:first-child tr:first-child td.remove a {
+  visibility: hidden !important;
+}
+.rule-groups .rule-group select:empty {
+  background: #f8f8f8;
 }
 /*---------------------------------------------------------------------------------------------
 *
@@ -272,38 +314,42 @@ table.conditional-logic-rules tbody td {
 *	Field: Tab
 *	
 *---------------------------------------------------------------------------------------------*/
-.acf-field-object-tab tr[data-name="name"],
-.acf-field-object-tab tr[data-name="instructions"],
-.acf-field-object-tab tr[data-name="required"],
-.acf-field-object-tab tr[data-name="warning"],
-.acf-field-object-tab tr[data-name="wrapper"] {
-  display: none !important;
+.acf-field-object-tab .acf-field-setting-name,
+.acf-field-object-tab .acf-field-setting-instructions,
+.acf-field-object-tab .acf-field-setting-required,
+.acf-field-object-tab .acf-field-setting-warning,
+.acf-field-object-tab .acf-field-setting-wrapper,
+.acf-field-object-accordion .acf-field-setting-name,
+.acf-field-object-accordion .acf-field-setting-instructions,
+.acf-field-object-accordion .acf-field-setting-required,
+.acf-field-object-accordion .acf-field-setting-warning,
+.acf-field-object-accordion .acf-field-setting-wrapper {
+  display: none;
 }
-.acf-field-object-tab .li-field-name {
+.acf-field-object-tab .li-field-name,
+.acf-field-object-accordion .li-field-name {
   visibility: hidden;
 }
-.layout-table .acf-field-object-tab tr[data-name="warning"] {
-  display: table-row !important;
-}
-.acf-field-object + .acf-field-object-tab {
-  margin-top: 6px;
-}
-.acf-field-object + .acf-field-object-tab:before {
+.acf-field-object + .acf-field-object-tab:before,
+.acf-field-object + .acf-field-object-accordion:before {
   display: block;
   content: "";
-  height: 1px;
-  background: #F0F0F0;
-  margin-top: -7px;
+  height: 5px;
   width: 100%;
-  position: absolute;
+  background: #f9f9f9;
+  border-bottom: #f0f0f0 solid 1px;
 }
-.acf-field-object + .acf-field-object-tab.ui-sortable-placeholder {
-  margin-top: 0;
-  padding-top: 6px;
+.acf-field-object-tab p:first-child,
+.acf-field-object-accordion p:first-child {
+  margin: 0.5em 0;
 }
-.acf-field-object-tab.ui-sortable-helper:before,
-.ui-sortable-placeholder + .acf-field-object-tab:before {
-  display: none;
+/*---------------------------------------------------------------------------------------------
+*
+*	Field: Accordion
+*	
+*---------------------------------------------------------------------------------------------*/
+.acf-field-object-accordion .acf-field-setting-instructions {
+  display: table-row;
 }
 /*---------------------------------------------------------------------------------------------
 *
@@ -323,12 +369,54 @@ table.conditional-logic-rules tbody td {
 }
 /*---------------------------------------------------------------------------------------------
 *
+*	Field: Separator
+*	
+*---------------------------------------------------------------------------------------------*/
+.acf-field-object-separator tr[data-name="name"],
+.acf-field-object-separator tr[data-name="instructions"],
+.acf-field-object-separator tr[data-name="required"] {
+  display: none !important;
+}
+/*---------------------------------------------------------------------------------------------
+*
 *	Field: Date Picker
 *	
 *---------------------------------------------------------------------------------------------*/
-.acf-field-object-date_picker .acf-radio-list span {
+.acf-field-object-date-picker .acf-radio-list li,
+.acf-field-object-time-picker .acf-radio-list li,
+.acf-field-object-date-time-picker .acf-radio-list li {
+  line-height: 25px;
+}
+.acf-field-object-date-picker .acf-radio-list span,
+.acf-field-object-time-picker .acf-radio-list span,
+.acf-field-object-date-time-picker .acf-radio-list span {
   display: inline-block;
+  min-width: 10em;
+}
+.acf-field-object-date-picker .acf-radio-list input[type="text"],
+.acf-field-object-time-picker .acf-radio-list input[type="text"],
+.acf-field-object-date-time-picker .acf-radio-list input[type="text"] {
   width: 100px;
+}
+.acf-field-object-date-time-picker .acf-radio-list span {
+  min-width: 15em;
+}
+.acf-field-object-date-time-picker .acf-radio-list input[type="text"] {
+  width: 200px;
+}
+/*--------------------------------------------------------------------------------------------
+*
+*	Slug
+*
+*--------------------------------------------------------------------------------------------*/
+#slugdiv .inside {
+  padding: 12px;
+  margin: 0;
+}
+#slugdiv input[type="text"] {
+  width: 100%;
+  height: 28px;
+  font-size: 14px;
 }
 /*--------------------------------------------------------------------------------------------
 *
@@ -344,4 +432,26 @@ html[dir="rtl"] .acf-field-object.open > .handle .acf-icon {
 html[dir="rtl"] .acf-field-object.open > .handle .li-field-order {
   padding-left: 0 !important;
   padding-right: 15px !important;
+}
+/*---------------------------------------------------------------------------------------------
+*
+*  Device
+*
+*---------------------------------------------------------------------------------------------*/
+@media only screen and (max-width: 850px) {
+  tr.acf-field,
+  td.acf-label,
+  td.acf-input {
+    display: block !important;
+    width: auto !important;
+    border: 0 none !important;
+  }
+  tr.acf-field {
+    border-top: #ededed solid 1px !important;
+    margin-bottom: 0 !important;
+  }
+  td.acf-label {
+    background: transparent !important;
+    padding-bottom: 0 !important;
+  }
 }
