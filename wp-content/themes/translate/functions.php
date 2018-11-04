@@ -67,4 +67,6 @@ add_action('wp_ajax_updateList', 'updateList'); // Update list
 add_action('wp_ajax_getList', 'getList'); // Get list
 add_action('wp_ajax_getLists', 'getLists'); // Get list
 
-add_action('wp_ajax_addWord', 'addWord'); // Add word
+add_action('wp_ajax_addUpdateWord', 'addUpdateWord'); // Add and update word
+add_action('wp_ajax_deleteWord', 'deleteWord'); // Delete word
+add_action('wp_ajax_getWord', 'getWord'); // Get single word

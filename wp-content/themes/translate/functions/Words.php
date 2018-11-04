@@ -8,59 +8,132 @@ class Words extends Lists {
      */
     function __construct($user_id, $recieved_nonce, $data) {
         parent::__construct($user_id, $recieved_nonce, $data);
-        if (isset($this->data['lists'])) {
-            if (!$this->isAllListsBelong($this->data['lists'])) {
-                throw new Error("Not all lists belong to the current user");
-            }
-        }
+        $this->checkDataRequirements();   
     }
 
     /**
-     * Check if all the translations are not blank
-     * 
-     * @param string $word
-     * @param string $prim_trans
-     * @param array $sec_trans
-     */
-    private function checkWordsRequirements($word, $prim_trans, $sec_trans = []) {
-        if (strlen($word) < 1) {
-            throw new Error('Word cannot be blank');
-        }
-        if (strlen($prim_trans) < 1) {
-            throw new Error('Word must have translation');
-        }
-        foreach ($sec_trans as $single_sec_trans) {
-            if (strlen($single_sec_trans) < 1) {
-                throw new Error('Secondary translation cannot be blank');   
-            }
-        }
-    }
-
-    /**
-     * Add new word
+     * Check if data meets the requirenments
      * 
      * @return void
      */
-    public function addWord() {
-        $this->checkIssetRecievedParams(['word', 'prim_trans', 'sec_trans', 'lists']);
+    private function checkDataRequirements() {
         extract($this->data);
-        $this->checkWordsRequirements($word, $prim_trans, $sec_trans);
+        if (isset($lists)) {
+            if (!$this->isAllListsBelong($lists)) {
+                throw new Error("Not all lists belong to the current user");
+            }
+        }
+        if (isset($word) && strlen($word) < 1) {
+            throw new Error('Word cannot be blank');
+        }
+        if (isset($prim_trans) && strlen($prim_trans) < 1) {
+            throw new Error('Word must have translation');
+        }
+        if (isset($sec_trans)) {
+            foreach ($sec_trans as $single_sec_trans) {
+                if (strlen($single_sec_trans) < 1) {
+                    throw new Error('Secondary translation cannot be blank');   
+                }
+            }
+        }
+        if (isset($id)) {
+            if ($post = get_post($id)) {
+                if ($post->post_author != $this->user_id) {
+                    throw new Error('You cannot access words that blong to another users');    
+                }
+            }
+            else {
+                throw new Error('get_post error');     
+            }
+        }
+    }
+
+    /**
+     * Add new word and update word
+     * 
+     * @return void
+     */
+    public function addUpdateWord() {
+        $this->checkIssetRecievedParams(['word', 'prim_trans', 'lists']);
+        extract($this->data);
         $args = [
             'post_title' => $word,
             'post_type' => 'words',
             'post_category' => $lists
         ];
+        if (isset($id)) {
+            $args['ID'] = $id;  
+        }
         if ($id = wp_insert_post($args, true)) {
             update_post_meta($id, 'primary_translation', $prim_trans);
-            foreach($sec_trans as $single_sec_trans) {
-                $row = [
-                    'translation' => $single_sec_trans   
-                ];
-                add_row('secondary_translations', $row , $id);    
+            if (isset($args['ID'])) {
+                $rows = get_field('secondary_translations', $id);
+                if ($rows) {
+                    $rows_count = count($rows);
+                    for ($i = 0; $i < $rows_count; $i++) {
+                        delete_row( 'secondary_translations', 1, $id);
+                    }
+                }     
             }
+            if (isset($sec_trans)) {
+                foreach($sec_trans as $single_sec_trans) {
+                    $row = [
+                        'translation' => $single_sec_trans   
+                    ];
+                    add_row('secondary_translations', $row , $id);    
+                }
+            }            
         }
         else {
             throw new Error('wp_insert_post error');
         }
+    }
+
+    /**
+     * Delete word
+     * 
+     * @return void
+     */
+    public function deleteWord() {
+        $this->checkIssetRecievedParams(['id']);
+        extract($this->data);
+        if (!wp_delete_post($id)) {
+            throw new Error('wp_delete_post error');   
+        }
+    }
+
+    /**
+     * Get single word
+     * 
+     * @return void
+     */
+    public function getWord() {
+        $this->checkIssetRecievedParams(['id']);
+        extract($this->data);
+        $post = get_post($id);
+        $word = $post->post_title;
+        $lists = wp_get_post_categories($id);
+        $prims_trans = get_field('primary_translation', $id);
+        $sec_trans = get_field('secondary_translations', $id);
+        $sec_trans_mapped = array_map(function($elem){
+            return $elem["translation"];
+        }, $sec_trans);
+        $times_ran = get_field('times_ran', $id);
+        $times_forgot = get_field('times_forgot', $id);
+        $last_forgot = get_field('last_forgot', $id);
+        $last_ran = get_field('last_ran', $id);
+
+        $return_data = [
+            'word' => $word,
+            'lists' => $lists,
+            'prims_trans' => $prims_trans,
+            'sec_trans' => $sec_trans_mapped,
+            'times_ran' => $times_ran,   
+            'times_forgot' => $times_forgot,   
+            'last_forgot' => $last_forgot,   
+            'last_ran' => $last_ran
+        ];
+
+        echo json_encode($return_data);
     }
 }

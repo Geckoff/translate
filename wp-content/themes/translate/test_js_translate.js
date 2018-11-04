@@ -117,7 +117,7 @@ $.ajax({
     url: window.userData.url,
     data: {
         security: window.userData.nonce,
-        action: "addWord",
+        action: "addUpdateWord",
         userId: window.userData.userId,
         data: {
             'word': 'word to translate',
@@ -128,6 +128,70 @@ $.ajax({
             ],
             'lists': [33, 31]
             }
+    },
+    success: function(res) {
+        console.log(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+$.ajax({
+    type: "POST",
+    url: window.userData.url,
+    data: {
+        security: window.userData.nonce,
+        action: "addUpdateWord",
+        userId: window.userData.userId,
+        data: {
+            'id': 44,
+            'word': 'New word to translate',
+            'prim_trans': "translation primary",
+            'sec_trans': [
+                'sec trans 1',
+                'sec trans 2',
+            ],
+            'lists': [33, 31]
+            }
+    },
+    success: function(res) {
+        console.log(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+$.ajax({
+    type: "POST",
+    url: window.userData.url,
+    data: {
+        security: window.userData.nonce,
+        action: "deleteWord",
+        userId: window.userData.userId,
+        data: {
+            'id': 46
+        }
+    },
+    success: function(res) {
+        console.log(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+$.ajax({
+    type: "POST",
+    url: window.userData.url,
+    data: {
+        security: window.userData.nonce,
+        action: "getWord",
+        userId: window.userData.userId,
+        data: {
+            'id': 46
+        }
     },
     success: function(res) {
         console.log(res);

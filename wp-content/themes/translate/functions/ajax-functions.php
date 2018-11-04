@@ -75,6 +75,20 @@ function getLists() {
 /**
  * @return void
 */
-function addWord() {
+function addUpdateWord() {
+    initApi(__FUNCTION__, 'Words');  
+}
+
+/**
+ * @return void
+*/
+function deleteWord() {
+    initApi(__FUNCTION__, 'Words');  
+}
+
+/**
+ * @return void
+*/
+function getWord() {
     initApi(__FUNCTION__, 'Words');  
 }

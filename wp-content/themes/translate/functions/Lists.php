@@ -17,6 +17,7 @@ class Lists extends TranslateAjax {
     function __construct($user_id, $recieved_nonce, $data) {
         parent::__construct($user_id, $recieved_nonce, $data);
         $cat_ids_json = get_field("lists", "user_".$user_id);
+        $cat_ids_json = !$cat_ids_json ? "[]" : $cat_ids_json;
         $this->list_ids_array = json_decode($cat_ids_json); 
     }
 
@@ -44,6 +45,8 @@ class Lists extends TranslateAjax {
             $cat_ids_array = $this->list_ids_array;  
             array_push($cat_ids_array, $cat_id);
             $cat_ids_json = json_encode($cat_ids_array);
+            // var_dump($cat_ids_array);
+            // die();
             update_field("lists", $cat_ids_json, "user_".$this->user_id);
         }   
         else {
