@@ -46,6 +46,9 @@ class Words extends Lists {
                 throw new Error('get_post error');     
             }
         }
+        if (isset($words_count) && !is_numeric($words_count) ) {
+            throw new Error('Amount of words should be a number');  
+        }
     }
 
     /**
@@ -124,6 +127,7 @@ class Words extends Lists {
         $last_ran = get_field('last_ran', $id);
 
         $return_data = [
+            'id' => $id,
             'word' => $word,
             'lists' => $lists,
             'prims_trans' => $prims_trans,
@@ -135,5 +139,114 @@ class Words extends Lists {
         ];
 
         echo json_encode($return_data);
+    }
+
+    /**
+     * Get multiple words
+     * 
+     * @return void
+     */
+    private function getWords($add_args = []) {
+        $args = [
+            'author' => $this->user_id,
+            'post_type' => 'words',
+            'post_status' => "any"  
+        ];
+        $args = array_merge($args, $add_args);  
+        $posts = get_posts($args);  
+        $posts_return = array_map(function($post){
+            $id = $post->ID;
+            $word = $post->post_title;
+            $lists = wp_get_post_categories($id);
+            $prims_trans = get_field('primary_translation', $id);
+            $sec_trans = get_field('secondary_translations', $id);
+            $sec_trans_mapped = array_map(function($elem){
+                return $elem["translation"];
+            }, $sec_trans);
+            $times_ran = get_field('times_ran', $id);
+            $times_forgot = get_field('times_forgot', $id);
+            $last_forgot = get_field('last_forgot', $id);
+            $last_ran = get_field('last_ran', $id); 
+            
+            return  [
+                'id' => $id,
+                'word' => $word,
+                'lists' => $lists,
+                'prims_trans' => $prims_trans,
+                'sec_trans' => $sec_trans_mapped,
+                'times_ran' => $times_ran,   
+                'times_forgot' => $times_forgot,   
+                'last_forgot' => $last_forgot,   
+                'last_ran' => $last_ran
+            ];
+        }, $posts);
+        
+        echo json_encode($posts_return);
+    }
+
+    /**
+     * Get specific list of words
+     * 
+     * @return void
+     */
+    public function getWordsByList() {
+        $this->checkIssetRecievedParams(['lists']);
+        extract($this->data);        
+        $this->getWords(['category__in' => $lists]);      
+    }
+
+    /**
+     * Get specific random number of words
+     * 
+     * @return void
+     */
+    public function getWordsByNumber() {
+        $this->checkIssetRecievedParams(['words_count']);
+        extract($this->data);    
+        $this->getWords(['orderby' => 'rand', 'posts_per_page' => $words_count]);      
+    }
+
+    /**
+     * Get latest forgotten words
+     * 
+     * @return void
+     */
+    public function getWordsByLatestForgotten() {
+        $this->checkIssetRecievedParams(['words_count']);
+        extract($this->data);    
+        $this->getWords([
+            'meta_key' => 'last_forgot',
+            'orderby'   => 'meta_value_num',
+            'meta_query' => [
+                [
+                    'key' => 'last_forgot',
+                    'value' => 0,
+                    'compare' => '>'
+                ]
+            ],
+            'posts_per_page' => $words_count
+        ]);      
+    }
+
+    /**
+     * Get most forgotten words
+     * 
+     * @return void
+     */
+    public function getWordsByMostForgotten() {
+        $this->checkIssetRecievedParams(['words_count']);
+        extract($this->data);    
+        $this->getWords([
+            'meta_key' => 'times_forgot',
+            'orderby'   => 'meta_value_num',
+            'meta_query' => [
+                [
+                    'key' => 'times_forgot',
+                    'value' => 0,
+                    'compare' => '>'
+                ]
+            ],
+            'posts_per_page' => $words_count
+        ]);      
     }
 }

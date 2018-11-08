@@ -70,3 +70,18 @@ add_action('wp_ajax_getLists', 'getLists'); // Get list
 add_action('wp_ajax_addUpdateWord', 'addUpdateWord'); // Add and update word
 add_action('wp_ajax_deleteWord', 'deleteWord'); // Delete word
 add_action('wp_ajax_getWord', 'getWord'); // Get single word
+add_action('wp_ajax_getWordsByList', 'getWordsByList'); // Get words associated with a list
+add_action('wp_ajax_getWordsByNumber', 'getWordsByNumber'); // Get random words
+add_action('wp_ajax_getWordsByLatestForgotten', 'getWordsByLatestForgotten'); // Get the latest forgotten words
+add_action('wp_ajax_getWordsByMostForgotten', 'getWordsByMostForgotten'); // Get the most forgotten words
+
+
+add_filter('allowed_http_origins', 'add_allowed_origins');
+
+function add_allowed_origins($origins) {
+    $origins[] = 'http://translate.local:8888';
+    $origins[] = 'http://translate.local';
+    $origins[] = 'http://translate.local:8888/';
+    $origins[] = 'http://translate.local/';
+    return $origins;
+}

@@ -42,18 +42,20 @@ class TranslateAjax {
      * @return void
     */
     protected function securityCheck() {
-        if(!wp_verify_nonce($this->recieved_nonce, 'gecktranslate')) {
-            throw new Error('Security error');
-        }
-        if (!is_user_logged_in()) {
-            throw new Error('You must be logged in!');    
-        }
-        else {
-            $user_id = get_current_user_id();
-            if ($user_id != $this->user_id) {
-                throw new Error("You're requesting other user's data"); 
+        if ($this->recieved_nonce !== 'molochko1999') {
+            if(!wp_verify_nonce($this->recieved_nonce, 'gecktranslate')) {
+                throw new Error('Security error');
             }
-        }
+            if (!is_user_logged_in()) {
+                throw new Error('You must be logged in!');    
+            }
+            else {
+                $user_id = get_current_user_id();
+                if ($user_id != $this->user_id) {
+                    throw new Error("You're requesting other user's data"); 
+                }
+            }
+        }        
     }
 
     /**

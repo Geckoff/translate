@@ -92,3 +92,31 @@ function deleteWord() {
 function getWord() {
     initApi(__FUNCTION__, 'Words');  
 }
+
+/**
+ * @return void
+*/
+function getWordsByList() {
+    initApi(__FUNCTION__, 'Words');  
+}
+
+/**
+ * @return void
+*/
+function getWordsByNumber() {
+    initApi(__FUNCTION__, 'Words');  
+}
+
+/**
+ * @return void
+*/
+function getWordsByLatestForgotten() {
+    initApi(__FUNCTION__, 'Words');  
+}
+
+/**
+ * @return void
+*/
+function getWordsByMostForgotten() {
+    initApi(__FUNCTION__, 'Words');  
+}

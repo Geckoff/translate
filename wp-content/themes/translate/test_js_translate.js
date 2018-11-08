@@ -200,3 +200,107 @@ $.ajax({
         console.log(err);
     }
 });
+
+$.ajax({
+    type: "POST",
+    url: window.userData.url,
+    data: {
+        security: window.userData.nonce,
+        action: "getWordsByList",
+        userId: window.userData.userId,
+        data: {
+            'lists': [31,33]
+        }
+    },
+    success: function(res) {
+        console.log(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+$.ajax({
+    type: "POST",
+    url: window.userData.url,
+    data: {
+        security: window.userData.nonce,
+        action: "getWordsByNumber",
+        userId: window.userData.userId,
+        data: {
+            'words_count': 2
+        }
+    },
+    success: function(res) {
+        console.log(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+$.ajax({
+    type: "POST",
+    url: window.userData.url,
+    data: {
+        security: window.userData.nonce,
+        action: "getWordsByLatestForgotten",
+        userId: window.userData.userId,
+        data: {
+            'words_count': 2
+        }
+    },
+    success: function(res) {
+        console.log(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+$.ajax({
+    type: "POST",
+    url: window.userData.url,
+    data: {
+        security: window.userData.nonce,
+        action: "getWordsByMostForgotten",
+        userId: window.userData.userId,
+        data: {
+            'words_count': 2
+        }
+    },
+    success: function(res) {
+        console.log(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+// ===========================================
+
+var payload = {
+    security: window.userData.nonce,
+    action: "getWordsByMostForgotten",
+    userId: window.userData.userId,
+    data: {
+        'words_count': 2
+    }
+}
+var data = new FormData();
+data.append( "json", JSON.stringify( payload ) );
+
+fetch('http://translate.local:8888/wp-admin/admin-ajax.php', {
+    method: 'POST',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    body: JSON.stringify(payload)
+  }).then(function(response) {
+      console.log(response);
+    return response.text();
+  }).then(function(datar) {
+    console.log(datar)
+  });
+

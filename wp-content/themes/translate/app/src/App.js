@@ -3,11 +3,14 @@ import logo from "./logo.svg";
 import "./App.css";
 import { Link, Route, Redirect, Switch } from "react-router-dom";
 
+import {apiRequest} from "./api/api";
+
 class App extends Component {
 	constructor(props) {
 		super(props);
 		var test = window.hasOwnProperty("testval") ? window.testval : 'fromReact';
 		console.log(test);
+		apiRequest("getWordsByMostForgotten", {words_count: 2});
 	}
 
     render() {
