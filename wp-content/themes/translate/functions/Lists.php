@@ -160,6 +160,38 @@ class Lists extends TranslateAjax {
     }
 
     /**
+     * Get all translation lists name
+     * 
+     * @return void
+    */
+    public function getAllLists() {
+        $ids = $this->list_ids_array;
+        if ($this->isAllListsBelong($ids)) {
+            $cats = get_categories([
+                "hide_empty" => 0,
+                'include' => $ids
+            ]);
+            if (count($cats) > 0) {
+                $cats_return = [];
+                foreach($cats as $cat) {
+                    $cats_return_single = [
+                        'id' => $cat->term_id,
+                        'name' => $cat->name,
+                    ];
+                    array_push($cats_return, $cats_return_single);    
+                }
+                echo json_encode($cats_return);
+            }   
+            else {
+                throw new Error('no categories');    
+            }    
+        } 
+        else {
+            throw new Error('not all list ids belong to the current user');
+        }
+    }
+
+    /**
      * Check if all passed list ids belong to the current user
      * 
      * @param array $lists

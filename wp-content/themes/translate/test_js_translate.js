@@ -110,6 +110,23 @@ $.ajax({
     }
 });
 
+$.ajax({
+    type: "POST",
+    url: window.userData.url,
+    data: {
+        security: window.userData.nonce,
+        action: "getAllLists",
+        userId: window.userData.userId,
+        data: {}
+    },
+    success: function(res) {
+        console.log(res);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
 fetch('https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=dict.1.1.20181026T231057Z.2ae7b2159b6e0f44.1b76f2af5640739f6fd89d91834369f1788a54fb&lang=en-ru&text=on time').then(res => res.json()).then(res => console.log(res))
 
 $.ajax({

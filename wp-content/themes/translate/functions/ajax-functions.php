@@ -75,6 +75,13 @@ function getLists() {
 /**
  * @return void
 */
+function getAllLists() {
+    initApi(__FUNCTION__, 'Lists');  
+}
+
+/**
+ * @return void
+*/
 function addUpdateWord() {
     initApi(__FUNCTION__, 'Words');  
 }

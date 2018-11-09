@@ -1,13 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+//import App from './App';
+import {AppRouter} from "./components/AppRouter";
+//import getStore from './store';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter  as Router} from 'react-router-dom';
+import {BrowserRouter } from 'react-router-dom';
+import { Provider } from "react-redux";
 
-ReactDOM.render(<Router>
-    <App />
-  </Router>,
+//const store = getStore();
+const store = true;
+
+ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <AppRouter />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

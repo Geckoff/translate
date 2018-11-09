@@ -3,6 +3,9 @@ import stringify from "qs-stringify";
 
 let baseUrl, security, userId;
 
+/**
+ * Setting api calls credentials depending on environment
+ */
 if (process.env.hasOwnProperty('REACT_APP_BASEURL')) {
     [baseUrl, security, userId] = [process.env.REACT_APP_BASEURL, process.env.REACT_APP_SECURITY, process.env.REACT_APP_USERID];
 }
@@ -22,19 +25,31 @@ const initData = {
     userId: userId
 };
 
-export const apiRequest = (action, data) => {
+/**
+ * Get most forgotten words
+ * 
+ * @param string action
+ * @param array data
+ * 
+ * @return void
+ */
+export const apiRequest = (action, data = {}) => {
     const submitData = stringify({
         ...initData,
         action,   
         data
     });
 
-    instance
+    return instance
         .post("", submitData)
-        .then(function(response) {
-            console.log(response);
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+        // .then(function(response) {
+        //     console.log(response);
+        // })
+        // .catch(function(error) {
+        //     console.log(error);
+        // });
 };
+
+export const getLists = data => {
+    apiRequest('getLists', data);    
+}
