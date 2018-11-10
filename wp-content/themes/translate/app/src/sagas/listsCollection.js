@@ -1,18 +1,17 @@
 import {fetchMultipleListsRequest, fetchMultipleListsSuccess, fetchMultipleListsFailure} from '../actions/lists';
 import {takeLatest, call, put} from 'redux-saga/effects';
-import {getLists} from '../api';
+import {getAllLists} from '../api/api';
 import requestFlow from './request';
 
-export function* fetchUserSaga(action) {
+export function* fetchMultipleListsSaga(action) {
   try {
-    const user = yield call(requestFlow, getUserInformation, action.payload);
-    //yield put(fetchUserSuccess(user.data));
-    yield put({type: fetchUserSuccess.toString(), payload: user.data});
+    const lists = yield call(requestFlow, getAllLists);
+    yield put({type: fetchMultipleListsSuccess.toString(), payload: lists});
   } catch (error) {
-    yield put(fetchUserFailure(error));
+    yield put(fetchMultipleListsFailure(error));
   }
 }
 
-export function* fetchUserWatch() {
-  yield takeLatest(fetchUserRequest, fetchUserSaga);
+export function* fetchMultipleListsWatch() {
+  yield takeLatest(fetchMultipleListsRequest, fetchMultipleListsSaga);
 }  

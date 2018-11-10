@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
-//import { getIsNetworkErrorPresent } from "../reducers";
+import { getIsNetworkErrorPresent } from "../reducers";
 import { connect } from "react-redux";
 import {AddWord} from "./AddWord";
-import {Lists} from "./Lists";
-//import PrivateRoute from "./PrivateRoute";
+import Lists from "./Lists";
 import '../index.css';
 import { withRouter } from 'react-router';
 
@@ -24,9 +23,8 @@ class AppRouter extends Component {
     } 
 }
 
-// const mapStateToProps = state => ({
-//     isNetworkErrorPresent: getIsNetworkErrorPresent(state)
-// });
+const mapStateToProps = state => ({
+    isNetworkErrorPresent: getIsNetworkErrorPresent(state)
+});
 
-//export default withRouter(connect(mapStateToProps)(AppRouter));
-export {AppRouter};
+export default withRouter(connect(mapStateToProps)(AppRouter));

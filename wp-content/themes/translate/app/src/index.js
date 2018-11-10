@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-//import App from './App';
-import {AppRouter} from "./components/AppRouter";
-//import getStore from './store';
+import AppRouter from "./components/AppRouter";
+import getStore from './store';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter } from 'react-router-dom';
 import { Provider } from "react-redux";
 
-//const store = getStore();
-const store = true;
+const store = getStore();
 
 ReactDOM.render(
   <BrowserRouter>

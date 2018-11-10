@@ -1,14 +1,24 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-//import { getIsNetworkErrorPresent } from "../reducers";
-import { connect } from "react-redux";
+import {fetchMultipleListsRequest} from "../actions/lists";
+import { getListsCollection, getIsFetching, getIsFetched, getError } from "../reducers";
 //import UserPage from "./UserPage";
 //import AuthPage from "./AuthPage";
 //import PrivateRoute from "./PrivateRoute";
-import { withRouter } from 'react-router';
+import { connect } from "react-redux";
 
 class Lists extends Component {
-    render() {    
+    componentDidMount() {
+        fetch(`http://api.tvmaze.com/search/shows?q=test`, {
+            method: 'GET',
+            mode: 'cors'
+          })
+            .then(response => response.json())
+        this.props.fetchMultipleListsRequest();
+    }
+
+    render() { 
+        console.log(this.props.listsCollection, 'Lists Component');   
         return (
             <div className="lists">
                 lists
@@ -17,9 +27,16 @@ class Lists extends Component {
     } 
 }
 
-// const mapStateToProps = state => ({
-//     isNetworkErrorPresent: getIsNetworkErrorPresent(state)
-// });
+const mapStateToProps = state => ({
+    listsCollection: getListsCollection(state)
+});
 
-//export default withRouter(connect(mapStateToProps)(AppRouter));
-export {Lists};
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchMultipleListsRequest: () => {
+            dispatch(fetchMultipleListsRequest())    
+        }         
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lists);
