@@ -42,11 +42,12 @@ export const apiRequest = (action, data = {}) => {
 
     return instance
         .post("", submitData)
-        // .catch(function(error) {
-        //     console.log(error);
-        // });
 };
 
 export const getAllLists = data => {
     return apiRequest('getAllLists', data);    
+}
+
+export const createList = data => {
+    return apiRequest('createList', data);    
 }

@@ -1,14 +1,62 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+}
+
+.menu {
+    padding: 10px;
+}
+
+.menu a {
+    margin-right: 20px;
+    display: inline-block;
+}
+
+.main-section {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.section-title h3 {
+    margin: 0 0 10px 0;
+}
+
+.lists-list-single {
+	margin-bottom: 15px;
+}
+
+.lists-list-single > * {
+	display: inline-block;
+}
+
+.lists-list-single > a {
+	margin-right: 10px;
+}
+
+.lists-list-single .single-list-title {
+	margin: 0 40px 0 0;
+}
+
+.form-label {
+    position: relative;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.form-label .valerror {
+    color: #f00;
+    position: absolute;
+    top: 17px;
+    margin: 0;
+    font-size: 12px;
 }

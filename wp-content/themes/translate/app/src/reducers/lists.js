@@ -20,9 +20,9 @@ export const listSingle = handleActions(
 
 export const listsCollection = handleActions(
     {
-        [fetchMultipleListsRequest]: () => null,
+        [fetchMultipleListsRequest]: () => [],
         [fetchMultipleListsSuccess]: (state, action) => action.payload,
-        [fetchMultipleListsFailure]: () => null
+        [fetchMultipleListsFailure]: () => []
     },
     []
 );
