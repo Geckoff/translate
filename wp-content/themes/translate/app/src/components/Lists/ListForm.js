@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
-import {SectionHeader} from "./styleComponents/SectionHeader";
-import Input from "./Input";
+import {SectionHeader} from "../styleComponents/SectionHeader";
+import Input from "../Input";
 import {Field, Form} from "react-final-form";
 
 class ListForm extends Component {
@@ -36,11 +36,13 @@ class ListForm extends Component {
                     validate = {this.validate}
                     onSubmit = {this.handleSubmit}
                     initialValues= {{
-                        list_name: listTitle   
+                        list_name: listTitle,
+                        id   
                     }}
                     render={(data) => (
                         <form onSubmit={data.handleSubmit}>
                             <Field label="List Name" name='list_name' component={Input} />
+                            <Field name='id' component='input' type="hidden"  />
                             <div className="submit-block">
                                 <button disabled={data.hasValidationErrors} type='submit'>{buttonText}</button>
                             </div>

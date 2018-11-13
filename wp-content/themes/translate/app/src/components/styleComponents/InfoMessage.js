@@ -1,6 +1,6 @@
 import React from "react";
 
-export const SectionHeader = ({title}) => 
-    <div className="section-title">
-        <h3>{title}</h3>
+export const InfoMessage = ({message}) => 
+    <div className="info-message">
+        <h3>{message}</h3>
     </div>;

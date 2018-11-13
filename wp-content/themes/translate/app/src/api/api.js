@@ -51,3 +51,11 @@ export const getAllLists = data => {
 export const createList = data => {
     return apiRequest('createList', data);    
 }
+
+export const getList = data => {
+    return apiRequest('getList', data);    
+}
+
+export const updateList = data => {
+    return apiRequest('updateList', data);    
+}

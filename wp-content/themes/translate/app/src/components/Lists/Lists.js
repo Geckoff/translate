@@ -1,14 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import {fetchMultipleListsRequest} from "../actions/lists";
-import {getListsCollection} from "../reducers";
+import {fetchMultipleListsRequest} from "../../actions/lists";
+import {getListsCollection} from "../../reducers";
 import { connect } from "react-redux";
-import {SectionHeader} from "./styleComponents/SectionHeader";
+import {SectionHeader} from "../styleComponents/SectionHeader";
 
 class Lists extends Component {
 
     render() { 
-        console.log(this.props.listsCollection);
         return (
             <Fragment>
                 <SectionHeader title="Lists" />

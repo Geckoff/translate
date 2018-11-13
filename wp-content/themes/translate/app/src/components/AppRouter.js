@@ -2,15 +2,27 @@ import React, { Component } from "react";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import {AddWord} from "./AddWord";
-import Lists from "./Lists";
-import AddList from "./AddList";
-import { getIsFetching, getIsFetched, getError, getRedirect, getIsNetworkErrorPresent } from "../reducers";
+import Lists from "./Lists/Lists";
+import AddList from "./Lists/AddList";
+import EditList from "./Lists/EditList";
+import {
+    getIsFetching, 
+    getIsFetched, 
+    getError, 
+    getRedirect, 
+    getIsNetworkErrorPresent,
+    getMessage,
+    getMessageSeen
+} from "../reducers";
 import {fetchMultipleListsRequest} from "../actions/lists";
 import {resetRedirect} from "../actions/redirects";
+import {deleteMessage, seeMessage} from "../actions/messages";
 import '../index.css';
 import { withRouter } from 'react-router';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class AppRouter extends Component {
+
     componentDidMount() {
         this.props.fetchMultipleListsRequest();
     }
@@ -19,10 +31,14 @@ class AppRouter extends Component {
         if (prevProps.redirect) {
             this.props.resetRedirect();
         }
+        if (this.props.message) {
+            NotificationManager.success('Success!', this.props.message);
+            this.props.deleteMessage();
+        }
     }
 
     render() {  
-        const {error, isFetching, isFetched, isNetworkErrorPresent, redirect} = this.props;  
+        const {error, isFetching, isFetched, isNetworkErrorPresent, redirect, message} = this.props;  
         if (redirect) {
             return (
                 <Redirect to={redirect}/>
@@ -37,15 +53,16 @@ class AppRouter extends Component {
                         {error && 'Error'}
                         {isNetworkErrorPresent && 'Error'}
                     </div>
-                    
                     <div className="main-section">
                         <Switch>
                             <Route exact path="/add-word" component={AddWord} /> 
                             <Route exact path="/lists/add" component={AddList} /> 
+                            <Route exact path="/lists/edit/:id" component={EditList} /> 
                             <Route exact path="/lists" component={Lists} />                            
                             <Redirect to="/lists" />
                         </Switch>
                     </div>
+                    <NotificationContainer/>
                 </div>
             );
         }        
@@ -57,7 +74,9 @@ const mapStateToProps = state => ({
     isFetching: getIsFetching(state),
     isFetched: getIsFetched(state),
     error: getError(state),
-    redirect: getRedirect(state)
+    redirect: getRedirect(state),
+    message: getMessage(state),
+    messageSeen: getMessageSeen(state),
 });
 
 const mapDispatchToProps = dispatch => {
@@ -67,7 +86,13 @@ const mapDispatchToProps = dispatch => {
         }, 
         resetRedirect: () => {
             dispatch(resetRedirect())    
-        },      
+        },  
+        deleteMessage: () => {
+            dispatch(deleteMessage())    
+        },     
+        seeMessage: () => {
+            dispatch(seeMessage())    
+        },  
     }
 }
 

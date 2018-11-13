@@ -30,6 +30,16 @@ const {
     "ADD_LIST_FAILURE"
 );
 
+const {
+    editListRequest,
+    editListSuccess,
+    editListFailure
+} = createActions(
+    "EDIT_LIST_REQUEST",
+    "EDIT_LIST_SUCCESS",
+    "EDIT_LIST_FAILURE"
+);
+
 export {
     fetchSingleListRequest,
     fetchSingleListSuccess,
@@ -39,5 +49,8 @@ export {
     fetchMultipleListsFailure,
     addListRequest,
     addListSuccess,
-    addListFailure
+    addListFailure,
+    editListRequest,
+    editListSuccess,
+    editListFailure
 };

@@ -5,7 +5,7 @@ import { getIsNetworkErrorPresent } from "../reducers";
 export default function*(fn, args) {
     try {
         const response = yield call(fn, args);
-        if (response.data.includes("Translation application API error")) {
+        if ((typeof response.data === 'string' || response.data instanceof String) && response.data.includes("Translation application API error")) {
             if (!process.env.hasOwnProperty("REACT_APP_BASEURL")) {
                 alert(
                     "Error occured! After closing this window you will be redirected to the Lists page"
