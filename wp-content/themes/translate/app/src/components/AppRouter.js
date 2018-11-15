@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
-import {AddWord} from "./AddWord";
+import AddWord from "./Words/AddWord";
 import Lists from "./Lists/Lists";
 import AddList from "./Lists/AddList";
 import EditList from "./Lists/EditList";

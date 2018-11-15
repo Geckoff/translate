@@ -2,10 +2,10 @@ import React, { Component, Fragment } from "react";
 import {SectionHeader} from "../styleComponents/SectionHeader";
 import Input from "../Input";
 import {Field, Form} from "react-final-form";
-import {deleteListRequest} from "../../actions/lists";
+//import {deleteListRequest} from "../../actions/lists";
 import { connect } from "react-redux";
 
-class ListForm extends Component {
+class WordForm extends Component {
 
     validate = values => {
         const errors = {},
@@ -64,12 +64,13 @@ class ListForm extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        deleteListRequest: data => {
-            dispatch(deleteListRequest(data));     
-        }     
-    }
-}
+// const mapDispatchToProps = dispatch => {
+//     return {
+//         deleteListRequest: data => {
+//             dispatch(deleteListRequest(data));     
+//         }     
+//     }
+// }
 
-export default connect(null, mapDispatchToProps)(ListForm);
+//export default connect(null, mapDispatchToProps)(ListForm);
+export default WordForm;

@@ -59,3 +59,7 @@ export const getList = data => {
 export const updateList = data => {
     return apiRequest('updateList', data);    
 }
+
+export const deleteList = data => {
+    return apiRequest('deleteList', data);    
+}

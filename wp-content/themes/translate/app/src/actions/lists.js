@@ -40,6 +40,16 @@ const {
     "EDIT_LIST_FAILURE"
 );
 
+const {
+    deleteListRequest,
+    deleteListSuccess,
+    deleteListFailure
+} = createActions(
+    "DELETE_LIST_REQUEST",
+    "DELETE_LIST_SUCCESS",
+    "DELETE_LIST_FAILURE"
+);
+
 export {
     fetchSingleListRequest,
     fetchSingleListSuccess,
@@ -52,5 +62,8 @@ export {
     addListFailure,
     editListRequest,
     editListSuccess,
-    editListFailure
+    editListFailure,
+    deleteListRequest,
+    deleteListSuccess,
+    deleteListFailure
 };
