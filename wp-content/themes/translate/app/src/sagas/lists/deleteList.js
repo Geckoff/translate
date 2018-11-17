@@ -16,7 +16,10 @@ export function* deleteListSaga({ payload }) {
         yield put(deleteListSuccess());
         yield put(fetchMultipleListsRequest());
         yield put(addRedirect('/lists'));
-        yield put(addMessage('List was deleted'));
+        yield put(addMessage({
+            type: 'success',
+            message: 'List was deleted'
+        }));
     } catch (error) {
         yield put(deleteListFailure(error));
     }

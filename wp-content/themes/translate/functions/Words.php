@@ -31,7 +31,7 @@ class Words extends Lists {
         }
         if (isset($sec_trans)) {
             foreach ($sec_trans as $single_sec_trans) {
-                if (strlen($single_sec_trans) < 1) {
+                if (strlen($single_sec_trans['translation']) < 1) {
                     throw new Error('Secondary translation cannot be blank');   
                 }
             }
@@ -81,7 +81,8 @@ class Words extends Lists {
             if (isset($sec_trans)) {
                 foreach($sec_trans as $single_sec_trans) {
                     $row = [
-                        'translation' => $single_sec_trans   
+                        'translation' => $single_sec_trans['translation'],   
+                        'pos' => $single_sec_trans['pos']   
                     ];
                     add_row('secondary_translations', $row , $id);    
                 }
@@ -119,7 +120,10 @@ class Words extends Lists {
         $prims_trans = get_field('primary_translation', $id);
         $sec_trans = get_field('secondary_translations', $id);
         $sec_trans_mapped = array_map(function($elem){
-            return $elem["translation"];
+            return [
+                'translation' => $elem["translation"],
+                'pos' => $elem["pos"]
+            ];
         }, $sec_trans);
         $times_ran = get_field('times_ran', $id);
         $times_forgot = get_field('times_forgot', $id);
@@ -161,7 +165,10 @@ class Words extends Lists {
             $prims_trans = get_field('primary_translation', $id);
             $sec_trans = get_field('secondary_translations', $id);
             $sec_trans_mapped = array_map(function($elem){
-                return $elem["translation"];
+                return [
+                    'translation' => $elem["translation"],
+                    'pos' => $elem["pos"]
+                ];
             }, $sec_trans);
             $times_ran = get_field('times_ran', $id);
             $times_forgot = get_field('times_forgot', $id);

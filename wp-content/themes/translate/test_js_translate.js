@@ -140,8 +140,8 @@ $.ajax({
             'word': 'word to translate',
             'prim_trans': "translation primary",
             'sec_trans': [
-                'sec trans 1',
-                'sec trans 2',
+                {translation:'sec trans 1', pos: 'noun'},
+                {translation:'sec trans 2', pos: 'noun'},
             ],
             'lists': [33, 31]
             }
@@ -162,8 +162,8 @@ $.ajax({
         action: "addUpdateWord",
         userId: window.userData.userId,
         data: {
-            'id': 44,
-            'word': 'New word to translate',
+            'id': 53,
+            'word': '1115 tr',
             'prim_trans': "translation primary",
             'sec_trans': [
                 'sec trans 1',

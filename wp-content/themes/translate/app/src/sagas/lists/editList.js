@@ -16,7 +16,10 @@ export function* editListSaga({ payload }) {
         yield put(editListSuccess());
         yield put(fetchMultipleListsRequest());
         yield put(addRedirect('/lists'));
-        yield put(addMessage('List was updated'));
+        yield put(addMessage({
+            type: 'success',
+            message: 'List was updated'
+        }));
     } catch (error) {
         yield put(editListFailure(error));
     }

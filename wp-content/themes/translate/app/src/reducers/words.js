@@ -9,7 +9,7 @@ import { handleActions } from "redux-actions";
 export const translatingWord = handleActions(
     {
         [translateWordRequest]: () => null,
-        [translateWordSuccess]: (state, action) => action.payload,
+        [translateWordSuccess]: (state, action) => {console.log(action.payload);return action.payload},
         [translateWordFailure]: () => null
     },
     null

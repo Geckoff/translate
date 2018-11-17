@@ -9,7 +9,6 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		var test = window.hasOwnProperty("testval") ? window.testval : 'fromReact';
-		console.log(test);
 		apiRequest("getWordsByMostForgotten", {words_count: 2});
 	}
 

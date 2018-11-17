@@ -2,15 +2,16 @@ import React, { Component, Fragment } from "react";
 import {SectionHeader} from "../styleComponents/SectionHeader";
 import Input from "../Input";
 import {Field, Form} from "react-final-form";
-//import {deleteListRequest} from "../../actions/lists";
+import {getTranslatingWord} from "../../reducers";
+import {getListsCollection} from "../../reducers";
 import { connect } from "react-redux";
 
-class WordForm extends Component {
+class AddWordForm extends Component {
 
     validate = values => {
         const errors = {},
               list_name_error = "List Name may contain numbers, letters, spaces and dash character";
-              console.log(values);
+              
         if (Object.keys(values).includes('list_name') && values.list_name !== undefined) {
             if (values.list_name.length < 1 || !values.list_name.match(/^[a-z0-9 -]+$/i)) {
                 errors.list_name = list_name_error;
@@ -22,55 +23,53 @@ class WordForm extends Component {
     }
 
     handleSubmit = values => {
-        this.props.action(values);
-    }
-
-    handleDelete = () => {
-        if (window.confirm("Are you sure you want to delete this list?")) {
-            this.props.deleteListRequest({id: this.props.id});  
-        }        
+        console.log(values, 'add word form');
     }
 
     render() { 
         const {
-            listTitle = "",
-            formTitle,
-            buttonText,
-            id = false
+            word,
+            translations   
+        } = this.props.translatingWord;
+        const {
+            listsCollection
         } = this.props;
        return( 
             <Fragment>
-                <SectionHeader title={formTitle} />
+                <SectionHeader title='Translate Form' />
                 <Form 
                     validate = {this.validate}
                     onSubmit = {this.handleSubmit}
                     initialValues= {{
-                        list_name: listTitle,
-                        id   
+                        list_name: 'asdf',
                     }}
                     render={(data) => (
                         <form onSubmit={data.handleSubmit}>
                             <Field label="List Name" name='list_name' component={Input} />
-                            <Field name='id' component='input' type="hidden"  />
+                            {listsCollection.map((list, i) => (  
+                                <div>
+                                    <Field
+                                        name={`list[${i}]`}
+                                        component="input"
+                                        type="checkbox"
+                                        value={list.id}
+                                    />{list.name} 
+                                </div>
+                            ))}
                             <div className="submit-block">
-                                <button disabled={data.hasValidationErrors} type='submit'>{buttonText}</button>
+                                <button disabled={data.hasValidationErrors} type='submit'>BUTTON word FORM</button>
                             </div>
                         </form>
                     )}
                 />
-                {id && <button onClick={this.handleDelete}>Delete List</button>}
             </Fragment>
        )
     }
 }
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         deleteListRequest: data => {
-//             dispatch(deleteListRequest(data));     
-//         }     
-//     }
-// }
+const mapStateToProps = state => ({
+    translatingWord: getTranslatingWord(state),
+    listsCollection: getListsCollection(state),
+});
 
-//export default connect(null, mapDispatchToProps)(ListForm);
-export default WordForm;
+export default connect(mapStateToProps)(AddWordForm);

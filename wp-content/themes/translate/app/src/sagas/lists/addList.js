@@ -16,7 +16,10 @@ export function* addListSaga({ payload }) {
         yield put(addListSuccess());
         yield put(fetchMultipleListsRequest());
         yield put(addRedirect('/lists'));
-        yield put(addMessage('List was created'));
+        yield put(addMessage({
+            type: 'success',
+            message: 'List was created'
+        }));
     } catch (error) {
         yield put(addListFailure(error));
     }

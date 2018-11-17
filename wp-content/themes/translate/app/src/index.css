@@ -53,9 +53,8 @@ code {
     display: block;
 }
 
-.form-label .valerror {
+.valerror {
     color: #f00;
-    position: absolute;
     top: 17px;
     margin: 0;
     font-size: 12px;

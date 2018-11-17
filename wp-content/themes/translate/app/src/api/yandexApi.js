@@ -6,4 +6,4 @@ const instance = axios.create({
     baseURL: 'https://dictionary.yandex.net/api/v1/dicservice.json/'
 });
 
-export const translate = ({lang, text}) => instance(`lookup?key=${key}&lang=${lang}&text=${text}`)
+export const translate = ({langFrom, langTo, word}) => instance(`lookup?key=${key}&lang=${langFrom}-${langTo}&text=${word}`)

@@ -2,27 +2,19 @@ import React, { Fragment, Component } from "react";
 import {translateWordRequest} from "../../actions/words";
 import {getTranslatingWord} from "../../reducers";
 import { connect } from "react-redux";
-//import UserPage from "./UserPage";
-//import AuthPage from "./AuthPage";
-//import PrivateRoute from "./PrivateRoute";
-import { withRouter } from 'react-router';
-import WordForm from "./WordForm";
+import AddWordForm from "./AddWordForm";
+import TranslateForm from "./TranslateForm";
 
 class AddWord extends Component {
-
-    constructor(props) {
-        super(props);
-        props.translateWordRequest({
-            lang: 'en-ru',
-            text: 'on time'
-        });
-    }
     
     render() { 
-        
+        const {
+            translatingWord
+        } = this.props;
         return (
             <Fragment>
-                <WordForm formTitle="Add Word" buttonText="Save Changes" action={null} listTitle={null} id={null} />
+                <TranslateForm/>
+                {translatingWord && <AddWordForm formTitle="Add Word" buttonText="Save Changes" action={null} listTitle={null} id={null} />}
             </Fragment>
         );
     } 

@@ -19,6 +19,7 @@ import {
     translateWordRequest,
     translateWordSuccess,
     translateWordFailure, 
+    translateWordNotFound
 } from "../actions/words";
 import {combineReducers} from 'redux';
 import { handleActions } from "redux-actions";
@@ -45,6 +46,7 @@ export const isFetching = handleActions(
         [editListFailure]: () => false,
         [deleteListFailure]: () => false,
         [translateWordFailure]: () => false,
+        [translateWordNotFound]: () => false,
     },
     false
 );
@@ -70,6 +72,7 @@ export const isFetched = handleActions(
         [addListFailure]: () => true,
         [editListFailure]: () => true,
         [deleteListFailure]: () => true,
+        [translateWordFailure]: () => true,
         [translateWordFailure]: () => true,
     },
     false
