@@ -10,7 +10,6 @@ class ListForm extends Component {
     validate = values => {
         const errors = {},
               list_name_error = "List Name may contain numbers, letters, spaces and dash character";
-              console.log(values);
         if (Object.keys(values).includes('list_name') && values.list_name !== undefined) {
             if (values.list_name.length < 1 || !values.list_name.match(/^[a-z0-9 -]+$/i)) {
                 errors.list_name = list_name_error;

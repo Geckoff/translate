@@ -40,6 +40,7 @@ class Lists extends TranslateAjax {
     public function createList() {
         $this->checkIssetRecievedParams(['listName']);
         extract($this->data);
+        $listName = wp_strip_all_tags($listName);
         $category_arr = wp_insert_term($listName, 'category', ['slug' => generateRandomString(64)]);
         if ($cat_id = $category_arr["term_id"]) {
             $cat_ids_array = $this->list_ids_array;  
@@ -88,6 +89,7 @@ class Lists extends TranslateAjax {
         $this->checkIssetRecievedParams(['id', 'name']);
         extract($this->data);
         $cat_ids_array = $this->list_ids_array;  
+        $name = wp_strip_all_tags($name);
         $args = [
             'name' => $name
         ];

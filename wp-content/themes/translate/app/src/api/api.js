@@ -63,3 +63,7 @@ export const updateList = data => {
 export const deleteList = data => {
     return apiRequest('deleteList', data);    
 }
+
+export const addUpdateWord = data => {
+    return apiRequest('addUpdateWord', data);    
+}

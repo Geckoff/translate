@@ -24,7 +24,6 @@ class TranslateForm extends Component {
         } else {
             errors.word = word_error;     
         }
-        console.log(errors);
         return errors;
     }
 

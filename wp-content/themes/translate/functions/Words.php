@@ -59,6 +59,7 @@ class Words extends Lists {
     public function addUpdateWord() {
         $this->checkIssetRecievedParams(['word', 'prim_trans', 'lists']);
         extract($this->data);
+        $word = wp_strip_all_tags($word);
         $args = [
             'post_title' => $word,
             'post_type' => 'words',
@@ -68,7 +69,8 @@ class Words extends Lists {
             $args['ID'] = $id;  
         }
         if ($id = wp_insert_post($args, true)) {
-            update_post_meta($id, 'primary_translation', $prim_trans);
+            update_post_meta($id, 'primary_translation', wp_strip_all_tags($prim_trans));
+            update_post_meta($id, 'primary_translation_pos', wp_strip_all_tags($prim_trans_pos));
             if (isset($args['ID'])) {
                 $rows = get_field('secondary_translations', $id);
                 if ($rows) {
@@ -80,9 +82,11 @@ class Words extends Lists {
             }
             if (isset($sec_trans)) {
                 foreach($sec_trans as $single_sec_trans) {
+                    $single_sec_trans_translation = wp_strip_all_tags($single_sec_trans['translation']);
+                    $single_sec_trans_pos = wp_strip_all_tags($single_sec_trans['pos']);
                     $row = [
-                        'translation' => $single_sec_trans['translation'],   
-                        'pos' => $single_sec_trans['pos']   
+                        'translation' => $single_sec_trans_translation,   
+                        'pos' => $single_sec_trans_pos   
                     ];
                     add_row('secondary_translations', $row , $id);    
                 }
@@ -118,6 +122,7 @@ class Words extends Lists {
         $word = $post->post_title;
         $lists = wp_get_post_categories($id);
         $prims_trans = get_field('primary_translation', $id);
+        $prims_trans_pos = get_field('primary_translation_pos', $id);
         $sec_trans = get_field('secondary_translations', $id);
         $sec_trans_mapped = array_map(function($elem){
             return [
@@ -135,6 +140,7 @@ class Words extends Lists {
             'word' => $word,
             'lists' => $lists,
             'prims_trans' => $prims_trans,
+            'prims_trans_pos' => $prims_trans_pos,
             'sec_trans' => $sec_trans_mapped,
             'times_ran' => $times_ran,   
             'times_forgot' => $times_forgot,   
@@ -163,6 +169,7 @@ class Words extends Lists {
             $word = $post->post_title;
             $lists = wp_get_post_categories($id);
             $prims_trans = get_field('primary_translation', $id);
+            $prims_trans_pos = get_field('primary_translation_pos', $id);
             $sec_trans = get_field('secondary_translations', $id);
             $sec_trans_mapped = array_map(function($elem){
                 return [
@@ -180,6 +187,7 @@ class Words extends Lists {
                 'word' => $word,
                 'lists' => $lists,
                 'prims_trans' => $prims_trans,
+                'prims_trans_pos' => $prims_trans_pos,
                 'sec_trans' => $sec_trans_mapped,
                 'times_ran' => $times_ran,   
                 'times_forgot' => $times_forgot,   

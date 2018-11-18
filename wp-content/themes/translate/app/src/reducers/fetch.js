@@ -19,7 +19,10 @@ import {
     translateWordRequest,
     translateWordSuccess,
     translateWordFailure, 
-    translateWordNotFound
+    translateWordNotFound,
+    addWordRequest,
+    addWordSuccess,
+    addWordFailure,
 } from "../actions/words";
 import {combineReducers} from 'redux';
 import { handleActions } from "redux-actions";
@@ -32,6 +35,7 @@ export const isFetching = handleActions(
         [editListRequest]: () => true,
         [deleteListRequest]: () => true,
         [translateWordRequest]: () => true,
+        [addWordRequest]: () => true,
 
         [fetchSingleListSuccess]: () => false,
         [fetchMultipleListsSuccess]: () => false,
@@ -39,6 +43,7 @@ export const isFetching = handleActions(
         [editListSuccess]: () => false,
         [deleteListSuccess]: () => false,
         [translateWordSuccess]: () => false,
+        [addWordSuccess]: () => false,
 
         [fetchSingleListFailure]: () => false,
         [fetchMultipleListsFailure]: () => false,
@@ -47,6 +52,7 @@ export const isFetching = handleActions(
         [deleteListFailure]: () => false,
         [translateWordFailure]: () => false,
         [translateWordNotFound]: () => false,
+        [addWordFailure]: () => false,
     },
     false
 );
@@ -59,6 +65,7 @@ export const isFetched = handleActions(
         [editListRequest]: () => false,
         [deleteListRequest]: () => false,
         [translateWordRequest]: () => false,
+        [addWordRequest]: () => false,
 
         [fetchSingleListSuccess]: () => true,
         [fetchMultipleListsSuccess]: () => true,
@@ -66,6 +73,7 @@ export const isFetched = handleActions(
         [editListSuccess]: () => true,
         [deleteListSuccess]: () => true,
         [translateWordSuccess]: () => true,
+        [addWordSuccess]: () => true,
 
         [fetchSingleListFailure]: () => true,
         [fetchMultipleListsFailure]: () => true,
@@ -73,7 +81,8 @@ export const isFetched = handleActions(
         [editListFailure]: () => true,
         [deleteListFailure]: () => true,
         [translateWordFailure]: () => true,
-        [translateWordFailure]: () => true,
+        [translateWordNotFound]: () => true,
+        [addWordFailure]: () => true,
     },
     false
 );
@@ -86,6 +95,7 @@ export const error = handleActions(
         [editListRequest]: () => null,
         [deleteListRequest]: () => null,
         [translateWordRequest]: () => null,
+        [addWordRequest]: () => null,
 
         [fetchSingleListSuccess]: () => null,
         [fetchMultipleListsSuccess]: () => null,
@@ -93,6 +103,7 @@ export const error = handleActions(
         [editListSuccess]: () => null,
         [deleteListSuccess]: () => null,
         [translateWordSuccess]: () => null,
+        [addWordSuccess]: () => null,
 
         [fetchSingleListFailure]: (state, action) => action.payload,
         [fetchMultipleListsFailure]: (state, action) => action.payload,
@@ -100,6 +111,7 @@ export const error = handleActions(
         [editListFailure]: (state, action) => action.payload,
         [deleteListFailure]: (state, action) => action.payload,
         [translateWordFailure]: (state, action) => action.payload,
+        [addWordFailure]: (state, action) => action.payload,
     },
     null
 );

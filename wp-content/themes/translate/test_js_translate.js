@@ -139,6 +139,7 @@ $.ajax({
         data: {
             'word': 'word to translate',
             'prim_trans': "translation primary",
+            'prim_trans_pos': "adj",
             'sec_trans': [
                 {translation:'sec trans 1', pos: 'noun'},
                 {translation:'sec trans 2', pos: 'noun'},
@@ -165,6 +166,7 @@ $.ajax({
             'id': 53,
             'word': '1115 tr',
             'prim_trans': "translation primary",
+            'prim_trans_pos': "adj",
             'sec_trans': [
                 'sec trans 1',
                 'sec trans 2',
