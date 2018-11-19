@@ -24,6 +24,36 @@ const {
     "ADD_WORD_FAILURE"
 );
 
+const {
+    editWordRequest,
+    editWordSuccess,
+    editWordFailure,
+} = createActions(
+    "EDIT_WORD_REQUEST",
+    "EDIT_WORD_SUCCESS",
+    "EDIT_WORD_FAILURE"
+);
+
+const {
+    deleteWordRequest,
+    deleteWordSuccess,
+    deleteWordFailure,
+} = createActions(
+    "DELETE_WORD_REQUEST",
+    "DELETE_WORD_SUCCESS",
+    "DELETE_WORD_FAILURE"
+);
+
+const {
+    getWordRequest,
+    getWordSuccess,
+    getWordFailure,
+} = createActions(
+    "GET_WORD_REQUEST",
+    "GET_WORD_SUCCESS",
+    "GET_WORD_FAILURE"
+);
+
 export {
     translateWordRequest,
     translateWordSuccess,
@@ -33,4 +63,13 @@ export {
     addWordRequest,
     addWordSuccess,
     addWordFailure,
+    editWordRequest,
+    editWordSuccess,
+    editWordFailure,
+    deleteWordRequest,
+    deleteWordSuccess,
+    deleteWordFailure,
+    getWordRequest,
+    getWordSuccess,
+    getWordFailure,
 };

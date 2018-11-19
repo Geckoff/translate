@@ -10,13 +10,19 @@ import { takeLatest, call, put } from "redux-saga/effects";
 import { deleteList } from "../../api/api";
 import requestFlow from "../request";
 
+/**
+ * Delete list
+ * 
+ * @param {Object} payload
+ * @param {integer} payload.id - id of the list
+ */
 export function* deleteListSaga({ payload }) {
     try {
         yield call(requestFlow, deleteList, payload);
         yield put(deleteListSuccess());
-        yield put(fetchMultipleListsRequest());
-        yield put(addRedirect('/lists'));
-        yield put(addMessage({
+        yield put(fetchMultipleListsRequest()); // pull in an updated lists of all word lists
+        yield put(addRedirect('/lists'));       // redirect to the list page on success
+        yield put(addMessage({                  // success message
             type: 'success',
             message: 'List was deleted'
         }));

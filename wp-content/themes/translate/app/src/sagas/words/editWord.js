@@ -1,19 +1,19 @@
 import {
-    addWordRequest,
-    addWordSuccess,
-    addWordFailure,
-    translateWordReset
+    editWordRequest,
+    editWordSuccess,
+    editWordFailure,
+    getWordRequest
 } from "../../actions/words";
 import {addMessage}  from "../../actions/messages";
 import { takeLatest, call, put } from "redux-saga/effects";
 import { addUpdateWord } from "../../api/api";
 import requestFlow from "../request";
-import {addRedirect}  from "../../actions/redirects";
 
 /**
  * Add word.
  * 
  * @param {Object} payload
+ * @param {string} payload.id - updated word id
  * @param {string} payload.word - translated word
  * @param {string} payload.prim_trans - primary translation
  * @param {string} payload.prim_trans_pos - part of the spich for the primary translation
@@ -23,21 +23,20 @@ import {addRedirect}  from "../../actions/redirects";
  * @param {array} payload.lists - array of lists the word is assigned to
  * @param {integer} payload.lists[] - id of the list
  */
-export function* addWordSaga({ payload }) {
+export function* editWordSaga({ payload }) {
     try {
         yield call(requestFlow, addUpdateWord, payload);
-        yield put(addWordSuccess());
-        yield put(translateWordReset());        // reset translation form
-        yield put(addRedirect('/add-word'));    // redirect to translatino form. helps to reset input of input text field
+        yield put(editWordSuccess());
         yield put(addMessage({                  // success message
             type: 'success',
-            message: 'Word was added'
+            message: 'Word was updated'
         }));
+        yield put(getWordRequest({id: payload.id})); // fetch updated word
     } catch (error) {
-        yield put(addWordFailure(error));
+        yield put(editWordFailure(error));
     }
 }
 
-export function* addWordWatch() {
-    yield takeLatest(addWordRequest, addWordSaga);
+export function* editWordWatch() {
+    yield takeLatest(editWordRequest, editWordSaga);
 }

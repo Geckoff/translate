@@ -1,18 +1,17 @@
 import React, { Component, Fragment } from "react";
-import { SectionHeader } from "../styleComponents/SectionHeader";
 import { Field, Form } from "react-final-form";
-import { getTranslatingWord } from "../../reducers";
 import { getListsCollection } from "../../reducers";
-import {addWordRequest} from "../../actions/words";
+import { editWordRequest } from "../../actions/words";
 import { connect } from "react-redux";
+import {deleteWordRequest} from "../../actions/words";
 
-class AddWordForm extends Component {
+class EditWordForm extends Component {
     validate = values => {
         const errors = {},
               list_error = "You miust select at least one list where you would like to include the word",
               custom_error = "Primary translation cannot be blank";
 
-        if (!this.checkLists(values)) {
+        if (values.lists.length < 1) {
             errors.list0 = list_error;   
         }
         if (values.primTrans === 'cutomTrans') {
@@ -26,27 +25,14 @@ class AddWordForm extends Component {
         return errors;
     };
 
-    checkLists = values => {
-        const listCount = this.props.listsCollection.length;
-        for (let i = 0; i < listCount; i++) {
-            if (Object.keys(values).includes(`list${i}`)) {
-                if (values[`list${i}`].length > 0) {
-                    return true;
-                }                
-            }
-        }
-        return false;
-    }
-
     handleSubmit = values => {
         let wordData = {},
             {listsCollection} = this.props,
-            {word, translations} = this.props.translatingWord,
-            {custom_prim_trans, primTrans} = values,
+            {id, word, sec_trans, prims_trans, prims_trans_pos} = this.props.editedWord,
+            {custom_prim_trans, primTrans, lists} = values,
             primTransFinal = '',
             primTransPosFinal = '',
-            sec_trans = [],
-            lists = [];
+            sec_trans_new = [];
 
         // save primary translation depending if user's one is used or one of the trnslatior options
         if (primTrans === 'cutomTrans') {
@@ -58,12 +44,17 @@ class AddWordForm extends Component {
             primTransPosFinal = primTransArr[1];    
         }
 
-        // itrate over translator translation options to save secondary translation excluding one that is used as a primary translation
-        translations.forEach((translation, i) => {
-            const {text, pos} = translation;
-            if (text !== primTransFinal) {
-                sec_trans.push({
-                    translation: text,
+        sec_trans = sec_trans.slice();
+        sec_trans.unshift({
+            translation: prims_trans,
+            pos: prims_trans_pos
+        }); // add primary translation from database to the beginning of secondaey translations array from db
+        // itrate over db translation options to save secondary translation excluding one that is used as a primary translation
+        sec_trans.forEach((translationSingle, i) => {
+            const {translation, pos} = translationSingle;
+            if (translation !== primTransFinal) {
+                sec_trans_new.push({
+                    translation,
                     pos    
                 });
             }
@@ -71,44 +62,46 @@ class AddWordForm extends Component {
 
         // add custom translation to secondary translations if it exists and not used as a primary translation
         if (custom_prim_trans && custom_prim_trans !== primTransFinal) {
-            sec_trans.push({
+            sec_trans_new.push({
                 translation: custom_prim_trans,
                 pos: ''
             });
         }
-
-        // save lists
-        const listsCount = listsCollection.length;
-        for (let i = 0; i < listsCount; i++) {
-            if (Object.keys(values).includes(`list${i}`)) {
-                if (values[`list${i}`].length > 0) {
-                    lists.push(values[`list${i}`][0]);
-                }                
-            }
-        }
         
         wordData = {
+            id,
             word,
             prim_trans: primTransFinal,
             prim_trans_pos: primTransPosFinal,
-            sec_trans,
+            sec_trans: sec_trans_new,
             lists
         }
         
-        this.props.addWordRequest(wordData);
-    };
+        this.props.editWordRequest(wordData);
+    }
+
+    handleDelete = () => {
+        if (window.confirm("Are you sure you want to delete this word?")) {
+            this.props.deleteWordRequest({id: this.props.editedWord.id});  
+        }        
+    }
 
     render() {
-        const { word, translations } = this.props.translatingWord;
+        const {  
+            lists, 
+            prims_trans,
+            prims_trans_pos,
+            sec_trans
+        } = this.props.editedWord;
         const { listsCollection } = this.props;
         return (
             <Fragment>
-                <SectionHeader title="Translate Form" />
                 <Form
                     validate={this.validate}
                     onSubmit={this.handleSubmit}
                     initialValues={{
-                        primTrans: (translations.length > 0) ? `${translations[0].text}||${translations[0].pos}` : 'cutomTrans'
+                        primTrans: `${prims_trans}||${prims_trans_pos}`,
+                        lists: lists
                     }}
                     render={data => (
                         <form onSubmit={data.handleSubmit}>
@@ -116,16 +109,27 @@ class AddWordForm extends Component {
                                 <div>
                                     <strong>Translations</strong>
                                 </div>
-                                {translations.map((translation, i) => (
+                                <div>
+                                    <label>
+                                        <Field
+                                            name="primTrans"
+                                            component="input"
+                                            type="radio"
+                                            value={`${prims_trans}||${prims_trans_pos}`}
+                                        />
+                                        {prims_trans} {prims_trans_pos && <span>({prims_trans_pos})</span>}
+                                    </label>
+                                </div>
+                                {sec_trans && sec_trans.map((translation, i) => (
                                     <div key={i}>
                                         <label>
                                             <Field
                                                 name="primTrans"
                                                 component="input"
                                                 type="radio"
-                                                value={`${translation.text}||${translation.pos}`}
+                                                value={`${translation.translation}||${translation.pos}`}
                                             />
-                                            {translation.text} {translation.pos && <span>({translation.pos})</span>}
+                                            {translation.translation} {translation.pos && <span>({translation.pos})</span>}
                                         </label>
                                     </div>
                                 ))}
@@ -143,7 +147,7 @@ class AddWordForm extends Component {
                                             component='input'
                                         /><span>
                                             Your Translation
-                                            {data.errors.custom_prim_trans && <p className="valerror">{data.errors.custom_prim_trans}</p>}
+                                            {data.errors && data.errors.custom_prim_trans && <p className="valerror">{data.errors.custom_prim_trans}</p>}
                                         </span>
                                     </label>
                                 </div>
@@ -152,13 +156,13 @@ class AddWordForm extends Component {
                             <div className="tr-lists">
                                 <div>
                                     <strong>Lists</strong>
-                                    {data.errors.list0 && <p className="valerror">{data.errors.list0}</p>}
+                                    {data.errors && data.errors.lists && <p className="valerror">{data.errors.lists}</p>}
                                 </div>
                                 {listsCollection.map((list, i) => (
                                     <div key={i}>
                                         <label>
                                             <Field
-                                                name={`list${i}`}
+                                                name={'lists'}
                                                 component="input"
                                                 type="checkbox"
                                                 value={list.id}
@@ -174,12 +178,17 @@ class AddWordForm extends Component {
                                     disabled={data.hasValidationErrors}
                                     type="submit"
                                 >
-                                    Add Word
+                                    Edit Word
                                 </button>
                             </div>
                         </form>
                     )}
                 />
+                <button
+                    onClick={this.handleDelete}
+                >
+                    Delete Word
+                </button>
             </Fragment>
         );
     }
@@ -187,15 +196,18 @@ class AddWordForm extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addWordRequest: data => {
-            dispatch(addWordRequest(data));     
+        editWordRequest: data => {
+            dispatch(editWordRequest(data));     
+        },
+        deleteWordRequest: data => {
+            dispatch(deleteWordRequest(data));     
         }        
     }
 }
 
 const mapStateToProps = state => ({
-    translatingWord: getTranslatingWord(state),
+//    editedWord: getEditedWord(state),
     listsCollection: getListsCollection(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddWordForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditWordForm);

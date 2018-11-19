@@ -7,10 +7,24 @@ const instanceDict = axios.create({
     baseURL: 'https://dictionary.yandex.net/api/v1/dicservice.json/'
 });
 
+/**
+ * Yandex Dictionary api call
+ * 
+ * @param {string} langFrom - lnguage from which translating
+ * @param {string} langTo - lnguage frotom which translating
+ * @param {string} word - word to translate
+ */
 export const translateDictionary = ({langFrom, langTo, word}) => instanceDict(`lookup?key=${keyDict}&lang=${langFrom}-${langTo}&text=${word}`);
 
 const instanceTrans = axios.create({
     baseURL: 'https://translate.yandex.net/api/v1.5/tr.json/'
 });
 
+/**
+ * Yandex Translator api call
+ * 
+ * @param {string} langFrom - lnguage from which translating
+ * @param {string} langTo - lnguage frotom which translating
+ * @param {string} word - word to translate
+ */
 export const translateTranslator = ({langFrom, langTo, word}) => instanceTrans(`translate?key=${keyTrans}&lang=${langFrom}-${langTo}&text=${word}`);

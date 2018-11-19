@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import {SectionHeader} from "../styleComponents/SectionHeader";
-import Input from "../Input";
+import Input from "../Input"; // input field with custom functinality
 import {Field, Form} from "react-final-form";
 import {deleteListRequest} from "../../actions/lists";
 import { connect } from "react-redux";

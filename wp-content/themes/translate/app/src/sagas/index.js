@@ -10,6 +10,9 @@ import {deleteListWatch} from './lists/deleteList';
 // Words sagas import
 import {translateWordWatch} from './words/translateWord';
 import {addWordWatch} from './words/addWord';
+import {fetchSingleWordWatch} from './words/singleWord';
+import {editWordWatch} from './words/editWord';
+import {deleteWordWatch} from './words/deleteWord';
 
 export default function*() {
   yield fork(fetchMultipleListsWatch);
@@ -19,6 +22,9 @@ export default function*() {
   yield fork(deleteListWatch);
   yield fork(translateWordWatch);
   yield fork(addWordWatch);
+  yield fork(fetchSingleWordWatch);
+  yield fork(editWordWatch);
+  yield fork(deleteWordWatch);
 }
 
 

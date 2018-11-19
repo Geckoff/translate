@@ -63,7 +63,9 @@ class Words extends Lists {
         $args = [
             'post_title' => $word,
             'post_type' => 'words',
-            'post_category' => $lists
+            'post_category' => $lists,
+            'post_status' => 'publish',
+            'post_author' => $this->user_id
         ];
         if (isset($id)) {
             $args['ID'] = $id;  
@@ -124,12 +126,17 @@ class Words extends Lists {
         $prims_trans = get_field('primary_translation', $id);
         $prims_trans_pos = get_field('primary_translation_pos', $id);
         $sec_trans = get_field('secondary_translations', $id);
-        $sec_trans_mapped = array_map(function($elem){
-            return [
-                'translation' => $elem["translation"],
-                'pos' => $elem["pos"]
-            ];
-        }, $sec_trans);
+        if (!is_array($sec_trans)) {
+            $sec_trans_mapped = [];    
+        } 
+        else {
+            $sec_trans_mapped = array_map(function($elem){
+                return [
+                    'translation' => $elem["translation"],
+                    'pos' => $elem["pos"]
+                ];
+            }, $sec_trans);
+        }   
         $times_ran = get_field('times_ran', $id);
         $times_forgot = get_field('times_forgot', $id);
         $last_forgot = get_field('last_forgot', $id);

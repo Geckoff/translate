@@ -4,8 +4,7 @@ import {getAllLists} from '../../api/api';
 import requestFlow from '../request';
 
 export function* fetchMultipleListsSaga(action) {
-  try {
-    
+  try {    
     const lists = yield call(requestFlow, getAllLists);
     yield put({type: fetchMultipleListsSuccess.toString(), payload: lists});
   } catch (error) {

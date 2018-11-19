@@ -7,6 +7,12 @@ import {takeLatest, call, put} from 'redux-saga/effects';
 import {getList, getAllLists} from '../../api/api';
 import requestFlow from '../request';
 
+/**
+ * Get single list
+ * 
+ * @param {Object} payload
+ * @param {integer} payload.id - id of the list
+ */
 export function* fetchSingleListSaga({payload}) {
   try {
     const list = yield call(requestFlow, getList, payload);
