@@ -29,3 +29,4 @@ export const getListsCollection = state => state.lists.listsCollection;
 //Words
 export const getTranslatingWord = state => state.words.translatingWord;
 export const getEditedWord = state => state.words.editedWord;
+export const getWordsByList = state => state.words.wordsByList;

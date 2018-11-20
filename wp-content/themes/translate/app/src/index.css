@@ -59,3 +59,13 @@ code {
     margin: 0;
     font-size: 12px;
 }
+
+.wordslist-word-single {
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+
+.wordslist-word-single-sectrans-block {
+    font-size: 10px;
+    padding-left: 15px;
+}

@@ -13,6 +13,7 @@ import {addWordWatch} from './words/addWord';
 import {fetchSingleWordWatch} from './words/singleWord';
 import {editWordWatch} from './words/editWord';
 import {deleteWordWatch} from './words/deleteWord';
+import {fetchWordsByListWatch} from './words/wordsByList';
 
 export default function*() {
   yield fork(fetchMultipleListsWatch);
@@ -25,6 +26,7 @@ export default function*() {
   yield fork(fetchSingleWordWatch);
   yield fork(editWordWatch);
   yield fork(deleteWordWatch);
+  yield fork(fetchWordsByListWatch);
 }
 
 

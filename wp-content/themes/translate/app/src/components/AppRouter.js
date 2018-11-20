@@ -3,6 +3,7 @@ import { Route, Switch, Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import AddWord from "./Words/AddWord";
 import EditWord from "./Words/EditWord";
+import WordsList from "./Words/WordsList";
 import Lists from "./Lists/Lists";
 import AddList from "./Lists/AddList";
 import EditList from "./Lists/EditList";
@@ -49,9 +50,7 @@ class AppRouter extends Component {
                 <div className="App">
                     <div className="menu">
                         <Link to={'/add-word' }>Add Word</Link>
-                        <Link to={'/lists' }>Lists</Link>
-                        <Link to={'/edit-word/68' }>Edit Word</Link>
-                        <Link to={'/edit-word/69' }>Edit Word</Link>
+                        <Link to={'/lists' }>Lists</Link>                        
                         {isFetching && 'Loading'}
                         {error && 'Error'}
                         {isNetworkErrorPresent && 'Error'}
@@ -60,6 +59,7 @@ class AppRouter extends Component {
                         <Switch>
                             <Route exact path="/add-word" component={AddWord} /> 
                             <Route exact path="/edit-word/:id" component={EditWord} /> 
+                            <Route exact path="/words-list/:id" component={WordsList} /> 
                             <Route exact path="/lists/add" component={AddList} /> 
                             <Route exact path="/lists/edit/:id" component={EditList} /> 
                             <Route exact path="/lists" component={Lists} />                            

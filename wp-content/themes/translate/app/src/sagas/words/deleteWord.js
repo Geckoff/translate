@@ -3,6 +3,9 @@ import {
     deleteWordSuccess,
     deleteWordFailure,
 } from "../../actions/words";
+import {
+    fetchMultipleListsRequest
+} from "../../actions/lists";
 import {addRedirect}  from "../../actions/redirects";
 import {addMessage}  from "../../actions/messages";
 import { takeLatest, call, put } from "redux-saga/effects";
@@ -19,6 +22,7 @@ export function* deleteWordSaga({ payload }) {
     try {
         yield call(requestFlow, deleteWord, payload);
         yield put(deleteWordSuccess());
+        yield put(fetchMultipleListsRequest());
         yield put(addRedirect('/lists'));       // redirect to the list page on success
         yield put(addMessage({                  // success message
             type: 'success',

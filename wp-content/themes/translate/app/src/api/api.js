@@ -131,3 +131,14 @@ export const getWord = data => {
 export const deleteWord = data => {
     return apiRequest('deleteWord', data);    
 }
+
+/**
+ * Get all words assigned to a list or lists
+ * 
+ * @param {Object} data
+ * @param {array} data.id - lists ids
+ * @param {integer} data.id[] - lists ids
+ */
+export const getWordsByList = data => {
+    return apiRequest('getWordsByList', data);    
+}

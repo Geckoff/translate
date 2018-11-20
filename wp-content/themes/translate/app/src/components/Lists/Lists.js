@@ -15,8 +15,9 @@ class Lists extends Component {
                     {this.props.listsCollection.map((list, i) => (
                         <div key={i} className="lists-list-single">
                             <p className="single-list-title">{list.name}</p>
+                            <p className="single-list-title">{list.words_count} word(s)</p>
                             <Link to={`/lists/edit/${list.id}`}>Edit List</Link>
-                            <Link to={`/lists/start/${list.id}`}>See Words</Link>
+                            <Link to={`/words-list/${list.id}`}>See Words</Link>
                         </div>
                     ))}        
                 </div>

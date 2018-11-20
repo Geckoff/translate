@@ -54,6 +54,16 @@ const {
     "GET_WORD_FAILURE"
 );
 
+const {
+    fetchWordsByListRequest,
+    fetchWordsByListSuccess,
+    fetchWordsByListFailure,
+} = createActions(
+    "FETCH_WORDS_BY_LIST_REQUEST",
+    "FETCH_WORDS_BY_LIST_SUCCESS",
+    "FETCH_WORDS_BY_LIST_FAILURE"
+);
+
 export {
     translateWordRequest,
     translateWordSuccess,
@@ -72,4 +82,7 @@ export {
     getWordRequest,
     getWordSuccess,
     getWordFailure,
+    fetchWordsByListRequest,
+    fetchWordsByListSuccess,
+    fetchWordsByListFailure,
 };

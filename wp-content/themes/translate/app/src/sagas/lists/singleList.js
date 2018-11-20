@@ -4,7 +4,7 @@ import {
     fetchSingleListFailure
 } from '../../actions/lists';
 import {takeLatest, call, put} from 'redux-saga/effects';
-import {getList, getAllLists} from '../../api/api';
+import {getList} from '../../api/api';
 import requestFlow from '../request';
 
 /**

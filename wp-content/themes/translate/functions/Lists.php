@@ -179,6 +179,7 @@ class Lists extends TranslateAjax {
                     $cats_return_single = [
                         'id' => $cat->term_id,
                         'name' => $cat->name,
+                        'words_count' => $cat->count
                     ];
                     array_push($cats_return, $cats_return_single);    
                 }

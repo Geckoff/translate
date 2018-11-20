@@ -6,6 +6,9 @@ import {
     getWordRequest,
     getWordSuccess,
     getWordFailure,
+    fetchWordsByListRequest,
+    fetchWordsByListSuccess,
+    fetchWordsByListFailure,
 } from "../actions/words";
 import {combineReducers} from 'redux';
 import { handleActions } from "redux-actions";
@@ -29,9 +32,19 @@ export const editedWord = handleActions(
     null
 );
 
+export const wordsByList = handleActions(
+    {
+        [fetchWordsByListRequest]: () => [],
+        [fetchWordsByListSuccess]: (state, action) => action.payload,
+        [fetchWordsByListFailure]: () => []
+    },
+    []
+);
+
 export default combineReducers({
     translatingWord,
-    editedWord
+    editedWord,
+    wordsByList
 });
 
 
