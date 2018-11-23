@@ -13,10 +13,12 @@
     "react-notifications": "^1.4.3",
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
+    "react-router-last-location": "^1.1.0",
     "react-scripts": "2.1.0",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
-    "redux-saga": "^0.16.2"
+    "redux-saga": "^0.16.2",
+    "shuffle-array": "^1.0.1"
   },
   "scripts": {
     "start": "REACT_APP_BASEURL=http://translate.local:8888/proxy REACT_APP_USERID=1 REACT_APP_SECURITY=molochko1999 react-scripts start ",

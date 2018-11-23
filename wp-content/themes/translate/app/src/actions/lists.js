@@ -3,11 +3,13 @@ import { createActions } from "redux-actions";
 const {
     fetchSingleListRequest,
     fetchSingleListSuccess,
-    fetchSingleListFailure
+    fetchSingleListFailure,
+    resetSingleList
 } = createActions(
     "FETCH_SINGLE_LIST_REQUEST",
     "FETCH_SINGLE_LIST_SUCCESS",
-    "FETCH_SINGLE_LIST_FAILURE"
+    "FETCH_SINGLE_LIST_FAILURE",
+    "RESET_SINGLE_LIST"
 );
 
 const {
@@ -65,5 +67,6 @@ export {
     editListFailure,
     deleteListRequest,
     deleteListSuccess,
-    deleteListFailure
+    deleteListFailure,
+    resetSingleList
 };

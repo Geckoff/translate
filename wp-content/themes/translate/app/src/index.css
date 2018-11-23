@@ -69,3 +69,8 @@ code {
     font-size: 10px;
     padding-left: 15px;
 }
+
+.wordslist-word-single-stats {
+    font-size: 10px;
+    font-style: italic;
+}

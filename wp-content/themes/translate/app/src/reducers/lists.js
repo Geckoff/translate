@@ -2,6 +2,7 @@ import {
     fetchSingleListRequest,
     fetchSingleListSuccess,
     fetchSingleListFailure,
+    resetSingleList,
     fetchMultipleListsRequest,
     fetchMultipleListsSuccess,
     fetchMultipleListsFailure
@@ -13,7 +14,8 @@ export const listSingle = handleActions(
     {
         [fetchSingleListRequest]: () => null,
         [fetchSingleListSuccess]: (state, action) => action.payload,
-        [fetchSingleListFailure]: () => null
+        [fetchSingleListFailure]: () => null,
+        [resetSingleList]: () => null,
     },
     null
 );

@@ -142,3 +142,37 @@ export const deleteWord = data => {
 export const getWordsByList = data => {
     return apiRequest('getWordsByList', data);    
 }
+
+/**
+ * Update statistics if the word was forgotten
+ * 
+ * @param {Object} data
+ * @param {array} data.words_ids - words ids
+ * @param {integer} data.words_ids[] - lists ids
+ */
+export const updateWordForgot = data => {
+    console.log(data);
+    return apiRequest('updateWordForgot', data);    
+}
+
+/**
+ * Update statistics if the words was a part of the test
+ * 
+ * @param {Object} data
+ * @param {array} data.words_ids - words ids
+ * @param {integer} data.words_ids[] - lists ids
+ */
+export const updateWordRan = data => {
+    return apiRequest('updateWordRan', data);    
+}
+
+/**
+ * Update statistics if the words was a part of the test
+ * 
+ * @param {Object} data
+ * @param {array} data.words_ids - words ids
+ * @param {integer} data.words_ids[] - lists ids
+ */
+export const getWordsByIds = data => {
+    return apiRequest('getWordsByIds', data);    
+}

@@ -17,7 +17,9 @@ class Words extends Lists {
      * @return void
      */
     private function checkDataRequirements() {
-        extract($this->data);
+        if (is_array($this->data)) {
+            extract($this->data);
+        }        
         if (isset($lists)) {
             if (!$this->isAllListsBelong($lists)) {
                 throw new Error("Not all lists belong to the current user");
@@ -49,6 +51,27 @@ class Words extends Lists {
         if (isset($words_count) && !is_numeric($words_count) ) {
             throw new Error('Amount of words should be a number');  
         }
+        if (isset($words_ids)) {
+            if (!is_array($words_ids)) {
+                throw new Error('You have to pass list of words ids you wnat to get'); 
+            }
+            else {
+                if (!$this->isAllWordsBelong($words_ids)) {
+                    throw new Error("It looks like you're trying to access the word that doesn't belong to current user.");    
+                }
+            }
+        }
+    }
+
+    private function isAllWordsBelong($words_ids) {
+        $words = get_posts([
+            'author' => $this->user_id,
+            'post_type' => 'words',
+            'post_status' => "any",
+            'posts_per_page' => -1,
+            'post__in' => $words_ids
+        ]);
+        return count($words) === count($words_ids);
     }
 
     /**
@@ -96,6 +119,39 @@ class Words extends Lists {
         }
         else {
             throw new Error('wp_insert_post error');
+        }
+    }
+
+    /**
+     * Update statistics if the word was forgotten
+     * 
+     * @return void
+     */
+    public function updateWordForgot() {
+        $this->checkIssetRecievedParams(['words_ids']);
+        extract($this->data);
+        foreach($words_ids as $word_id) {
+            update_field('last_forgot', time(), $word_id);
+            $times_forgot = get_field('times_forgot', $word_id);
+            $times_forgot_new = $times_forgot ? ++$times_forgot : 1;
+            update_field('times_forgot', 1, $word_id); 
+        }
+    }
+
+    /**
+     * Update statistics if the words was a part of the test
+     * 
+     * @return void
+     */
+    public function updateWordRan() {
+        $this->checkIssetRecievedParams(['words_ids']);
+        extract($this->data);
+        foreach($words_ids as $word_id) {
+            update_field('last_ran', time(), $word_id);
+            $times_ran = get_field('times_ran', $word_id);
+            $times_ran_new = $times_ran ? ++$times_ran : 1;
+            update_field('times_ran', $times_ran_new, $word_id); 
+            //update_field('times_ran', 1, $word_id); 
         }
     }
 
@@ -167,7 +223,8 @@ class Words extends Lists {
         $args = [
             'author' => $this->user_id,
             'post_type' => 'words',
-            'post_status' => "any"  
+            'post_status' => "any", 
+            'posts_per_page' => -1
         ];
         $args = array_merge($args, $add_args);  
         $posts = get_posts($args);  
@@ -215,6 +272,17 @@ class Words extends Lists {
         $this->checkIssetRecievedParams(['lists']);
         extract($this->data);        
         $this->getWords(['category__in' => $lists]);      
+    }
+
+    /**
+     * Get list of words by words ids
+     * 
+     * @return void
+     */
+    public function getWordsByIds() {
+        $this->checkIssetRecievedParams(['words_ids']);
+        extract($this->data);        
+        $this->getWords(['post__in' => $words_ids]);      
     }
 
     /**

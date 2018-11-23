@@ -75,6 +75,9 @@ add_action('wp_ajax_getWordsByList', 'getWordsByList'); // Get words associated 
 add_action('wp_ajax_getWordsByNumber', 'getWordsByNumber'); // Get random words
 add_action('wp_ajax_getWordsByLatestForgotten', 'getWordsByLatestForgotten'); // Get the latest forgotten words
 add_action('wp_ajax_getWordsByMostForgotten', 'getWordsByMostForgotten'); // Get the most forgotten words
+add_action('wp_ajax_updateWordForgot', 'updateWordForgot'); // Update statistics if the word was forgotten
+add_action('wp_ajax_updateWordRan', 'updateWordRan'); // Update statistics if the words was a part of the test
+add_action('wp_ajax_getWordsByIds', 'getWordsByIds'); // Get list of words by words ids
 
 
 add_filter('allowed_http_origins', 'add_allowed_origins');

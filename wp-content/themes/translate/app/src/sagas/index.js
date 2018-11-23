@@ -14,6 +14,8 @@ import {fetchSingleWordWatch} from './words/singleWord';
 import {editWordWatch} from './words/editWord';
 import {deleteWordWatch} from './words/deleteWord';
 import {fetchWordsByListWatch} from './words/wordsByList';
+import {finishTestWatch} from './words/finishTest';
+import {shuffleListWordsWatch} from './words/shuffleWords';
 
 export default function*() {
   yield fork(fetchMultipleListsWatch);
@@ -27,6 +29,8 @@ export default function*() {
   yield fork(editWordWatch);
   yield fork(deleteWordWatch);
   yield fork(fetchWordsByListWatch);
+  yield fork(finishTestWatch);
+  yield fork(shuffleListWordsWatch);
 }
 
 

@@ -2,16 +2,18 @@ import {
     addWordRequest,
     addWordSuccess,
     addWordFailure,
-    translateWordReset
+    translateWordReset,
+    fetchWordsByListRequest
 } from "../../actions/words";
 import {
     fetchMultipleListsRequest
 } from "../../actions/lists";
 import {addMessage}  from "../../actions/messages";
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call, put, select } from "redux-saga/effects";
 import { addUpdateWord } from "../../api/api";
 import requestFlow from "../request";
 import {addRedirect}  from "../../actions/redirects";
+import { getSingleList } from "../../reducers";
 
 /**
  * Add word.
@@ -37,6 +39,10 @@ export function* addWordSaga({ payload }) {
             type: 'success',
             message: 'Word was added'
         }));
+        const singleList = yield select(getSingleList);
+        if (singleList) {
+            yield put(fetchWordsByListRequest({lists: [singleList.id]}));    
+        }
     } catch (error) {
         yield put(addWordFailure(error));
     }

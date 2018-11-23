@@ -9,6 +9,14 @@ import {
     fetchWordsByListRequest,
     fetchWordsByListSuccess,
     fetchWordsByListFailure,
+    startTest,
+    cancelTest,
+    finishTest,
+    shuffleListWordsSuccess,
+    shuffleListWordsResetList,
+    testForgottenWordsRequest,
+    testForgottenWordsSuccess,
+    testForgottenWordsFailure,
 } from "../actions/words";
 import {combineReducers} from 'redux';
 import { handleActions } from "redux-actions";
@@ -36,7 +44,36 @@ export const wordsByList = handleActions(
     {
         [fetchWordsByListRequest]: () => [],
         [fetchWordsByListSuccess]: (state, action) => action.payload,
-        [fetchWordsByListFailure]: () => []
+        [fetchWordsByListFailure]: () => [],
+        [shuffleListWordsSuccess]: (state, action) => action.payload,
+        [shuffleListWordsResetList]: () => [],
+    },
+    []
+);
+
+export const testInProgress = handleActions(
+    {
+        [startTest]: () => true,
+        [cancelTest]: () => false,
+        [finishTest]: () => false
+    },
+    false
+);
+
+export const testPath = handleActions(
+    {
+        [startTest]: (state, action) => action.payload,
+        [cancelTest]: () => null,
+        [finishTest]: () => null
+    },
+    null
+);
+
+export const testForgottenWords = handleActions(
+    {
+        [testForgottenWordsRequest]: () => [],
+        [testForgottenWordsSuccess]: (state, action) => action.payload,
+        [testForgottenWordsFailure]: () => [],
     },
     []
 );
@@ -44,7 +81,10 @@ export const wordsByList = handleActions(
 export default combineReducers({
     translatingWord,
     editedWord,
-    wordsByList
+    wordsByList,
+    testInProgress,
+    testPath,
+    testForgottenWords
 });
 
 

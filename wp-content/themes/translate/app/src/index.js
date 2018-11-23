@@ -7,14 +7,17 @@ import getStore from './store';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter } from 'react-router-dom';
 import { Provider } from "react-redux";
+import { LastLocationProvider } from 'react-router-last-location';
 
 const store = getStore();
 
 ReactDOM.render(
   <BrowserRouter>
-    <Provider store={store}>
-      <AppRouter />
-    </Provider>
+    <LastLocationProvider>
+      <Provider store={store}>
+        <AppRouter />
+      </Provider>
+    </LastLocationProvider>
   </BrowserRouter>,
   document.getElementById('root')
 );

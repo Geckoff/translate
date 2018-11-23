@@ -2,12 +2,14 @@ import {
     editWordRequest,
     editWordSuccess,
     editWordFailure,
-    getWordRequest
+    getWordRequest,
+    fetchWordsByListRequest
 } from "../../actions/words";
 import {addMessage}  from "../../actions/messages";
-import { takeLatest, call, put } from "redux-saga/effects";
+import { takeLatest, call, put, select } from "redux-saga/effects";
 import { addUpdateWord } from "../../api/api";
 import requestFlow from "../request";
+import { getSingleList } from "../../reducers";
 
 /**
  * Add word.
@@ -32,6 +34,10 @@ export function* editWordSaga({ payload }) {
             message: 'Word was updated'
         }));
         yield put(getWordRequest({id: payload.id})); // fetch updated word
+        const singleList = yield select(getSingleList);
+        if (singleList) {
+            yield put(fetchWordsByListRequest({lists: [singleList.id]}));    
+        }
     } catch (error) {
         yield put(editWordFailure(error));
     }

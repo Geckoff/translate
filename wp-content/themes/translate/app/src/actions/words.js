@@ -64,6 +64,40 @@ const {
     "FETCH_WORDS_BY_LIST_FAILURE"
 );
 
+const {
+    startTest,
+    cancelTest,
+    finishTest,
+    finishTestSuccess,
+    finishTestFailure
+} = createActions(
+    "START_TEST",
+    "CANCEL_TEST",
+    "FINISH_TEST",
+    "FINISH_TEST_SUCCESS",
+    "FINISH_TEST_FAILURE"
+);
+
+const {
+    shuffleListWordsRequest,
+    shuffleListWordsSuccess,
+    shuffleListWordsResetList,
+} = createActions(
+    "SHUFFLE_LIST_WORDS_REQUEST",
+    "SHUFFLE_LIST_WORDS_SUCCESS",
+    "SHUFFLE_LIST_WORDS_RESET_LIST",
+);
+
+const {
+    testForgottenWordsRequest,
+    testForgottenWordsSuccess,
+    testForgottenWordsFailure,
+} = createActions(
+    "TEST_FORGOTTEN_WORDS_REQUEST",
+    "TEST_FORGOTTEN_WORDS_SUCCESS",
+    "TEST_FORGOTTEN_WORDS_FAILURE"
+);
+
 export {
     translateWordRequest,
     translateWordSuccess,
@@ -85,4 +119,15 @@ export {
     fetchWordsByListRequest,
     fetchWordsByListSuccess,
     fetchWordsByListFailure,
+    startTest,
+    cancelTest,
+    finishTest,
+    finishTestSuccess,
+    finishTestFailure,
+    shuffleListWordsRequest,
+    shuffleListWordsSuccess,
+    shuffleListWordsResetList,
+    testForgottenWordsRequest,
+    testForgottenWordsSuccess,
+    testForgottenWordsFailure,
 };

@@ -4,6 +4,8 @@ import { getListsCollection } from "../../reducers";
 import { editWordRequest } from "../../actions/words";
 import { connect } from "react-redux";
 import {deleteWordRequest} from "../../actions/words";
+import { withLastLocation } from 'react-router-last-location';
+import { Link } from "react-router-dom";
 
 class EditWordForm extends Component {
     validate = values => {
@@ -82,7 +84,11 @@ class EditWordForm extends Component {
 
     handleDelete = () => {
         if (window.confirm("Are you sure you want to delete this word?")) {
-            this.props.deleteWordRequest({id: this.props.editedWord.id});  
+            const redirectPath = this.props.lastLocation ? this.props.lastLocation.pathname : false;
+            this.props.deleteWordRequest({
+                id: this.props.editedWord.id,
+                redirectPath 
+            });  
         }        
     }
 
@@ -93,7 +99,7 @@ class EditWordForm extends Component {
             prims_trans_pos,
             sec_trans
         } = this.props.editedWord;
-        const { listsCollection } = this.props;
+        const { listsCollection, lastLocation } = this.props;
         return (
             <Fragment>
                 <Form
@@ -189,6 +195,7 @@ class EditWordForm extends Component {
                 >
                     Delete Word
                 </button>
+                {lastLocation && <Link to={lastLocation.pathname}>Bak to List</Link>}
             </Fragment>
         );
     }
@@ -210,4 +217,4 @@ const mapStateToProps = state => ({
     listsCollection: getListsCollection(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(EditWordForm);
+export default connect(mapStateToProps, mapDispatchToProps)(withLastLocation(EditWordForm));

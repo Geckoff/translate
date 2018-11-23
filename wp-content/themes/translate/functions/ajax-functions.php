@@ -127,3 +127,24 @@ function getWordsByLatestForgotten() {
 function getWordsByMostForgotten() {
     initApi(__FUNCTION__, 'Words');  
 }
+
+/**
+ * @return void
+*/
+function updateWordForgot() {
+    initApi(__FUNCTION__, 'Words');  
+}
+
+/**
+ * @return void
+*/
+function updateWordRan() {
+    initApi(__FUNCTION__, 'Words');  
+}
+
+/**
+ * @return void
+*/
+function getWordsByIds() {
+    initApi(__FUNCTION__, 'Words');  
+}

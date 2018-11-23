@@ -30,3 +30,6 @@ export const getListsCollection = state => state.lists.listsCollection;
 export const getTranslatingWord = state => state.words.translatingWord;
 export const getEditedWord = state => state.words.editedWord;
 export const getWordsByList = state => state.words.wordsByList;
+export const getTestInProgress = state => state.words.testInProgress;
+export const getTestPath = state => state.words.testPath;
+export const getTestForgottenWords = state => state.words.testForgottenWords;

@@ -1,8 +1,18 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import {fetchWordsByListRequest} from "../../actions/words";
+import {
+    fetchWordsByListRequest,
+    startTest,
+    cancelTest,
+    finishTest,
+    shuffleListWordsRequest
+} from "../../actions/words";
 import {fetchSingleListRequest} from "../../actions/lists";
-import {getWordsByList, getSingleList} from "../../reducers";
+import {
+    getWordsByList, 
+    getSingleList,
+    getTestInProgress
+} from "../../reducers";
 import { connect } from "react-redux";
 import {SectionHeader} from "../styleComponents/SectionHeader";
 
@@ -15,7 +25,10 @@ class WordsList extends Component {
             this.props.fetchWordsByListRequest({lists: [listId]}); // fetch list of the words by list id
             this.props.fetchSingleListRequest({id: listId}); // fetch list of the words by list id
         }
-        
+        this.state = {
+            forgotWords: [],
+            allWords: []
+        } 
     }
 
     componentWillReceiveProps(nextProps) {
@@ -29,10 +42,43 @@ class WordsList extends Component {
         }
     }
 
+    handleStartTest = () => {
+        this.props.startTest(this.props.match.url);    
+    }
+
+    handleCheckNoRemeber = e => {
+        const {checked, name} = e.target,
+              {forgotWords} = this.state;
+
+        if (checked) {
+            forgotWords.push(name);    
+        }
+        else {
+            const index = forgotWords.indexOf(name);
+            forgotWords.splice(index, 1);     
+        }
+        this.setState({forgotWords});
+    }
+
+    handleFinishTest = () => {
+        const allWords = this.props.wordsByList.map((word) => {
+            return word.id;
+
+        });
+        const {forgotWords} = this.state;
+        this.props.finishTest({
+            forgotWords,
+            allWords
+        });    
+    }
+
     render() { 
         const {
             wordsByList,
-            singleList
+            singleList,
+            testInProgress,
+            cancelTest,
+            shuffleListWordsRequest
         } = this.props;
         return (
             <Fragment>
@@ -44,17 +90,43 @@ class WordsList extends Component {
                             {word.word} - {word.prims_trans} {word.prims_trans_pos && <Fragment>({word.prims_trans_pos})</Fragment>}
                             <div className="wordslist-word-single-sectrans-block">
                                 {word.sec_trans.map((sec_trans, j) => (
-                                    <div class="wordslist-word-single-sectrans-single">
+                                    <div key={j} className="wordslist-word-single-sectrans-single">
                                         {sec_trans.translation} {sec_trans.pos && <Fragment>({sec_trans.pos})</Fragment>}
                                     </div>
                                 ))}
                             </div>
                             <div className="wordslist-word-single-stats">
-                                {word.times_forgot && <span>Forgor {word.times_forgot} times</span>}
+                                <div>{word.times_forgot && <span>Forgot {word.times_forgot} times</span>}</div>
+                                <div>{word.last_forgot && <span>Last forgot - {word.last_forgot}</span>}</div>
+                                <div>{word.times_ran && <span>Ran {word.times_ran} times</span>}</div>
+                                <div>{word.last_ran && <span>Last ran - {word.last_ran}</span>}</div>
                             </div>
-                            <Link to={'/edit-word/69' }>Edit Word</Link>
+                            {testInProgress ? 
+                                    <label>
+                                        <input onChange={this.handleCheckNoRemeber} name={word.id} type="checkbox" />
+                                        Don't remember
+                                    </label>     
+                                :
+                                    <Link to={`/edit-word/${word.id}` }>Edit Word</Link>
+                            }
+                            
                         </div>
-                    ))}        
+                    ))} 
+                    <div className="words-list-buttons">
+                        {testInProgress ?
+                            <Fragment>
+                                <button onClick={cancelTest}>Cancel Test</button>
+                                <button onClick={this.handleFinishTest}>Finish Test</button>
+                            </Fragment>    
+                        :
+                            <Fragment>
+                                <button onClick={this.handleStartTest}>Start Test</button>
+                            </Fragment>  
+                        }
+                        <Fragment>
+                            <button onClick={shuffleListWordsRequest}>Shuffle Words</button>
+                        </Fragment>  
+                    </div>
                 </div>
                 : <p>No Words in this list</p>  }
             </Fragment>
@@ -69,13 +141,26 @@ const mapDispatchToProps = dispatch => (
         },
         fetchSingleListRequest: listData => {
             dispatch(fetchSingleListRequest(listData));   
-        }      
+        },
+        startTest: testPath => {
+            dispatch(startTest(testPath));   
+        },
+        cancelTest: () => {
+            dispatch(cancelTest());   
+        },
+        finishTest: (finishData) => {
+            dispatch(finishTest(finishData));   
+        },           
+        shuffleListWordsRequest: () => {
+            dispatch(shuffleListWordsRequest());   
+        },
     }
 );
 
 const mapStateToProps = state => ({
     wordsByList: getWordsByList(state),
-    singleList: getSingleList(state)
+    singleList: getSingleList(state),
+    testInProgress: getTestInProgress(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(WordsList);
