@@ -37,7 +37,10 @@ import {
     fetchWordsByListFailure,
     finishTest,
     finishTestSuccess,
-    finishTestFailure
+    finishTestFailure,
+    testForgottenWordsRequest,
+    testForgottenWordsSuccess,
+    testForgottenWordsFailure,
 } from "../actions/words";
 import {combineReducers} from 'redux';
 import { handleActions } from "redux-actions";
@@ -56,6 +59,7 @@ export const isFetching = handleActions(
         [getWordRequest]: () => true,
         [fetchWordsByListRequest]: () => true,
         [finishTest]: () => true,
+        [testForgottenWordsRequest]: () => true,
 
         [fetchSingleListSuccess]: () => false,
         [fetchMultipleListsSuccess]: () => false,
@@ -69,6 +73,7 @@ export const isFetching = handleActions(
         [getWordSuccess]: () => false,
         [fetchWordsByListSuccess]: () => false,
         [finishTestSuccess]: () => false,
+        [testForgottenWordsSuccess]: () => false,
 
         [fetchSingleListFailure]: () => false,
         [fetchMultipleListsFailure]: () => false,
@@ -83,6 +88,7 @@ export const isFetching = handleActions(
         [getWordFailure]: () => false,
         [fetchWordsByListFailure]: () => false,
         [finishTestFailure]: () => false,
+        [testForgottenWordsFailure]: () => false,
     },
     false
 );
@@ -101,6 +107,7 @@ export const isFetched = handleActions(
         [getWordRequest]: () => false,
         [fetchWordsByListRequest]: () => false,
         [finishTest]: () => false,
+        [testForgottenWordsRequest]: () => false,
 
         [fetchSingleListSuccess]: () => true,
         [fetchMultipleListsSuccess]: () => true,
@@ -114,6 +121,7 @@ export const isFetched = handleActions(
         [getWordSuccess]: () => true,
         [fetchWordsByListSuccess]: () => true,
         [finishTestSuccess]: () => true,
+        [testForgottenWordsSuccess]: () => true,
 
         [fetchSingleListFailure]: () => true,
         [fetchMultipleListsFailure]: () => true,
@@ -128,6 +136,7 @@ export const isFetched = handleActions(
         [getWordFailure]: () => true,
         [fetchWordsByListFailure]: () => true,
         [finishTestFailure]: () => true,
+        [testForgottenWordsFailure]: () => true,
     },
     false
 );
@@ -146,6 +155,7 @@ export const error = handleActions(
         [getWordRequest]: () => null,
         [fetchWordsByListRequest]: () => null,
         [finishTest]: () => null,
+        [testForgottenWordsRequest]: () => null,
 
         [fetchSingleListSuccess]: () => null,
         [fetchMultipleListsSuccess]: () => null,
@@ -159,6 +169,7 @@ export const error = handleActions(
         [getWordSuccess]: () => null,
         [fetchWordsByListSuccess]: () => null,
         [finishTestSuccess]: () => null,
+        [testForgottenWordsSuccess]: () => null,
 
         [fetchSingleListFailure]: (state, action) => action.payload,
         [fetchMultipleListsFailure]: (state, action) => action.payload,
@@ -172,6 +183,7 @@ export const error = handleActions(
         [getWordFailure]: (state, action) => action.payload,
         [fetchWordsByListFailure]: (state, action) => action.payload,
         [finishTestFailure]: (state, action) => action.payload,
+        [testForgottenWordsFailure]: (state, action) => action.payload,
     },
     null
 );

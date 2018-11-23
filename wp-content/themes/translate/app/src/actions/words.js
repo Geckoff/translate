@@ -92,10 +92,12 @@ const {
     testForgottenWordsRequest,
     testForgottenWordsSuccess,
     testForgottenWordsFailure,
+    testForgottenWordsReset
 } = createActions(
     "TEST_FORGOTTEN_WORDS_REQUEST",
     "TEST_FORGOTTEN_WORDS_SUCCESS",
-    "TEST_FORGOTTEN_WORDS_FAILURE"
+    "TEST_FORGOTTEN_WORDS_FAILURE",
+    "TEST_FORGOTTEN_WORDS_RESET",
 );
 
 export {
@@ -130,4 +132,5 @@ export {
     testForgottenWordsRequest,
     testForgottenWordsSuccess,
     testForgottenWordsFailure,
+    testForgottenWordsReset
 };

@@ -1,7 +1,9 @@
 import {
     finishTest,
     finishTestSuccess,
-    finishTestFailure
+    finishTestFailure,
+    testForgottenWordsReset,
+    testForgottenWordsRequest
 } from "../../actions/words";
 import {resetSingleList} from "../../actions/lists";
 import {addRedirect}  from "../../actions/redirects";
@@ -23,15 +25,16 @@ import requestFlow from "../request";
  */
 export function* finishTestSaga({ payload }) {
     try {
+        yield put(testForgottenWordsReset());
         if (payload.forgotWords.length > 0) {
             yield call(requestFlow, updateWordForgot, {words_ids: payload.forgotWords});
+            yield put(testForgottenWordsRequest({words_ids: payload.forgotWords}));
         }        
         yield call(requestFlow, updateWordRan, {words_ids: payload.allWords});
         yield put(finishTestSuccess());
         yield put(addRedirect('/lists')); // redirect on success
         yield put(resetSingleList());     // reset single list info
     } catch (error) {
-        console.log(error);
         yield put(finishTestFailure(error));
     }
 }

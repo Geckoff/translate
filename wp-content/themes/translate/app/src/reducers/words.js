@@ -17,6 +17,7 @@ import {
     testForgottenWordsRequest,
     testForgottenWordsSuccess,
     testForgottenWordsFailure,
+    testForgottenWordsReset
 } from "../actions/words";
 import {combineReducers} from 'redux';
 import { handleActions } from "redux-actions";
@@ -74,6 +75,7 @@ export const testForgottenWords = handleActions(
         [testForgottenWordsRequest]: () => [],
         [testForgottenWordsSuccess]: (state, action) => action.payload,
         [testForgottenWordsFailure]: () => [],
+        [testForgottenWordsReset]: () => [],
     },
     []
 );
