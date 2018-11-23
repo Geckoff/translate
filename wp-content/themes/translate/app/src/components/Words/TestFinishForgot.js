@@ -1,80 +1,20 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import { testForgottenWordsRequest } from "../../actions/words";
 import { getTestForgottenWords } from "../../reducers";
 import { connect } from "react-redux";
 import {SectionHeader} from "../styleComponents/SectionHeader";
 
-class WordsList extends Component {
-    constructor(props) {
-        super(props);
-        const listId = this.props.match.params.id,
-              {singleList} = this.props;
-        if (!singleList || listId !== singleList.id) {
-            this.props.fetchWordsByListRequest({lists: [listId]}); // fetch list of the words by list id
-            this.props.fetchSingleListRequest({id: listId}); // fetch list of the words by list id
-        }
-        this.state = {
-            forgotWords: [],
-            allWords: []
-        } 
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const listId = this.props.match.params.id,
-              {singleList} = this.props;
-        if (nextProps.match.params.id !== listId) {
-            if (!singleList || listId !== singleList.id) {
-                this.props.fetchWordsByListRequest({lists: [listId]}); // fetch list of the words by list id
-                this.props.fetchSingleListRequest({id: listId}); // fetch list of the words by list id
-            }
-        }
-    }
-
-    handleStartTest = () => {
-        this.props.startTest(this.props.match.url);    
-    }
-
-    handleCheckNoRemeber = e => {
-        const {checked, name} = e.target,
-              {forgotWords} = this.state;
-
-        if (checked) {
-            forgotWords.push(name);    
-        }
-        else {
-            const index = forgotWords.indexOf(name);
-            forgotWords.splice(index, 1);     
-        }
-        this.setState({forgotWords});
-    }
-
-    handleFinishTest = () => {
-        const allWords = this.props.wordsByList.map((word) => {
-            return word.id;
-
-        });
-        const {forgotWords} = this.state;
-        this.props.finishTest({
-            forgotWords,
-            allWords
-        });    
-    }
-
+class TestFinishForgot extends Component {
     render() { 
         const {
-            wordsByList,
-            singleList,
-            testInProgress,
-            cancelTest,
-            shuffleListWordsRequest
+            testForgottenWords
         } = this.props;
         return (
             <Fragment>
-                {singleList && <SectionHeader title={singleList.name} />}
-                {wordsByList.length > 0 ?
-                <div className="spe-section words-list">
-                    {wordsByList.map((word, i) => (
+                {testForgottenWords && <SectionHeader title={testForgottenWords.name} />}
+                {testForgottenWords.length > 0 ?
+                <div className="spe-section words-list-test-results">
+                    {testForgottenWords.map((word, i) => (
                         <div key={i} className="wordslist-word-single">
                             {word.word} - {word.prims_trans} {word.prims_trans_pos && <Fragment>({word.prims_trans_pos})</Fragment>}
                             <div className="wordslist-word-single-sectrans-block">
@@ -89,50 +29,27 @@ class WordsList extends Component {
                                 <div>{word.last_forgot && <span>Last forgot - {word.last_forgot}</span>}</div>
                                 <div>{word.times_ran && <span>Ran {word.times_ran} times</span>}</div>
                                 <div>{word.last_ran && <span>Last ran - {word.last_ran}</span>}</div>
-                            </div>
-                            {testInProgress ? 
-                                    <label>
-                                        <input onChange={this.handleCheckNoRemeber} name={word.id} type="checkbox" />
-                                        Don't remember
-                                    </label>     
-                                :
-                                    <Link to={`/edit-word/${word.id}` }>Edit Word</Link>
-                            }
-                            
-                        </div>
+                            </div>  
+                            <Link to={`/edit-word/${word.id}` }>Edit Word</Link>                          
+                        </div>                        
                     ))} 
-                    <div className="words-list-buttons">
-                        {testInProgress ?
-                            <Fragment>
-                                <button onClick={cancelTest}>Cancel Test</button>
-                                <button onClick={this.handleFinishTest}>Finish Test</button>
-                            </Fragment>    
-                        :
-                            <Fragment>
-                                <button onClick={this.handleStartTest}>Start Test</button>
-                            </Fragment>  
-                        }
-                        <Fragment>
-                            <button onClick={shuffleListWordsRequest}>Shuffle Words</button>
-                        </Fragment>  
+                    <div>
+                        <Link to='/lists'>Continue to Lists</Link>                     
                     </div>
                 </div>
-                : <p>No Words in this list</p>  }
+                :
+                <div className="spe-section words-list-test-results"> 
+                    <p>Well Done! You remember all words!</p>  
+                    <Link to='/lists'>Continue to Lists</Link>  
+                </div>
+                }
             </Fragment>
         );
     } 
 }
 
-const mapDispatchToProps = dispatch => (
-    {
-        testForgottenWordsRequest: listData => {
-            dispatch(testForgottenWordsRequest());   
-        }
-    }
-);
-
 const mapStateToProps = state => ({
     testForgottenWords: getTestForgottenWords(state)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(WordsList);
+export default connect(mapStateToProps)(TestFinishForgot);

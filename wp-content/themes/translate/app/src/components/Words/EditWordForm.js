@@ -195,7 +195,15 @@ class EditWordForm extends Component {
                 >
                     Delete Word
                 </button>
-                {lastLocation && <Link to={lastLocation.pathname}>Bak to List</Link>}
+                {lastLocation && <Link to={lastLocation.pathname}>
+                    {
+                        (lastLocation.pathname === '/test-results')
+                        ?
+                        "Back to Test Results"
+                        :
+                        "Bak to List"
+                    }    
+                </Link>}
             </Fragment>
         );
     }

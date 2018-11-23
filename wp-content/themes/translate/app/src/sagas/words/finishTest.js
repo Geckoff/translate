@@ -32,7 +32,7 @@ export function* finishTestSaga({ payload }) {
         }        
         yield call(requestFlow, updateWordRan, {words_ids: payload.allWords});
         yield put(finishTestSuccess());
-        yield put(addRedirect('/lists')); // redirect on success
+        yield put(addRedirect('/test-results')); // redirect on success        
         yield put(resetSingleList());     // reset single list info
     } catch (error) {
         yield put(finishTestFailure(error));

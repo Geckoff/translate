@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import AddWord from "./Words/AddWord";
 import EditWord from "./Words/EditWord";
 import WordsList from "./Words/WordsList";
+import TestFinishForgot from "./Words/TestFinishForgot";
 import Lists from "./Lists/Lists";
 import AddList from "./Lists/AddList";
 import EditList from "./Lists/EditList";
@@ -63,6 +64,7 @@ class AppRouter extends Component {
                             <Route exact path="/lists/add" component={AddList} /> 
                             <Route exact path="/lists/edit/:id" component={EditList} /> 
                             <Route exact path="/lists" component={Lists} />                            
+                            <Route exact path="/test-results" component={TestFinishForgot} />                            
                             <Redirect to="/lists" />
                         </Switch>
                     </div>
