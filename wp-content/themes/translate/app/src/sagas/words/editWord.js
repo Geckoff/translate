@@ -3,13 +3,18 @@ import {
     editWordSuccess,
     editWordFailure,
     getWordRequest,
-    fetchWordsByListRequest
+    fetchWordsByListRequest,
+    testForgottenWordsRequest
 } from "../../actions/words";
 import {addMessage}  from "../../actions/messages";
 import { takeLatest, call, put, select } from "redux-saga/effects";
 import { addUpdateWord } from "../../api/api";
 import requestFlow from "../request";
-import { getSingleList } from "../../reducers";
+import { 
+    getSingleList,
+    getTestForgottenWords,
+    getWordsByList
+} from "../../reducers";
 
 /**
  * Add word.
@@ -34,13 +39,41 @@ export function* editWordSaga({ payload }) {
             message: 'Word was updated'
         }));
         yield put(getWordRequest({id: payload.id})); // fetch updated word
+
         const singleList = yield select(getSingleList);
         if (singleList) {
-            yield put(fetchWordsByListRequest({lists: [singleList.id]}));    
+            const singleListWords = yield select(getWordsByList);
+            if (checkIfIdInList(payload.id, singleListWords)) {            
+                yield put(fetchWordsByListRequest({lists: [singleList.id]})); // fetch list of words if the word is a part of the list
+            }
+        }       
+
+        const testForgottenWords = yield select(getTestForgottenWords);
+        if (testForgottenWords && checkIfIdInList(payload.id, testForgottenWords)) {
+            const forgottenWordsIds = testForgottenWords.map(forgottenWord => forgottenWord.id);
+            yield put(testForgottenWordsRequest({words_ids: forgottenWordsIds})); // fetch list of test results if the word is a part of the test result
         }
     } catch (error) {
         yield put(editWordFailure(error));
     }
+}
+
+
+/**
+ * Check id current word id is a part of a word list
+ * 
+ * @param {integer} id - id of the word
+ * @param {array} list - list od words
+ */
+const checkIfIdInList = (id, list) => {
+    console.log(id, list);
+    let inList = false;
+    list.forEach(elem => {
+        if (elem.id == id) {
+            inList = true;   
+        }
+    })   
+    return inList;
 }
 
 export function* editWordWatch() {
