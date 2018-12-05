@@ -324,7 +324,7 @@ class Words extends Lists {
      * @return void
      */
     public function getWordsByMostForgotten() {
-        $this->checkIssetRecievedParams(['words_count']);
+        $this->checkIssetRecievedParams(['words_count', 'lists']);
         extract($this->data);    
         $this->getWords([
             'meta_key' => 'times_forgot',
@@ -336,7 +336,8 @@ class Words extends Lists {
                     'compare' => '>'
                 ]
             ],
-            'posts_per_page' => $words_count
+            'posts_per_page' => $words_count,
+            'category__in' => $lists
         ]);      
     }
 }

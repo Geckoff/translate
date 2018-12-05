@@ -176,3 +176,14 @@ export const updateWordRan = data => {
 export const getWordsByIds = data => {
     return apiRequest('getWordsByIds', data);    
 }
+
+/**
+ * Update statistics if the words was a part of the test
+ * 
+ * @param {Object} data
+ * @param {integer} data.posts_per_page - words count
+ * @param {array} data.lists - lists ids
+ */
+export const getWordsStats = data => {
+    return apiRequest('getWordsByMostForgotten', data);    
+}

@@ -100,6 +100,16 @@ const {
     "TEST_FORGOTTEN_WORDS_RESET",
 );
 
+const {
+    fetchWordsStatsRequest,
+    fetchWordsStatsSuccess,
+    fetchWordsStatsFailure,
+} = createActions(
+    "FETCH_WORDS_STATS_REQUEST",
+    "FETCH_WORDS_STATS_SUCCESS",
+    "FETCH_WORDS_STATS_FAILURE"
+);
+
 export {
     translateWordRequest,
     translateWordSuccess,
@@ -132,5 +142,8 @@ export {
     testForgottenWordsRequest,
     testForgottenWordsSuccess,
     testForgottenWordsFailure,
-    testForgottenWordsReset
+    testForgottenWordsReset,
+    fetchWordsStatsRequest,
+    fetchWordsStatsSuccess,
+    fetchWordsStatsFailure,
 };

@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "final-form": "^4.10.0",
+    "moment": "^2.22.2",
     "normalizr": "^3.3.0",
     "qs-stringify": "^1.1.0",
     "react": "^16.6.0",
@@ -15,6 +16,7 @@
     "react-router-dom": "^4.3.1",
     "react-router-last-location": "^1.1.0",
     "react-scripts": "2.1.0",
+    "react-table": "^6.8.6",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",
     "redux-saga": "^0.16.2",

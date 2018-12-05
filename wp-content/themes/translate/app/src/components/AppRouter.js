@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import AddWord from "./Words/AddWord";
 import EditWord from "./Words/EditWord";
 import WordsList from "./Words/WordsList";
+import WordsStats from "./Words/WordsStats";
 import TestFinishForgot from "./Words/TestFinishForgot";
 import Lists from "./Lists/Lists";
 import AddList from "./Lists/AddList";
@@ -52,6 +53,7 @@ class AppRouter extends Component {
                     <div className="menu">
                         <Link to={'/add-word' }>Add Word</Link>
                         <Link to={'/lists' }>Lists</Link>                        
+                        <Link to={'/words-stats' }>Statistics</Link>                        
                         {isFetching && 'Loading'}
                         {error && 'Error'}
                         {isNetworkErrorPresent && 'Error'}
@@ -65,6 +67,7 @@ class AppRouter extends Component {
                             <Route exact path="/lists/edit/:id" component={EditList} /> 
                             <Route exact path="/lists" component={Lists} />                            
                             <Route exact path="/test-results" component={TestFinishForgot} />                            
+                            <Route exact path="/words-stats" component={WordsStats} />                            
                             <Redirect to="/lists" />
                         </Switch>
                     </div>

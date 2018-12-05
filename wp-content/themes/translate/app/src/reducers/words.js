@@ -17,7 +17,10 @@ import {
     testForgottenWordsRequest,
     testForgottenWordsSuccess,
     testForgottenWordsFailure,
-    testForgottenWordsReset
+    testForgottenWordsReset,
+    fetchWordsStatsRequest,
+    fetchWordsStatsSuccess,
+    fetchWordsStatsFailure,
 } from "../actions/words";
 import {combineReducers} from 'redux';
 import { handleActions } from "redux-actions";
@@ -80,13 +83,23 @@ export const testForgottenWords = handleActions(
     []
 );
 
+export const wordsStats = handleActions(
+    {
+        [fetchWordsStatsRequest]: () => [],
+        [fetchWordsStatsSuccess]: (state, action) => action.payload,
+        [fetchWordsStatsFailure]: () => []
+    },
+    []
+);
+
 export default combineReducers({
     translatingWord,
     editedWord,
     wordsByList,
     testInProgress,
     testPath,
-    testForgottenWords
+    testForgottenWords,
+    wordsStats
 });
 
 

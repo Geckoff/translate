@@ -33,3 +33,4 @@ export const getWordsByList = state => state.words.wordsByList;
 export const getTestInProgress = state => state.words.testInProgress;
 export const getTestPath = state => state.words.testPath;
 export const getTestForgottenWords = state => state.words.testForgottenWords;
+export const getWordsStats = state => state.words.wordsStats;
