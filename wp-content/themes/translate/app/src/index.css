@@ -74,3 +74,7 @@ code {
     font-size: 10px;
     font-style: italic;
 }
+
+.ReactTable .rt-td {
+    white-space: normal!important;
+}

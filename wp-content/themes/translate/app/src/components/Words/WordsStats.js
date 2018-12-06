@@ -1,4 +1,5 @@
 import React, { Fragment, Component } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchWordsStatsRequest } from "../../actions/words";
 import { getWordsStats } from "../../reducers";
@@ -26,24 +27,36 @@ class WordsStats extends Component {
                                 {
                                     columns: [
                                         {
-                                            Header: "Word",
+                                            Header: 'Word',
                                             id: 'word',
-                                            accessor: d => `<strong>${d.word}</strong> - ${d.prims_trans}`
+                                            resizable: true,
+                                            accessor: d => d,
+                                            Cell: row => (
+                                              <span>
+                                                <strong>{row.value.word}</strong> - {row.value.prims_trans}
+                                                <div>
+                                                    <Link to={`/edit-word/${row.value.id}` }>Edit Word</Link>
+                                                </div>
+                                              </span>
+                                            )
                                         },
                                         {
                                             Header: "Times Forgot",
-                                            accessor: 'times_forgot'
+                                            accessor: 'times_forgot',
+                                            minWidth: 30,
                                         },
                                         {
                                             Header: "Last Forgot",
                                             id: 'last_forgot',
+                                            minWidth: 30,
                                             accessor: d => moment.unix(d.last_forgot).format("DD/MM/YYYY, HH:mm")
                                         },
                                         {
                                             Header: "Forgot/Ran Ratio",
                                             id: 'forgot_ran_ratio',
-                                            accessor: d => d.times_forgot / d.times_ran * 100
-                                        }
+                                            minWidth: 30,
+                                            accessor: d => parseFloat(d.times_forgot / d.times_ran * 100).toFixed(2)
+                                        },
                                     ]
                                 }
                             ]}

@@ -201,6 +201,10 @@ class EditWordForm extends Component {
                         ?
                         "Back to Test Results"
                         :
+                        (lastLocation.pathname === '/words-stats')
+                        ?
+                        "Back to Statistics"    
+                        :
                         "Bak to List"
                     }    
                 </Link>}

@@ -15,6 +15,7 @@ import {
 } from "../../reducers";
 import { connect } from "react-redux";
 import {SectionHeader} from "../styleComponents/SectionHeader";
+//https://www.npmjs.com/package/react-draggable
 
 class WordsList extends Component {
     constructor(props) {
