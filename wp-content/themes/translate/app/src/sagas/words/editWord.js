@@ -66,7 +66,6 @@ export function* editWordSaga({ payload }) {
  * @param {array} list - list od words
  */
 const checkIfIdInList = (id, list) => {
-    console.log(id, list);
     let inList = false;
     list.forEach(elem => {
         if (elem.id == id) {
