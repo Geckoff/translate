@@ -60,11 +60,6 @@ code {
     font-size: 12px;
 }
 
-.wordslist-word-single {
-    padding: 3px;
-    border: 1px solid #ccc;
-}
-
 .wordslist-word-single-sectrans-block {
     font-size: 10px;
     padding-left: 15px;
@@ -77,4 +72,48 @@ code {
 
 .ReactTable .rt-td {
     white-space: normal!important;
+}
+
+.words-list {
+    width: 70%;
+}
+
+.wordslist-word-single-top {
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.wordslist-word-single-prword {
+    border-right: 1px solid #000;
+}
+
+.wordslist-word-single-prword,
+.wordslist-word-single-prtranslate {
+    background: #ccc;
+    flex-basis: 50%;
+    padding: 5px;
+}
+
+.wordslist-word-single-prword .wordslist-word-single-prword-forgot,
+.wordslist-word-single-prtranslate .wordslist-word-single-prtranslate-pos {
+    display: block;
+    font-size: 9px;
+}
+
+.wordslist-word-single-bottom {
+    padding: 5px;
+    background: #eee;
+    display: flex;
+}
+
+.wordslist-word-single-bottom-left,
+.wordslist-word-single-bottom-right {
+    flex-basis: 50%;
+}
+
+.wordslist-word-single-open {
+    background: thistle;
+    position: absolute;
+    right: 0;
 }

@@ -134,7 +134,7 @@ class Words extends Lists {
             update_field('last_forgot', time(), $word_id);
             $times_forgot = get_field('times_forgot', $word_id);
             $times_forgot_new = $times_forgot ? ++$times_forgot : 1;
-            update_field('times_forgot', 1, $word_id); 
+            update_field('times_forgot', $times_forgot_new, $word_id); 
         }
     }
 
@@ -344,5 +344,19 @@ class Words extends Lists {
             'posts_per_page' => $words_count,
             'category__in' => $lists
         ]);      
+    }
+
+    /**
+     * Reset word's statistics
+     * 
+     * @return void
+     */
+    public function resetWordStats() {
+        $this->checkIssetRecievedParams(['id']);
+        extract($this->data);  
+        update_field('times_ran', 0, $id);
+        update_field('times_forgot', 0, $id);
+        update_field('last_forgot', 0, $id);
+        update_field('last_ran', 0, $id);
     }
 }

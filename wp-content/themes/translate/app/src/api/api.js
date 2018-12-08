@@ -187,3 +187,13 @@ export const getWordsByIds = data => {
 export const getWordsStats = data => {
     return apiRequest('getWordsByMostForgotten', data);    
 }
+
+/**
+ * Reset word's statistics
+ * 
+ * @param {Object} data
+ * @param {integer} data.id - id of the word
+ */
+export const resetWordStats = data => {
+    return apiRequest('resetWordStats', data);    
+}

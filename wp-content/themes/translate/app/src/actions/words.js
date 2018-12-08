@@ -110,6 +110,16 @@ const {
     "FETCH_WORDS_STATS_FAILURE"
 );
 
+const {
+    resetWordStatsRequest,
+    resetWordStatsSuccess,
+    resetWordStatsFailure,
+} = createActions(
+    "RESET_WORD_STATS_REQUEST",
+    "RESET_WORD_STATS_SUCCESS",
+    "RESET_WORD_STATS_FAILURE"
+);
+
 export {
     translateWordRequest,
     translateWordSuccess,
@@ -146,4 +156,7 @@ export {
     fetchWordsStatsRequest,
     fetchWordsStatsSuccess,
     fetchWordsStatsFailure,
+    resetWordStatsRequest,
+    resetWordStatsSuccess,
+    resetWordStatsFailure,
 };

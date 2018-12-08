@@ -28,9 +28,12 @@ export function* finishTestSaga({ payload }) {
         yield put(testForgottenWordsReset());
         if (payload.forgotWords.length > 0) {
             yield call(requestFlow, updateWordForgot, {words_ids: payload.forgotWords});
+            yield call(requestFlow, updateWordRan, {words_ids: payload.allWords});
             yield put(testForgottenWordsRequest({words_ids: payload.forgotWords}));
+        } 
+        else {
+            yield call(requestFlow, updateWordRan, {words_ids: payload.allWords});
         }        
-        yield call(requestFlow, updateWordRan, {words_ids: payload.allWords});
         yield put(finishTestSuccess());
         yield put(addRedirect('/test-results')); // redirect on success        
         yield put(resetSingleList());     // reset single list info

@@ -3,7 +3,10 @@ import { Field, Form } from "react-final-form";
 import { getListsCollection } from "../../reducers";
 import { editWordRequest } from "../../actions/words";
 import { connect } from "react-redux";
-import {deleteWordRequest} from "../../actions/words";
+import {
+    deleteWordRequest,
+    resetWordStatsRequest
+} from "../../actions/words";
 import { withLastLocation } from 'react-router-last-location';
 import { Link } from "react-router-dom";
 
@@ -88,6 +91,14 @@ class EditWordForm extends Component {
             this.props.deleteWordRequest({
                 id: this.props.editedWord.id,
                 redirectPath 
+            });  
+        }        
+    }
+
+    handleResetStats = () => {
+        if (window.confirm("Are you sure you want to reset the statistics for this word?")) {
+            this.props.resetWordStatsRequest({
+                id: this.props.editedWord.id
             });  
         }        
     }
@@ -195,6 +206,11 @@ class EditWordForm extends Component {
                 >
                     Delete Word
                 </button>
+                <button
+                    onClick={this.handleResetStats}
+                >
+                    Reset Word's Statistics
+                </button>
                 {lastLocation && <Link to={lastLocation.pathname}>
                     {
                         (lastLocation.pathname === '/test-results')
@@ -220,7 +236,10 @@ const mapDispatchToProps = dispatch => {
         },
         deleteWordRequest: data => {
             dispatch(deleteWordRequest(data));     
-        }        
+        },
+        resetWordStatsRequest: data => {
+            dispatch(resetWordStatsRequest(data));     
+        }       
     }
 }
 

@@ -15,6 +15,8 @@ import {
 } from "../../reducers";
 import { connect } from "react-redux";
 import {SectionHeader} from "../styleComponents/SectionHeader";
+import {SlideDown} from 'react-slidedown'
+import 'react-slidedown/lib/slidedown.css'
 //https://www.npmjs.com/package/react-draggable
 
 class WordsList extends Component {
@@ -88,29 +90,43 @@ class WordsList extends Component {
                 <div className="spe-section words-list">
                     {wordsByList.map((word, i) => (
                         <div key={i} className="wordslist-word-single">
-                            {word.word} - {word.prims_trans} {word.prims_trans_pos && <Fragment>({word.prims_trans_pos})</Fragment>}
-                            <div className="wordslist-word-single-sectrans-block">
-                                {word.sec_trans.map((sec_trans, j) => (
-                                    <div key={j} className="wordslist-word-single-sectrans-single">
-                                        {sec_trans.translation} {sec_trans.pos && <Fragment>({sec_trans.pos})</Fragment>}
+                            <div className="wordslist-word-single-top">
+                                <div className="wordslist-word-single-prword">
+                                    <span>{word.word}</span>
+                                    <span className="wordslist-word-single-prword-forgot">Forgot {word.times_forgot ? word.times_forgot : 0 } times</span>
+                                </div>
+                                <div className="wordslist-word-single-prtranslate">
+                                    <span>{word.prims_trans}</span>
+                                    {word.prims_trans_pos && <span className="wordslist-word-single-prtranslate-pos">({word.prims_trans_pos})</span>}
+                                </div>
+                                <div className="wordslist-word-single-open">
+                                    Open
+                                </div>
+                            </div>
+                            <div className="wordslist-word-single-bottom">
+                                <div className="wordslist-word-single-sectrans-block wordslist-word-single-bottom-left">
+                                    {word.sec_trans.map((sec_trans, j) => (
+                                        <div key={j} className="wordslist-word-single-sectrans-single">
+                                            {sec_trans.translation} {sec_trans.pos && <Fragment>({sec_trans.pos})</Fragment>}
+                                        </div>
+                                    ))}
+                                </div>
+                                <div className="wordslist-word-single-bottom-right">
+                                    <div className="wordslist-word-single-stats">                                
+                                        <div><span>Last forgot -  {word.last_forgot ? word.last_forgot : 0 } times</span></div>
+                                        <div><span>Ran {word.times_ran ? word.times_ran : 0 } times</span></div>
+                                        <div><span>Last ran -  {word.last_ran ? word.last_ran : 0 } times</span></div>
                                     </div>
-                                ))}
+                                    {testInProgress ? 
+                                            <label>
+                                                <input onChange={this.handleCheckNoRemeber} name={word.id} type="checkbox" />
+                                                Don't remember
+                                            </label>     
+                                        :
+                                            <Link to={`/edit-word/${word.id}` }>Edit Word</Link>
+                                    }
+                                </div>
                             </div>
-                            <div className="wordslist-word-single-stats">
-                                <div>{word.times_forgot && <span>Forgot {word.times_forgot} times</span>}</div>
-                                <div>{word.last_forgot && <span>Last forgot - {word.last_forgot}</span>}</div>
-                                <div>{word.times_ran && <span>Ran {word.times_ran} times</span>}</div>
-                                <div>{word.last_ran && <span>Last ran - {word.last_ran}</span>}</div>
-                            </div>
-                            {testInProgress ? 
-                                    <label>
-                                        <input onChange={this.handleCheckNoRemeber} name={word.id} type="checkbox" />
-                                        Don't remember
-                                    </label>     
-                                :
-                                    <Link to={`/edit-word/${word.id}` }>Edit Word</Link>
-                            }
-                            
                         </div>
                     ))} 
                     <div className="words-list-buttons">

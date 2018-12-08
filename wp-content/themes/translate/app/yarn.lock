@@ -1744,7 +1744,7 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
-chain-function@^1.0.0:
+chain-function@^1.0.0, chain-function@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/chain-function/-/chain-function-1.0.1.tgz#c63045e5b4b663fb86f1c6e186adaf1de402a1cc"
 
@@ -6877,6 +6877,13 @@ react-scripts@2.1.0:
     workbox-webpack-plugin "3.6.3"
   optionalDependencies:
     fsevents "1.2.4"
+
+react-slidedown@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/react-slidedown/-/react-slidedown-2.0.5.tgz#fd2f61ade49b130a55feb9dc3b7fce3786967029"
+  dependencies:
+    chain-function "^1.0.1"
+    tslib "^1.9.0"
 
 react-table@^6.8.6:
   version "6.8.6"

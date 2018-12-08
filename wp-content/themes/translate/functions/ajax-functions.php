@@ -148,3 +148,10 @@ function updateWordRan() {
 function getWordsByIds() {
     initApi(__FUNCTION__, 'Words');  
 }
+
+/**
+ * @return void
+*/
+function resetWordStats() {
+    initApi(__FUNCTION__, 'Words');  
+}
