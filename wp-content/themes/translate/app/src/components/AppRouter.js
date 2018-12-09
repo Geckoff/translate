@@ -9,6 +9,7 @@ import TestFinishForgot from "./Words/TestFinishForgot";
 import Lists from "./Lists/Lists";
 import AddList from "./Lists/AddList";
 import EditList from "./Lists/EditList";
+import Loading from "./styleComponents/Loading";
 import {
     getIsFetching, 
     getIsFetched, 
@@ -24,6 +25,7 @@ import {deleteMessage, seeMessage} from "../actions/messages";
 import '../index.css';
 import { withRouter } from 'react-router';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import 'font-awesome/css/font-awesome.min.css';
 
 class AppRouter extends Component {
 
@@ -49,12 +51,18 @@ class AppRouter extends Component {
             );
         } else {
             return (
-                <div className="App">
+                <div className="App">                
                     <div className="menu">
                         <Link to={'/add-word' }>Add Word</Link>
                         <Link to={'/lists' }>Lists</Link>                        
                         <Link to={'/words-stats' }>Statistics</Link>                        
-                        {isFetching && 'Loading'}
+                        {isFetching && 
+                            <Loading domNode={document.querySelector('#loading-block')}>
+                                <div className="loading-progress">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                </div>
+                            </Loading>
+                        }
                         {error && 'Error'}
                         {isNetworkErrorPresent && 'Error'}
                     </div>

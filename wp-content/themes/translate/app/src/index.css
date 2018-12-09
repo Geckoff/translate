@@ -1,3 +1,8 @@
+html {
+    height: 100%;
+    position: relative;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -13,18 +18,33 @@ code {
         monospace;
 }
 
+.App {
+    display: flex;
+}
+
+.App  > .menu {
+    flex-basis: 20%;
+    order: 2;
+    border-left: 2px solid #ccc;
+}
+
+.App  > .main-section {
+    flex-basis: 80%;
+    order: 1;
+}
+
 .menu {
     padding: 10px;
 }
 
 .menu a {
-    margin-right: 20px;
-    display: inline-block;
+    display: block;
+    font-size: 20px;
+    margin-bottom: 13px;
 }
 
 .main-section {
     padding: 10px;
-    border: 1px solid #ccc;
 }
 
 .section-title h3 {
@@ -54,10 +74,9 @@ code {
 }
 
 .valerror {
-    color: #f00;
-    top: 17px;
+    color: #721c24;
     margin: 0;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .wordslist-word-single-sectrans-block {
@@ -75,23 +94,29 @@ code {
 }
 
 .words-list {
-    width: 70%;
+    width: 100%;
 }
 
 .wordslist-word-single-top {
     display: flex;
     width: 100%;
     position: relative;
+    border-bottom: 1px solid #000;
 }
 
 .wordslist-word-single-prword {
     border-right: 1px solid #000;
+    padding: 5px;
 }
 
 .wordslist-word-single-prword,
 .wordslist-word-single-prtranslate {
     background: #ccc;
     flex-basis: 50%;
+    font-size: 16px;
+}
+
+.wordslist-word-single-prtranslate-inner {
     padding: 5px;
 }
 
@@ -99,6 +124,16 @@ code {
 .wordslist-word-single-prtranslate .wordslist-word-single-prtranslate-pos {
     display: block;
     font-size: 9px;
+}
+
+.wordslist-word-single-prword .wordslist-word-single-prword-forgot {
+    display: inline;
+    line-height: 17px;
+}
+
+.wordslist-word-single-prword .wordslist-word-single-prword-dont {
+    font-size: 11px;
+    margin-right: 8px;
 }
 
 .wordslist-word-single-bottom {
@@ -116,4 +151,172 @@ code {
     background: thistle;
     position: absolute;
     right: 0;
+    cursor: pointer;
+    height: 100%;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wordslist-word-single-open > i {
+    font-size: 20px;
+    color: #ab99ab;
+    transition-duration: .3s;
+    transform: rotate(0deg);
+}
+
+.wordslist-word-single-open > i.word-desc-opened {
+    transform: rotate(360deg);
+}
+
+.test-curtain {
+    height: 100%;
+    background: indianred;
+    width: 40px;
+    position: absolute;
+    transition-duration: .3s;
+    cursor: move;
+    text-align: center;
+    padding-top: 14px;
+    font-size: 20px;
+    color: #964444;
+}
+
+.test-curtain:before {
+    content: "";
+    position: absolute;
+    width: 400px;
+    top: 0;
+    bottom: 0;
+    background: tomato;
+    transform: translateX(34px);
+}
+
+.test-curtain.react-draggable-dragging{
+    transition-duration: 0s;
+}
+
+.test-curtain.no-test-started {
+    transform: translate(500px, 0)!important;   
+}
+
+.wordslist-word-single-prtranslate {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+.loading-progress {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: #000;
+    opacity: 0.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-progress > .fa {
+    color: #fff;
+    font-size: 70px;
+}
+
+.add-word-page {
+    display: flex;
+}
+
+.add-word-page .translate-form-wrapper,
+.add-word-page .add-form-wrapper {
+    flex-basis: 50%;
+}
+
+.translation-form-langs {
+    display: flex;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.translation-form-langs .valerror {
+    position: absolute;
+    bottom: -1px;
+    height: 17px;
+}
+
+.translation-form-langs label {
+    margin-bottom: 4px;
+}
+
+.translation-form-langs select {
+    width: 100%;
+    font-size: 18px;
+}
+
+.translation-form-langs .translation-form-lang-picker {
+    flex-basis: 50%;
+}
+
+.translation-form-lang-picker:first-of-type {
+    padding-right: 10px;
+}
+
+.translate-form-wrapper {
+    padding-right: 20px;
+}
+
+.translation-form-bottom input {
+    width: 100%;
+    padding: 5px;
+    font-size: 18px;
+}
+
+.translation-form-bottom label {
+    margin-bottom: 27px;
+}
+
+.translation-form-bottom button {
+    width: 100%;
+}
+
+.add-form-wrapper .tr-translations-title {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.tr-translations {
+    margin-bottom: 10px;
+}
+
+.tr-translations input[type=radio] {
+    margin-right: 9px;
+    transform: translateY(-1px);
+}
+
+.tr-translations .tr-translations-pos {
+    font-size: 12px;
+    color: #999;
+}
+
+.tr-translations-title .valerror {
+    display: inline;
+}
+
+.tr-translations-title .tr-translations-title-lists {
+    margin-right: 5px;
+}
+
+.tr-lists {
+    margin-bottom: 18px;
+}
+
+.tr-lists input[type=checkbox] {
+    margin-right: 8px;
+    transform: translateY(-1px);
+}
+
+.add-form-wrapper button {
+    width: 100%;
 }

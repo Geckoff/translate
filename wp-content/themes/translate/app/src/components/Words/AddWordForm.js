@@ -1,15 +1,17 @@
 import React, { Component, Fragment } from "react";
-import { SectionHeader } from "../styleComponents/SectionHeader";
 import { Field, Form } from "react-final-form";
 import { getTranslatingWord } from "../../reducers";
 import { getListsCollection } from "../../reducers";
 import {addWordRequest} from "../../actions/words";
 import { connect } from "react-redux";
+import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 class AddWordForm extends Component {
     validate = values => {
         const errors = {},
-              list_error = "You miust select at least one list where you would like to include the word",
+              list_error = "At least one should be selected",
               custom_error = "Primary translation cannot be blank";
 
         if (!this.checkLists(values)) {
@@ -103,7 +105,6 @@ class AddWordForm extends Component {
         const { listsCollection } = this.props;
         return (
             <Fragment>
-                <SectionHeader title="Translate Form" />
                 <Form
                     validate={this.validate}
                     onSubmit={this.handleSubmit}
@@ -113,7 +114,7 @@ class AddWordForm extends Component {
                     render={data => (
                         <form onSubmit={data.handleSubmit}>
                             <div className="tr-translations">
-                                <div>
+                                <div className="tr-translations-title">
                                     <strong>Translations</strong>
                                 </div>
                                 {translations.map((translation, i) => (
@@ -125,7 +126,7 @@ class AddWordForm extends Component {
                                                 type="radio"
                                                 value={`${translation.text}||${translation.pos}`}
                                             />
-                                            {translation.text} {translation.pos && <span>({translation.pos})</span>}
+                                            {translation.text} {translation.pos && <span className="tr-translations-pos">({translation.pos})</span>}
                                         </label>
                                     </div>
                                 ))}
@@ -141,8 +142,8 @@ class AddWordForm extends Component {
                                             label=""
                                             name="custom_prim_trans"
                                             component='input'
+                                            placeholder="Your Tranlation"
                                         /><span>
-                                            Your Translation
                                             {data.errors.custom_prim_trans && <p className="valerror">{data.errors.custom_prim_trans}</p>}
                                         </span>
                                     </label>
@@ -150,8 +151,8 @@ class AddWordForm extends Component {
                             </div>
                             
                             <div className="tr-lists">
-                                <div>
-                                    <strong>Lists</strong>
+                                <div  className="tr-translations-title">
+                                    <strong className="tr-translations-title-lists">Lists</strong>
                                     {data.errors.list0 && <p className="valerror">{data.errors.list0}</p>}
                                 </div>
                                 {listsCollection.map((list, i) => (
@@ -170,12 +171,13 @@ class AddWordForm extends Component {
                                 ))}
                             </div>
                             <div className="submit-block">
-                                <button
+                                <Button
+                                    bsStyle="success"
                                     disabled={data.hasValidationErrors}
                                     type="submit"
                                 >
                                     Add Word
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     )}

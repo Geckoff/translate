@@ -4,6 +4,7 @@ import {getTranslatingWord} from "../../reducers";
 import { connect } from "react-redux";
 import AddWordForm from "./AddWordForm";
 import TranslateForm from "./TranslateForm";
+import {SectionHeader} from "../styleComponents/SectionHeader";
 
 class AddWord extends Component {
     
@@ -13,8 +14,17 @@ class AddWord extends Component {
         } = this.props;
         return (
             <Fragment>
-                <TranslateForm/>
-                {translatingWord && <AddWordForm formTitle="Add Word" buttonText="Save Changes" action={null} listTitle={null} id={null} />}
+                <SectionHeader title='Translation Form' />
+                <div className="add-word-page">
+                    <div className="translate-form-wrapper">
+                        <TranslateForm/>
+                    </div>
+                    <div className="add-form-wrapper">
+                        {translatingWord && <AddWordForm formTitle="Add Word" buttonText="Save Changes" action={null} listTitle={null} id={null} />}
+                    </div>
+                </div>
+                
+                
             </Fragment>
         );
     } 

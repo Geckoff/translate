@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react";
-import {SectionHeader} from "../styleComponents/SectionHeader";
 import Input from "../Input";
 import Select from "../Select";
 import {Field, Form} from "react-final-form";
-//import {deleteListRequest} from "../../actions/lists";
 import { connect } from "react-redux";
 import {translateWordRequest} from "../../actions/words";
+import { getTranslatingWord } from "../../reducers";
+import { Button } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class TranslateForm extends Component {
 
@@ -32,39 +34,42 @@ class TranslateForm extends Component {
     }
 
     render() { 
-       return( 
+        return( 
             <Fragment>
-                <SectionHeader title='Translate Form' />
                 <Form 
                     validate = {this.validate}
                     onSubmit = {this.handleSubmit}
                     initialValues= {{
                         langFrom: 'en',
                         langTo: 'ru', 
-                        word: '',   
+                        word: this.props.translatingWord ? this.props.translatingWord.word : '',   
                     }}
                     render={(data) => (
-                        <form onSubmit={data.handleSubmit}>
-                            <div>
-                                <label>From</label>
-                                <Field data={data} name="langFrom" component={Select}>
-                                    <option value="en">English</option>
-                                    <option value="ru">Russian</option>
-                                    <option value="es">Spanish</option>
-                                </Field>
-                            </div>
-                            <div>
-                                <label>To</label>
-                                <Field name="langTo" component={Select} initVal='ru'>
-                                    <option value="en">English</option>
-                                    <option value="ru">Russian</option>
-                                    <option value="es">Spanish</option>
-                                </Field>
-                            </div>
-                            {data.errors.langFrom && <p className="valerror">{data.errors.langFrom}</p>}
-                            <Field label="" name='word' component={Input} />
-                            <div className="submit-block">
-                                <button disabled={data.hasValidationErrors} type='submit'>Translate</button>
+                        <form className="translation-form" onSubmit={data.handleSubmit}>
+                            <div className="translation-form-langs">
+                                <div className="translation-form-lang-picker">
+                                    <label>From</label>
+                                    <Field data={data} name="langFrom" component={Select}>
+                                        <option value="en">English</option>
+                                        <option value="ru">Russian</option>
+                                        <option value="es">Spanish</option>
+                                    </Field>
+                                </div>
+                                <div className="translation-form-lang-picker">
+                                    <label>To</label>
+                                    <Field name="langTo" component={Select} initVal='ru'>
+                                        <option value="en">English</option>
+                                        <option value="ru">Russian</option>
+                                        <option value="es">Spanish</option>
+                                    </Field>
+                                </div>
+                                {data.errors.langFrom && <p className="valerror">{data.errors.langFrom}</p>}
+                            </div>   
+                            <div className="translation-form-bottom">                         
+                                <Field label="" name='word' component={Input} />
+                                <div className="submit-block">
+                                    <Button bsStyle="primary" disabled={data.hasValidationErrors} type='submit'>Translate</Button>
+                                </div>
                             </div>
                         </form>
                     )}
@@ -74,6 +79,10 @@ class TranslateForm extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    translatingWord: getTranslatingWord(state)
+});
+
 const mapDispatchToProps = dispatch => {
     return {
         translateWordRequest: (trnslateData) => {
@@ -82,4 +91,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(TranslateForm);
+export default connect(mapStateToProps, mapDispatchToProps)(TranslateForm);
