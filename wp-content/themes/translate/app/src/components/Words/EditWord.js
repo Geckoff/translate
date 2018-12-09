@@ -19,9 +19,11 @@ class EditWord extends Component {
     render() { 
         return (
             <Fragment>
-                <SectionHeader title="Edit Form" />
-                {this.props.editedWord && <h3>{this.props.editedWord.word}</h3>}
-                {this.props.editedWord && <EditWordForm editedWord={this.props.editedWord} />} 
+                <SectionHeader title="Edit Word" />
+                <div className="add-form-wrapper edit-form-wrapper">
+                    {this.props.editedWord && <h3 className="edited-word">{this.props.editedWord.word}</h3>}
+                    {this.props.editedWord && <EditWordForm editedWord={this.props.editedWord} />} 
+                </div>
             </Fragment>
         );
     } 

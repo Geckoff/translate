@@ -20,6 +20,7 @@ import {
     getMessageSeen
 } from "../reducers";
 import {fetchMultipleListsRequest} from "../actions/lists";
+import {generateColorsRequest} from "../actions/colors";
 import {resetRedirect} from "../actions/redirects";
 import {deleteMessage, seeMessage} from "../actions/messages";
 import '../index.css';
@@ -28,6 +29,10 @@ import {NotificationContainer, NotificationManager} from 'react-notifications';
 import 'font-awesome/css/font-awesome.min.css';
 
 class AppRouter extends Component {
+    constructor(props) {
+        super(props);
+        props.generateColorsRequest();
+    }
 
     componentDidMount() {
         this.props.fetchMultipleListsRequest();
@@ -59,7 +64,7 @@ class AppRouter extends Component {
                         {isFetching && 
                             <Loading domNode={document.querySelector('#loading-block')}>
                                 <div className="loading-progress">
-                                    <i class="fa fa-spinner fa-spin"></i>
+                                    <i className="fa fa-spinner fa-spin"></i>
                                 </div>
                             </Loading>
                         }
@@ -110,6 +115,9 @@ const mapDispatchToProps = dispatch => {
         seeMessage: () => {
             dispatch(seeMessage())    
         },  
+        generateColorsRequest: () => {
+            dispatch(generateColorsRequest())    
+        }, 
     }
 }
 

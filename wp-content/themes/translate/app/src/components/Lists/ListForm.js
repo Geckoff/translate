@@ -4,6 +4,7 @@ import Input from "../Input"; // input field with custom functinality
 import {Field, Form} from "react-final-form";
 import {deleteListRequest} from "../../actions/lists";
 import { connect } from "react-redux";
+import { Button } from 'react-bootstrap';
 
 class ListForm extends Component {
 
@@ -52,12 +53,12 @@ class ListForm extends Component {
                             <Field label="List Name" name='list_name' component={Input} />
                             <Field name='id' component='input' type="hidden"  />
                             <div className="submit-block">
-                                <button disabled={data.hasValidationErrors} type='submit'>{buttonText}</button>
+                                <Button bsStyle="success" disabled={data.hasValidationErrors} type='submit'>{buttonText}</Button>
                             </div>
                         </form>
                     )}
                 />
-                {id && <button onClick={this.handleDelete}>Delete List</button>}
+                {id && <Button bsStyle="danger" onClick={this.handleDelete}>Delete List</Button>}
             </Fragment>
        )
     }

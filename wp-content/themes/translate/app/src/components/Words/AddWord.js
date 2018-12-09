@@ -14,7 +14,7 @@ class AddWord extends Component {
         } = this.props;
         return (
             <Fragment>
-                <SectionHeader title='Translation Form' />
+                <SectionHeader title='Word Translation' />
                 <div className="add-word-page">
                     <div className="translate-form-wrapper">
                         <TranslateForm/>

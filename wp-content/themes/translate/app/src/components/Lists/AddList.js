@@ -14,9 +14,9 @@ class AddList extends Component {
 
     render() { 
         return (
-            <Fragment>
+            <div className="spe-section list-form">
                 <ListForm formTitle="Add List" buttonText="Add List" action={this.handleSubmit} />
-            </Fragment>
+            </div>
         );
     } 
 }

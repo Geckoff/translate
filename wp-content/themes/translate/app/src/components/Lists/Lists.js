@@ -14,14 +14,20 @@ class Lists extends Component {
                 <div className="spe-section lists">
                     {this.props.listsCollection.map((list, i) => (
                         <div key={i} className="lists-list-single">
-                            <p className="single-list-title">{list.name}</p>
-                            <p className="single-list-title">{list.words_count} word(s)</p>
-                            <Link to={`/lists/edit/${list.id}`}>Edit List</Link>
-                            <Link to={`/words-list/${list.id}`}>See Words</Link>
+                            <div className="lists-list-name">
+                                <p className="single-list-title">{list.name}</p>
+                            </div>
+                            <div className="lists-word-count">
+                                <p className="single-list-title">{list.words_count} word{parseInt(list.words_count) !== 1 && 's'}</p>
+                            </div>
+                            <div className="lists-buttons">
+                                <Link className="btn btn-warning" to={`/lists/edit/${list.id}`}>Edit List</Link>
+                                <Link className="btn btn-primary" to={`/words-list/${list.id}`}>See Words</Link>
+                            </div>
                         </div>
                     ))}        
                 </div>
-                <Link className="button add-button" to="/lists/add">Add List</Link>
+                <Link className="button add-button btn btn-success" to="/lists/add">Add List <i className="fa fa-plus"></i></Link>
             </Fragment>
         );
     } 

@@ -51,8 +51,48 @@ code {
     margin: 0 0 10px 0;
 }
 
+.spe-section.lists {
+    margin-bottom: 25px;
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 15px;
+}
+
 .lists-list-single {
-	margin-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+    display: flex;
+}
+
+.lists-list-single .lists-list-name {
+    flex-basis: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.lists-list-single .lists-list-name p {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.lists-list-single .lists-word-count {
+    flex-basis: 20%;
+    display: flex;
+    align-items: center;
+}
+
+.lists-list-single .lists-word-count p {
+    font-size: 14px;
+}
+
+.lists-list-single .lists-buttons {
+    flex-basis: 30%;
+    text-align: right;
+}
+
+.lists-list-single .lists-buttons .btn:first-of-type {
+    margin-right: 13px;
 }
 
 .lists-list-single > * {
@@ -66,6 +106,8 @@ code {
 .lists-list-single .single-list-title {
 	margin: 0 40px 0 0;
 }
+
+
 
 .form-label {
     position: relative;
@@ -81,12 +123,21 @@ code {
 
 .wordslist-word-single-sectrans-block {
     font-size: 10px;
-    padding-left: 15px;
 }
 
 .wordslist-word-single-stats {
-    font-size: 10px;
-    font-style: italic;
+    font-size: 11px;
+}
+
+.wordslist-word-single-stats .wordslist-word-single-stats-name {
+    width: 67px;
+    display: inline-block;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.wordslist-word-single-stats > div:last-of-type {
+    margin-bottom: 8px;
 }
 
 .ReactTable .rt-td {
@@ -95,23 +146,50 @@ code {
 
 .words-list {
     width: 100%;
+    margin-top: 20px;    
+}
+
+.words-list-buttons {
+    margin-bottom: 20px;
+}
+
+.words-list-buttons button {
+    margin-right: 15px;
+}
+
+.words-list-table {
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
 }
 
 .wordslist-word-single-top {
     display: flex;
     width: 100%;
     position: relative;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #ccc;
+    background: #e5ffe5;
 }
 
 .wordslist-word-single-prword {
-    border-right: 1px solid #000;
+    border-right: 1px solid #ccc;
     padding: 5px;
+}
+
+.wordslist-word-single-prword .wordslist-word-single-prword-inner {
+    font-size: 9px;
+}
+
+.wordslist-word-single-prword .wordslist-word-single-prword-inner label {
+    margin-bottom: 0;
+}
+.wordslist-word-single-prword .wordslist-word-single-prword-inner input[type=checkbox] {
+    font-size: 15px;
+    margin-right: 5px;
 }
 
 .wordslist-word-single-prword,
 .wordslist-word-single-prtranslate {
-    background: #ccc;
     flex-basis: 50%;
     font-size: 16px;
 }
@@ -126,19 +204,23 @@ code {
     font-size: 9px;
 }
 
+.wordslist-word-single-prtranslate .wordslist-word-single-prtranslate-pos {
+    line-height: 15px;
+}
+
 .wordslist-word-single-prword .wordslist-word-single-prword-forgot {
     display: inline;
-    line-height: 17px;
+    line-height: 15px;
 }
 
 .wordslist-word-single-prword .wordslist-word-single-prword-dont {
     font-size: 11px;
     margin-right: 8px;
+    line-height: 14px;
 }
 
 .wordslist-word-single-bottom {
-    padding: 5px;
-    background: #eee;
+    padding: 8px;
     display: flex;
 }
 
@@ -148,7 +230,7 @@ code {
 }
 
 .wordslist-word-single-open {
-    background: thistle;
+    background: #eee;
     position: absolute;
     right: 0;
     cursor: pointer;
@@ -161,7 +243,7 @@ code {
 
 .wordslist-word-single-open > i {
     font-size: 20px;
-    color: #ab99ab;
+    color: #ccc;
     transition-duration: .3s;
     transform: rotate(0deg);
 }
@@ -172,15 +254,20 @@ code {
 
 .test-curtain {
     height: 100%;
-    background: indianred;
     width: 40px;
     position: absolute;
     transition-duration: .3s;
     cursor: move;
     text-align: center;
-    padding-top: 14px;
     font-size: 20px;
-    color: #964444;
+    background: #e0e0e0;
+    color: #999;;
+    display: flex;
+    align-items: center;
+}
+
+.test-curtain > i:first-of-type {
+    padding-left: 2px;
 }
 
 .test-curtain:before {
@@ -189,7 +276,7 @@ code {
     width: 400px;
     top: 0;
     bottom: 0;
-    background: tomato;
+    background: #efefef;
     transform: translateX(34px);
 }
 
@@ -286,8 +373,38 @@ code {
     margin-bottom: 5px;
 }
 
+.add-form-wrapper.edit-form-wrapper button {
+    width: auto;
+}
+
+.add-form-wrapper.edit-form-wrapper form {
+    margin-bottom: 20px;
+}
+
+.add-form-wrapper.edit-form-wrapper button.btn-danger {
+    margin-right: 20px;
+}
+
+.add-form-wrapper.edit-form-wrapper .edited-word {
+    font-size: 26px;
+    text-decoration: underline;
+}
+
+.back-link {
+    display: block;
+    margin-top: 17px;
+}
+
+.back-link i {
+    margin-right: 6px;
+}
+
 .tr-translations {
     margin-bottom: 10px;
+}
+
+.tr-translations .custom-prim-trans .valerror {
+    position: absolute;
 }
 
 .tr-translations input[type=radio] {
@@ -317,6 +434,25 @@ code {
     transform: translateY(-1px);
 }
 
+.wordslist-word-single-sectrans-block.wordslist-word-single-bottom-left {
+    font-size: 12px;
+}
+
+.wordslist-word-single-sectrans-block.wordslist-word-single-bottom-left .wordslist-word-single-sectrans-single-pos {
+    color: #999;
+    font-size: 10px;
+}
+
 .add-form-wrapper button {
     width: 100%;
+}
+
+.spe-section.list-form input{
+    display: block;
+    width: 350px;
+    margin-top: 7px;
+}
+
+.spe-section.list-form .submit-block {
+    margin-bottom: 10px;
 }

@@ -9,11 +9,12 @@ import {
 } from "../../actions/words";
 import { withLastLocation } from 'react-router-last-location';
 import { Link } from "react-router-dom";
+import { Button } from 'react-bootstrap';
 
 class EditWordForm extends Component {
     validate = values => {
         const errors = {},
-              list_error = "You miust select at least one list where you would like to include the word",
+              list_error = "At least one should be selected",
               custom_error = "Primary translation cannot be blank";
 
         if (values.lists.length < 1) {
@@ -123,7 +124,7 @@ class EditWordForm extends Component {
                     render={data => (
                         <form onSubmit={data.handleSubmit}>
                             <div className="tr-translations">
-                                <div>
+                                <div className="tr-translations-title">
                                     <strong>Translations</strong>
                                 </div>
                                 <div>
@@ -150,7 +151,7 @@ class EditWordForm extends Component {
                                         </label>
                                     </div>
                                 ))}
-                                <div>
+                                <div className="custom-prim-trans">
                                     <label>
                                         <Field
                                             name="primTrans"
@@ -162,8 +163,8 @@ class EditWordForm extends Component {
                                             label=""
                                             name="custom_prim_trans"
                                             component='input'
+                                            placeholder="Your Translation"
                                         /><span>
-                                            Your Translation
                                             {data.errors && data.errors.custom_prim_trans && <p className="valerror">{data.errors.custom_prim_trans}</p>}
                                         </span>
                                     </label>
@@ -171,9 +172,9 @@ class EditWordForm extends Component {
                             </div>
                             
                             <div className="tr-lists">
-                                <div>
-                                    <strong>Lists</strong>
-                                    {data.errors && data.errors.lists && <p className="valerror">{data.errors.lists}</p>}
+                                <div className="tr-translations-title">
+                                    <strong className="tr-translations-title-lists">Lists</strong>
+                                    {data.errors.list0 && <p className="valerror">{data.errors.list0}</p>}
                                 </div>
                                 {listsCollection.map((list, i) => (
                                     <div key={i}>
@@ -191,27 +192,30 @@ class EditWordForm extends Component {
                                 ))}
                             </div>
                             <div className="submit-block">
-                                <button
+                                <Button 
+                                    bsStyle="success"
                                     disabled={data.hasValidationErrors}
                                     type="submit"
                                 >
                                     Edit Word
-                                </button>
+                                </Button>
                             </div>
                         </form>
                     )}
                 />
-                <button
+                <Button
                     onClick={this.handleDelete}
+                    bsStyle="danger"
                 >
                     Delete Word
-                </button>
-                <button
+                </Button>
+                <Button
+                    bsStyle="warning"
                     onClick={this.handleResetStats}
                 >
                     Reset Word's Statistics
-                </button>
-                {lastLocation && <Link to={lastLocation.pathname}>
+                </Button>
+                {lastLocation && <Link className="back-link" to={lastLocation.pathname}><i className="fa fa-arrow-left"></i>
                     {
                         (lastLocation.pathname === '/test-results')
                         ?
@@ -221,7 +225,7 @@ class EditWordForm extends Component {
                         ?
                         "Back to Statistics"    
                         :
-                        "Bak to List"
+                        "Back to List"
                     }    
                 </Link>}
             </Fragment>

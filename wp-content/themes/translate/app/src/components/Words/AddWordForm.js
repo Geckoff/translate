@@ -130,7 +130,7 @@ class AddWordForm extends Component {
                                         </label>
                                     </div>
                                 ))}
-                                <div>
+                                <div className="custom-prim-trans">
                                     <label>
                                         <Field
                                             name="primTrans"
@@ -176,7 +176,7 @@ class AddWordForm extends Component {
                                     disabled={data.hasValidationErrors}
                                     type="submit"
                                 >
-                                    Add Word
+                                    Add Word <i className="fa fa-plus"></i>
                                 </Button>
                             </div>
                         </form>

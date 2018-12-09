@@ -4,6 +4,7 @@ import words from "./words";
 import fetch from "./fetch";
 import redirects from "./redirects";
 import message from "./messages";
+import colors from "./colors";
 import isNetworkErrorPresent from "./network";
 
 export default combineReducers({
@@ -11,7 +12,8 @@ export default combineReducers({
     lists,
     words,
     redirects,
-    message
+    message,
+    colors
 });
 
 export const getIsFetching = state => state.fetch.isFetching;
@@ -21,6 +23,7 @@ export const getIsNetworkErrorPresent = state => state.isNetworkErrorPresent;
 export const getRedirect = state => state.redirects.redirect;
 export const getMessage = state => state.message.message;
 export const getMessageSeen = state => state.message.messageSeen;
+export const getColors = state => state.colors.colors;
 
 //Lists
 export const getSingleList = state => state.lists.listSingle;

@@ -19,6 +19,7 @@ import {shuffleListWordsWatch} from './words/shuffleWords';
 import {testForgottenWordsWatch} from './words/testFinishForgottenWords';
 import {fetchWordsStatsWatch} from './words/wordsStats';
 import {resetWordStatsWatch} from './words/resetWordStats';
+import {generateColorsWatch} from './colors';
 
 export default function*() {
   yield fork(fetchMultipleListsWatch);
@@ -37,6 +38,7 @@ export default function*() {
   yield fork(testForgottenWordsWatch);
   yield fork(fetchWordsStatsWatch);
   yield fork(resetWordStatsWatch);
+  yield fork(generateColorsWatch);
 }
 
 

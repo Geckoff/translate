@@ -27,9 +27,9 @@ class EditList extends Component {
             id = this.props.singleList.id;
         }
         return (
-            <Fragment>
+            <div className="spe-section list-form">
                 <ListForm formTitle="Edit List" buttonText="Save Changes" action={this.handleSubmit} listTitle={name} id={id} />
-            </Fragment>
+            </div>
         );
     } 
 }
