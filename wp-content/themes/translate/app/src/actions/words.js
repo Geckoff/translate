@@ -120,6 +120,12 @@ const {
     "RESET_WORD_STATS_FAILURE"
 );
 
+const {
+    setRandWordsQuant
+} = createActions(
+    "SET_RAND_WORDS_QUANT"
+);
+
 export {
     translateWordRequest,
     translateWordSuccess,
@@ -159,4 +165,5 @@ export {
     resetWordStatsRequest,
     resetWordStatsSuccess,
     resetWordStatsFailure,
+    setRandWordsQuant
 };

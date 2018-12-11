@@ -1,11 +1,35 @@
 import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
-import {fetchMultipleListsRequest} from "../../actions/lists";
+import {setRandWordsQuant} from "../../actions/words";
 import {getListsCollection} from "../../reducers";
 import { connect } from "react-redux";
 import {SectionHeader} from "../styleComponents/SectionHeader";
 
 class Lists extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            randQuant: false
+        }
+    }
+
+    handleRandInput = e => {
+        const quant = e.target.value,
+              reg = /^\d+$/;
+        const randQuant = (reg.test(quant) && parseInt(quant) > 0) ? parseInt(quant) : false; 
+        this.setState({
+            randQuant  
+        })
+    }
+
+    handleClickRand = () => {
+        const date = new Date(),
+              timeStamp = date.getTime();
+        this.props.setRandWordsQuant({
+            randQuant: this.state.randQuant,
+            requestTime: timeStamp
+        });    
+    }
 
     render() { 
         return (
@@ -27,7 +51,13 @@ class Lists extends Component {
                         </div>
                     ))}        
                 </div>
-                <Link className="button add-button btn btn-success" to="/lists/add">Add List <i className="fa fa-plus"></i></Link>
+                <div className="lists-list-bottom">
+                    <div className="random-words-block">
+                        <input onChange={this.handleRandInput} type="text" name="rand-word-quant" />
+                        <button onClick={this.handleClickRand}  disabled={this.state.randQuant ? false : true}  className="button btn btn-primary">See Random Words</button>
+                    </div>
+                    <Link className="button add-button btn btn-success" to="/lists/add">Add List <i className="fa fa-plus"></i></Link>
+                </div>
             </Fragment>
         );
     } 
@@ -37,4 +67,12 @@ const mapStateToProps = state => ({
     listsCollection: getListsCollection(state)
 });
 
-export default connect(mapStateToProps)(Lists);
+const mapDispatchToProps = dispatch => {
+    return {
+        setRandWordsQuant: wordsQuant => {
+            dispatch(setRandWordsQuant(wordsQuant)) 
+        } 
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Lists);

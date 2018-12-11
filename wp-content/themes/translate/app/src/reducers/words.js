@@ -21,6 +21,7 @@ import {
     fetchWordsStatsRequest,
     fetchWordsStatsSuccess,
     fetchWordsStatsFailure,
+    setRandWordsQuant
 } from "../actions/words";
 import {combineReducers} from 'redux';
 import { handleActions } from "redux-actions";
@@ -92,6 +93,17 @@ export const wordsStats = handleActions(
     []
 );
 
+export const randWordsQuant = handleActions(
+    {
+        [setRandWordsQuant]: (state, action) => ({...state, ...action.payload})
+    },
+    {
+        randQuant: 10,
+        requestTime: 0,
+        loadedTime: 1,
+    }  
+);
+
 export default combineReducers({
     translatingWord,
     editedWord,
@@ -99,7 +111,8 @@ export default combineReducers({
     testInProgress,
     testPath,
     testForgottenWords,
-    wordsStats
+    wordsStats,
+    randWordsQuant
 });
 
 
