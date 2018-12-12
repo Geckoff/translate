@@ -25,7 +25,7 @@ import { Button } from 'react-bootstrap';
 
 
 class WordsList extends Component {
-    constructor(props) {
+    constructor(props) { 
         super(props);
         const listId = this.props.match.params.id,
               {singleList} = this.props;
