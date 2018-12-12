@@ -15,7 +15,10 @@ import requestFlow from '../request';
  */
 export function* fetchSingleListSaga({payload}) {
   try {
-    const list = yield call(requestFlow, getList, payload);
+    let list = null;
+    if (payload !== 'rand') {
+      list = yield call(requestFlow, getList, {id: payload}); //fetching single list data only if id isn't rand
+    }    
     yield put({type: fetchSingleListSuccess.toString(), payload: list});
   } catch (error) {
     yield put(fetchSingleListFailure(error));

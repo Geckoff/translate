@@ -23,6 +23,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import moment from "moment";
 import { Button } from 'react-bootstrap';
 
+
 class WordsList extends Component {
     constructor(props) {
         super(props);
@@ -30,8 +31,8 @@ class WordsList extends Component {
               {singleList} = this.props;
 
         if (!singleList || listId !== singleList.id) {
-            this.props.fetchWordsByListRequest({lists: [listId]}); // fetch list of the words by list id
-            this.props.fetchSingleListRequest({id: listId}); // fetch list of the words by list id
+            this.props.fetchWordsByListRequest(listId); // fetch list of the words by list id
+            this.props.fetchSingleListRequest(listId);
         }
 
         this.state = {
@@ -239,7 +240,7 @@ const mapDispatchToProps = dispatch => (
         },           
         shuffleListWordsRequest: () => {
             dispatch(shuffleListWordsRequest());   
-        },
+        }
     }
 );
 

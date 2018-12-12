@@ -37,4 +37,4 @@ export const getTestInProgress = state => state.words.testInProgress;
 export const getTestPath = state => state.words.testPath;
 export const getTestForgottenWords = state => state.words.testForgottenWords;
 export const getWordsStats = state => state.words.wordsStats;
-export const getrandWordsQuant = state => state.words.randWordsQuant;
+export const getRandWordsQuant = state => state.words.randWordsQuant;

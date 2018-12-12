@@ -4,6 +4,7 @@ import {setRandWordsQuant} from "../../actions/words";
 import {getListsCollection} from "../../reducers";
 import { connect } from "react-redux";
 import {SectionHeader} from "../styleComponents/SectionHeader";
+import {addRedirect}  from "../../actions/redirects";
 
 class Lists extends Component {
     constructor(props) {
@@ -23,12 +24,9 @@ class Lists extends Component {
     }
 
     handleClickRand = () => {
-        const date = new Date(),
-              timeStamp = date.getTime();
-        this.props.setRandWordsQuant({
-            randQuant: this.state.randQuant,
-            requestTime: timeStamp
-        });    
+        const date = new Date();
+        this.props.setRandWordsQuant(this.state.randQuant);
+        this.props.addRedirect('/words-list/rand');
     }
 
     render() { 
@@ -71,7 +69,10 @@ const mapDispatchToProps = dispatch => {
     return {
         setRandWordsQuant: wordsQuant => {
             dispatch(setRandWordsQuant(wordsQuant)) 
-        } 
+        },
+        addRedirect: (url) => {
+            dispatch(addRedirect(url));   
+        },
     }
 }
 

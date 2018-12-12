@@ -197,3 +197,13 @@ export const getWordsStats = data => {
 export const resetWordStats = data => {
     return apiRequest('resetWordStats', data);    
 }
+
+/**
+ * Get N random words
+ * 
+ * @param {Object} data
+ * @param {integer} data.words_count - quantity of words
+ */
+export const getWordsByNumber = data => {
+    return apiRequest('getWordsByNumber', data);    
+}

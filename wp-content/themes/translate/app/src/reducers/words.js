@@ -95,13 +95,9 @@ export const wordsStats = handleActions(
 
 export const randWordsQuant = handleActions(
     {
-        [setRandWordsQuant]: (state, action) => ({...state, ...action.payload})
+        [setRandWordsQuant]: (state, action) => action.payload
     },
-    {
-        randQuant: 10,
-        requestTime: 0,
-        loadedTime: 1,
-    }  
+    10 
 );
 
 export default combineReducers({
