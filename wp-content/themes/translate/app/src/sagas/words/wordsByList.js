@@ -17,7 +17,7 @@ import requestFlow from "../request";
  * Get all words assigned to a list or lists
  *
  * @param {Object} payload
- * @param {array} payload.id - lists ids
+ * @param {array} payload.id - lists ids 
  * @param {integer||string} payload.id[] - lists ids or rand
  */
 export function* fetchWordsByListSaga({ payload }) {
