@@ -51,7 +51,7 @@ class Lists extends Component {
                 </div>
                 <div className="lists-list-bottom">
                     <div className="random-words-block">
-                        <input onChange={this.handleRandInput} type="text" name="rand-word-quant" />
+                        <input placeholder="# of Words" onChange={this.handleRandInput} type="text" name="rand-word-quant" />
                         <button onClick={this.handleClickRand}  disabled={this.state.randQuant ? false : true}  className="button btn btn-primary">See Random Words</button>
                     </div>
                     <Link className="button add-button btn btn-success" to="/lists/add">Add List <i className="fa fa-plus"></i></Link>

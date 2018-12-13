@@ -23,7 +23,7 @@ import requestFlow from "../request";
 export function* fetchWordsByListSaga({ payload }) {
     try {
         let words = [];
-        if (payload !== 'rand') { // if not random swlwction, fetch by id, otherwise fetch by words quantity
+		if (payload !== 'rand') { // if not random swlwction, fetch by id, otherwise fetch by words quantity
             words = yield call(requestFlow, getWordsByList, {lists: [payload]}); // payload - {lists: [listId]}
         } else {
 			
