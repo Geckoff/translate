@@ -469,6 +469,7 @@ code {
 
 .words-list-test-results > p {
     font-size: 20px;
+    margin-top: 20px;
 }
 
 .words-list-test-results {
@@ -476,14 +477,19 @@ code {
 }
 
 .words-list-test-results .wordslist-word-single {
-    padding: 10px;
+    padding: 5px;
     border-left: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     border-right: 1px solid #ccc;
 }
 
+.words-list-test-results .wordslist-word-single:nth-last-of-type(2) {
+    margin-bottom: 20px;
+}
+
 .words-list-test-results .test-result-top {
-    font-size: 25px;
+    font-size: 17px;
+    overflow: hidden;
 }
 
 .words-list-test-results .test-result-top .result-prim-tr {
@@ -491,7 +497,7 @@ code {
 }
 
 .words-list-test-results .test-result-top .result-prim-tr-pos {
-    font-size: 18px;
+    font-size: 12px;
     color: #999;
 }
 
@@ -500,10 +506,33 @@ code {
 }
 
 .words-list-test-results .test-result-bottom .wordslist-word-single-sectrans-block {
-    flex-basis: 30%;
-    font-size: 15px;
+    font-size: 13px;
+    color: #737373;
 }
 
 .words-list-test-results .test-result-bottom .wordslist-word-single-stats > div {
     font-size: 12px;
+}
+
+.test-result.translation {
+    float: left;
+    line-height: 20px;
+}
+
+.test-result-top .test-times-forgot {
+    float: right;
+    font-size: 12px;
+    padding-top: 3px;
+    margin-right: 15px;
+}
+
+.test-result-top .btn {
+    float: right;
+    padding: 0 5px;
+}
+
+div.notification-container {
+    top: auto;
+    bottom: 0;
+    padding-bottom: 15px;
 }

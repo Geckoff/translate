@@ -43,7 +43,7 @@ class AppRouter extends Component {
             this.props.resetRedirect();
         }
         if (this.props.message) {
-            NotificationManager[this.props.message.type]('', this.props.message.message);
+            NotificationManager[this.props.message.type]('', this.props.message.message, 2500);
             this.props.deleteMessage();
         }
     }

@@ -31,6 +31,9 @@ class WordsStats extends Component {
                                             id: 'word',
                                             resizable: true,
                                             accessor: d => d,
+                                            sortMethod: (a, b) => {
+                                                return a.word > b.word ? 1 : -1;
+                                            },
                                             Cell: row => (
                                               <span>
                                                 <strong>{row.value.word}</strong> - {row.value.prims_trans}
@@ -49,13 +52,25 @@ class WordsStats extends Component {
                                             Header: "Last Forgot",
                                             id: 'last_forgot',
                                             minWidth: 30,
-                                            accessor: d => moment.unix(d.last_forgot).format("DD/MM/YYYY, HH:mm")
+                                            accessor: d => d,
+                                            sortMethod: (a, b) => a.last_forgot > b.last_forgot ? 1 : -1,
+                                            Cell: row => (
+                                                <Fragment>
+                                                    {moment.unix(row.value.last_forgot).format("MM/DD/YYYY, HH:mm")}
+                                                </Fragment>
+                                              )
                                         },
                                         {
                                             Header: "Forgot/Ran Ratio",
                                             id: 'forgot_ran_ratio',
                                             minWidth: 30,
-                                            accessor: d => parseFloat(d.times_forgot / d.times_ran * 100).toFixed(2)
+                                            accessor: d => d,
+                                            sortMethod: (a, b) => {
+                                                const ratioA = a.times_forgot / a.times_ran,
+                                                      ratioB = b.times_forgot / b.times_ran;
+                                                return ratioA > ratioB ? 1 : -1;
+                                            },
+                                            Cell: d => parseFloat(d.value.times_forgot / d.value.times_ran * 100).toFixed(2)
                                         },
                                     ]
                                 }

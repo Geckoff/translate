@@ -8,7 +8,7 @@ class EditList extends Component {
 
     constructor(props) {
         super(props);
-        this.props.fetchSingleListRequest({id: this.props.match.params.id}); // fetch the list that need to ne updated
+        this.props.fetchSingleListRequest(this.props.match.params.id); // fetch the list that need to ne updated
     }
 
     handleSubmit = data => {
