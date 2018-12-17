@@ -536,3 +536,85 @@ div.notification-container {
     bottom: 0;
     padding-bottom: 15px;
 }
+
+.words-stats {
+    margin-top: 20px;
+}
+
+.words-stats .-headerGroups {
+    display: none!important;
+}
+
+.words-stats  * {
+    border-color: #ccc!important;
+}
+
+.words-stats .ReactTable .rt-td {
+    padding: 0;
+}
+
+.words-stats .ReactTable.-striped .rt-tr.-odd {
+    background: transparent;
+}
+
+.words-stats .ReactTable .rt-td .stats-table-cell {
+    height: 100%;
+    padding: 5px;
+}
+
+.words-stats .ReactTable .rt-td .stats-table-cell.stats-word {
+    display: flex;
+    justify-content: space-between;
+} 
+
+.stats-word-button .btn {
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.words-stats .ReactTable .rt-thead .rt-th > div {
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+@media (max-width: 1050px) {
+    .words-stats .ReactTable .rt-thead .rt-th > div {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 850px) {
+    .words-stats .ReactTable .rt-thead .rt-th.stats-cell-times-forgot > div {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 640px) {
+    .App > .main-section {
+        flex-basis: 100%;
+    }
+
+    .words-stats {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 500px) {
+    .words-stats {
+        font-size: 13px;
+    }  
+
+    .stats-content-cell-last-forgot {
+        font-size: 9px;
+    }
+
+    .words-stats .ReactTable .rt-td .stats-table-cell.stats-word {
+        display: block;
+    }
+
+    .stats-word-button .btn {
+        font-size: 10px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+}
