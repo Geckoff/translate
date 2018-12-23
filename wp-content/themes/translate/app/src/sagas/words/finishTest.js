@@ -7,7 +7,7 @@ import {
 } from "../../actions/words";
 import {resetSingleList} from "../../actions/lists";
 import {addRedirect}  from "../../actions/redirects";
-import { takeLatest, call, put, select } from "redux-saga/effects";
+import { takeLatest, call, put } from "redux-saga/effects";
 import { 
     updateWordForgot,
     updateWordRan

@@ -24,7 +24,6 @@ class Lists extends Component {
     }
 
     handleClickRand = () => {
-        const date = new Date();
         this.props.setRandWordsQuant(this.state.randQuant);
         this.props.addRedirect('/words-list/rand');
     }

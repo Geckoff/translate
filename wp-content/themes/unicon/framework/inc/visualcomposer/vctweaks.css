@@ -1,0 +1,77 @@
+.vc_element-icon.icon-wpb-minti-alert{background: url("images/vc_alert.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-callout{background: url("images/vc_callout.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-category_image{background: url("images/vc_category_image.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-box{background: url("images/vc_box.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-iconbox{background: url("images/vc_iconbox.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-imagebox{background: url("images/vc_imagebox.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-counter{background: url("images/vc_counter.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-member{background: url("images/vc_member.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-blog{background: url("images/vc_blog.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-bloglist{background: url("images/vc_bloglist.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-portfolio{background: url("images/vc_portfolio.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-portfoliosection{background: url("images/vc_portfoliosection.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-pricingplan{background: url("images/vc_pricingplan.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-testimonial{background: url("images/vc_testimonial.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-text{background: url("images/vc_text.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-title{background: url("images/vc_title.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-headline{background: url("images/vc_headline.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-googlemaps{background: url("images/vc_googlemaps.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-progressbar{background: url("images/vc_progressbar.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-divider{background: url("images/vc_divider.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-spacer{background: url("images/vc_spacer.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-video{background: url("images/vc_video.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-image{background: url("images/vc_image.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-gallery{background: url("images/vc_gallery.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-toggle{background: url("images/vc_toggle.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-woocommerce{background: url("images/vc_woocommerce.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-list{background: url("images/vc_list.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-zooming_slider{background: url("images/vc_zoom_slider.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-carousel{background: url("images/vc_carousel.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-boxedholder{background: url("images/vc_boxedholder.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-masonrygrid{background: url("images/vc_masonrygrid.svg") no-repeat 0 0 !important;}
+.vc_element-icon.icon-wpb-minti-playvideo{background: url("images/vc_video.svg") no-repeat 0 0 !important;}
+
+.admin_label_css_animation{
+	display: none;
+}
+
+.wpb_switch-to-composer{
+	padding-left: 15px !important;
+	padding-right: 15px !important;
+	border-radius: 0 4px 4px 0;
+}
+
+.vc_panel-heading,
+.vc_modal-header{
+	background: #444444 !important;
+}
+
+.vc_btn-primary{
+	background: #0074a2 !important;
+}
+
+.vc_btn-primary.vc_btn-sm{
+	font-size: 13px;
+	padding: 6px 12px;
+}
+
+.vc_templates-editor .wpb_templates_list .wpb_template_li a{
+	color: inherit!important;
+}
+
+.vc_modal-content{
+	border: none !important;
+}
+
+.wpb_vc_param_value.wpb-textarea{
+	height: 120px;
+}
+
+/* Remove appear animation */
+.appear{ 
+	-webkit-animation: none!important;
+    animation: none!important;
+    -webkit-transform: scale(1)!important;
+    -ms-transform: scale(1)!important;
+    transform: scale(1)!important; 
+}

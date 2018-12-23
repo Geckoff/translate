@@ -1,8 +1,7 @@
 import {
     translateWordRequest,
     translateWordSuccess,
-    translateWordFailure,
-    translateWordNotFound
+    translateWordFailure
 } from "../../actions/words";
 import { takeLatest, call, put } from "redux-saga/effects";
 import { translateDictionary } from "../../api/yandexApi";

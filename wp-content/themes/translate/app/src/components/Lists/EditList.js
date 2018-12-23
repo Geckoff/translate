@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import {editListRequest, fetchSingleListRequest} from "../../actions/lists";
 import {getSingleList} from "../../reducers";
 import { connect } from "react-redux";

@@ -5,7 +5,6 @@ import fetch from "./fetch";
 import redirects from "./redirects";
 import message from "./messages";
 import colors from "./colors";
-import isNetworkErrorPresent from "./network";
 
 export default combineReducers({
     fetch,

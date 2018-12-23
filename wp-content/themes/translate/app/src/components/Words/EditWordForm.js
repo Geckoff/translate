@@ -33,7 +33,6 @@ class EditWordForm extends Component {
 
     handleSubmit = values => {
         let wordData = {},
-            {listsCollection} = this.props,
             {id, word, sec_trans, prims_trans, prims_trans_pos} = this.props.editedWord,
             {custom_prim_trans, primTrans, lists} = values,
             primTransFinal = '',

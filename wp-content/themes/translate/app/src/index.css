@@ -483,6 +483,10 @@ code {
     border-right: 1px solid #ccc;
 }
 
+.words-list-test-results .wordslist-word-single:last-of-type .wordslist-word-single-bottom {
+    border-bottom: 1px solid #ccc;
+}
+
 .words-list-test-results .wordslist-word-single:nth-last-of-type(2) {
     margin-bottom: 20px;
 }

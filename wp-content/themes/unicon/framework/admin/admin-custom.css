@@ -1,0 +1,331 @@
+/* Header */
+#redux-header {
+    background: #ffffff !important;
+    margin: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid #e1e1e1 !important;
+    padding: 0 !important;
+    position: relative;
+}
+
+#redux-header .display_header {
+    float: none;
+    margin: 24px 22px 20px 18px!important;
+    padding: 0;
+}
+#redux-header .display_header h2 {
+    line-height: 1;
+    padding: 0;
+    margin: 0 8px 0 0;
+    color: #23282d;
+}
+
+/* DevMode Notice */
+.redux-container #redux-header .display_header span.redux-dev-mode-notice {
+    font-weight: 400!important;
+    border-radius: none;
+    background: #fafafa;
+    color: #999999!important;
+    padding: 5px 12px !important;
+    line-height: 1!important;
+}
+
+.redux-container #redux-header .display_header .redux-dev-mode-notice-container {
+    bottom: 3px;
+    left: auto;
+    right: 0px;
+    top: auto;
+    font-size: 12px;
+    border-radius: 0!important
+}
+
+/* Info / Save-Bar */
+#info_bar {
+    background: #ffffff !important;
+    padding: 18px 11px !important;
+    margin: 0 !important;
+    border-bottom: 1px dashed #e1e1e1 !important;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#info_bar .button{
+    margin: 0 0 0 6px !important;
+}
+
+.expand_options{
+    display: none !important;
+}
+
+/* Content Area */
+.redux-container{
+    background: #f9f9f9!important;
+}
+
+.redux-container .redux-main {
+    background: #ffffff!important;
+    border-left: 1px solid #e1e1e1!important;
+}
+
+.redux-container .redux-main h2{
+    font-size: 1.8em;
+}
+
+/* Menu / Sidebar */
+.redux-sidebar .redux-group-menu li a{
+    padding: 12px 18px 12px 18px;
+}
+.redux-container .redux-sidebar, .redux-container .display_header {
+    box-sizing: border-box;
+}
+.redux-sidebar .redux-group-menu li.active a, .redux-sidebar .redux-group-menu li.active a:hover, .redux-sidebar .redux-group-menu li.activeChild a, .redux-sidebar .redux-group-menu li.activeChild a:hover {
+    box-sizing: border-box;
+}
+
+.redux-sidebar .redux-group-menu li.activeChild.hasSubSections a, .wp-customizer .redux-sidebar .redux-group-menu li.activeChild.hasSubSections a {
+    text-shadow: none;
+}
+
+.redux-sidebar .redux-group-tab-link-a i { 
+    font-size: 18px;
+    line-height: 18px;
+}
+
+/* Main Menu items (inactive) */
+body .redux-container  .redux-sidebar .redux-group-menu li a {
+    background-color: #f9f9f9;
+    border-color: #eaeaea;
+    color: #666666;
+    text-shadow: none!Important;
+    opacity: 1;
+}
+
+html .redux-container  .redux-sidebar .redux-group-menu * {
+    font-weight: 400!important;
+}
+
+/* Subitems when active */
+html .redux-container  .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li a, .wp-customizer .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li a {
+    background-color: #ffffff;
+    color: #666666;
+}
+html body .redux-container  .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li a:hover {
+    background-color: #fafafa!important;
+    color: #23282d!important;
+}
+html .redux-container  .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li.active a, .wp-customizer .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li.active a {
+    background-color: #ffffff!important;
+    color: #23282d;
+    font-weight: 700!important;
+}
+html .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li.active a span, .wp-customizer .redux-sidebar .redux-group-menu li.activeChild.hasSubSections ul.subsection li.active a span {
+    font-weight: 700!important;
+}
+
+html .redux-container .redux-sidebar .redux-group-tab-link-a i {
+    color: #dddddd;
+    text-shadow: none!important;
+}
+
+html .redux-container .redux-sidebar .redux-group-tab-link-li.activeChild i, html .redux-container  .redux-sidebar .redux-group-tab-link-li.active i {
+    color: #0073aa!important;
+}
+
+html .redux-container  .redux-sidebar .redux-group-menu li.activeChild.hasSubSections{
+    border-bottom: 1px solid #eaeaea;
+    box-shadow: 1px 0px 0px 0px rgba(255,255,255,1);
+    position: relative;
+    z-index: 2;
+}
+
+
+body .redux-sidebar .redux-group-menu li > a:hover {
+    background-color: #0073aa;
+    color: #ffffff;
+}
+body .redux-sidebar .redux-group-menu li > a:hover i {
+    color: #ffffff!important;
+}
+html .redux-sidebar .redux-group-menu li.redux-group-tab-link-li.active > a,  html .redux-container .redux-sidebar .redux-group-menu li.activeChild.hasSubSections a  {
+    background-color: #fff;
+    color: #0073aa;
+    font-weight: 700!important;
+    width: 100%;
+    
+}
+ html .redux-sidebar .redux-group-menu li.active.hasSubSections .active a:after,  html .redux-container  .redux-sidebar .redux-group-menu li.activeChild.hasSubSections .active a:after, .wp-customizer .redux-sidebar .redux-group-menu li.active.hasSubSections .active a:after, .wp-customizer .redux-sidebar .redux-group-menu li.activeChild.hasSubSections .active a:after {
+    display: none!important;
+}
+
+html .redux-sidebar .redux-group-menu li.redux-group-tab-link-li.active{
+    box-shadow: 1px 0px 0px 0px rgba(255,255,255,1);
+    position: relative;
+    z-index: 2;
+}
+
+/* Navigation Arrow */
+html .redux-container .redux-sidebar .redux-group-tab-link-a .extraIconSubsections i{
+    font-size: 11px!important;
+}
+
+/* Footer */
+#redux-footer{
+    background: #ffffff !important;
+    padding: 18px 11px !important;
+    border-top: 1px dashed #e1e1e1 !important;
+    z-index: 2;
+}
+
+#redux-footer.sticky-footer-fixed {
+    background: #f9f9f9 !important;
+    padding: 18px 10px !important;
+    border-top: 1px solid #e1e1e1 !important;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#redux-footer .button{
+    margin: 0 0 0 10px !important;
+}
+
+.rAds{
+    display: hidden !important;
+}
+
+/* Redux Fields */
+.redux-group-tab{
+    padding: 30px 0;
+}
+
+.redux-group-tab h3 {
+    line-height: 1 !important;
+    border-bottom: none !important;
+    color: #222222 !important;
+    font-weight: 400 !important;
+    margin: 0 0 0px 0 !important;
+    padding: 0px 0 20px 0 !important;
+    font-size: 26px !important;
+    border-bottom: 1px solid #efefef !important;
+}
+
+.redux-main .form-table {
+    margin-bottom: 0px;
+}
+
+.redux-main .form-table tr {
+    border-bottom: 10px solid #ffffff!important;
+    background: #fafafa!important;
+}
+
+@media screen and (max-width: 600px) {
+    .redux-main .form-table tr{
+        padding-top: 20px!important;
+        padding-bottom: 20px!important;
+    }
+}
+
+.redux-main .form-table tr:last-child {
+    border-bottom: 0 !important;
+}
+
+.redux-main .form-table tr th, .redux-main .form-table tr td {
+    padding: 5px 20px 0 20px !important;
+}
+
+.redux-notice-field.redux-normal{
+    margin: 0 !important;
+    background-color: #fff;
+    border: 0 !important;
+    -webkit-box-shadow: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    padding: 10px 20px !important;
+    background: #888888 !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    margin: 34px 0 10px 0 !important;
+    font-size: 14px !important;
+}
+
+.redux-notice-field.redux-normal p{
+    font-size: 14px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-weight: 600!important;
+}
+
+.redux-notice-field.redux-normal{
+    margin: 34px 0 10px 0 !important;
+    padding: 10px 20px !important;
+    background: #888888 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border:none;
+    border-radius: 0 !important;
+}
+
+.redux-info-field.redux-normal{
+    border:none;
+    border-radius: 0 !important;
+    background: #fffae7 !important;
+    color: #9F6000 !important;
+    margin: 0px 0 10px 0 !important;
+    padding: 10px 20px !important;
+}
+
+.redux-info-field .redux-info-desc{
+    font-size: 14px !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+}
+
+.redux-container-ace_editor .ace_editor {
+    height: 600px !important;
+    border:1px solid #cccccc !important;
+}
+
+.redux-main span.description, .field-desc {
+    display: block !important;
+    font-style: normal !important;
+    line-height: 1.4 !important;
+    color: #999999 !important;
+}
+
+.redux-container-image_select ul.redux-image-select li {
+    padding: 2px 10px 2px 0;
+}
+
+.redux-container-image_select ul.redux-image-select li img{
+    max-width: 200px;
+}
+
+.redux-container-image_select ul.redux-image-select li span{
+    color: #999999;
+    font-size: 12px;
+}
+
+.redux-container-radio ul li{
+    display: inline-block;
+    float: none;
+    width: auto!important;
+    margin-right: 20px;
+    background: rgba(0,0,0,0.04);
+    padding: 10px 15px 5px 15px;
+    border-radius: 4px;
+}
+
+
+/* Admin Colors */
+html .admin-color-fresh .redux-container .redux-sidebar .redux-group-tab-link-li.activeChild i, html .admin-color-fresh .redux-container  .redux-sidebar .redux-group-tab-link-li.active i { color: #0073aa!important; }
+html .admin-color-fresh .redux-sidebar .redux-group-menu li > a:hover { background-color: #0073aa; color: #ffffff; }
+html .admin-color-fresh .redux-sidebar .redux-group-menu li.redux-group-tab-link-li.active > a,  html .admin-color-fresh .redux-container .redux-sidebar .redux-group-menu li.activeChild.hasSubSections a  { background-color: #fff; color: #0073aa; }
+
+html .admin-color-light .redux-container .redux-sidebar .redux-group-tab-link-li.activeChild i, html .admin-color-light .redux-container  .redux-sidebar .redux-group-tab-link-li.active i { color: #04a4cc!important; }
+html .admin-color-light .redux-sidebar .redux-group-menu li > a:hover { background-color: #04a4cc; color: #ffffff; }
+html .admin-color-light .redux-sidebar .redux-group-menu li.redux-group-tab-link-li.active > a,  html .admin-color-light .redux-container .redux-sidebar .redux-group-menu li.activeChild.hasSubSections a  { background-color: #fff; color: #04a4cc; }
+
+html .admin-color-midnight .redux-container .redux-sidebar .redux-group-tab-link-li.activeChild i, html .admin-color-midnight .redux-container  .redux-sidebar .redux-group-tab-link-li.active i { color: #e14d43!important; }
+html .admin-color-midnight .redux-sidebar .redux-group-menu li > a:hover { background-color: #e14d43; color: #ffffff; }
+html .admin-color-midnight .redux-sidebar .redux-group-menu li.redux-group-tab-link-li.active > a,  html .admin-color-midnight .redux-container .redux-sidebar .redux-group-menu li.activeChild.hasSubSections a  { background-color: #fff; color: #e14d43; }

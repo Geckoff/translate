@@ -42,18 +42,6 @@ function generateRandomString($length = 10) {
     return $randomString;
 }
 
-// function saveToken() {
-//     if (is_user_logged_in()) {
-//         $user_id = get_current_user_id();
-//         $token = get_field('token', "test", 'user_'.$user_id);  
-//         if (!$token) {
-//             update_field('token', generateRandomString(32), 'user_'.$user_id);   
-//         }
-//     }
-// }
-
-// add_action('init', 'saveToken');
-
 /**
 * Ajax function registration
 **/

@@ -101,7 +101,7 @@ class AddWordForm extends Component {
     };
 
     render() {
-        const { word, translations } = this.props.translatingWord;
+        const { translations } = this.props.translatingWord;
         const { listsCollection } = this.props;
         return (
             <Fragment>

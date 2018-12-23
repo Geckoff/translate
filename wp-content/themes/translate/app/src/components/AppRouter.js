@@ -49,7 +49,7 @@ class AppRouter extends Component {
     }
 
     render() {  
-        const {error, isFetching, isFetched, isNetworkErrorPresent, redirect, message} = this.props;  
+        const {error, isFetching, isNetworkErrorPresent, redirect} = this.props;  
         if (redirect) {
             return (
                 <Redirect to={redirect}/>

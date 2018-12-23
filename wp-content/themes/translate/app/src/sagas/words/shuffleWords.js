@@ -3,7 +3,7 @@ import {
     shuffleListWordsSuccess,
     shuffleListWordsResetList
 } from "../../actions/words";
-import { takeLatest, call, put, select } from "redux-saga/effects";
+import { takeLatest, put, select } from "redux-saga/effects";
 import { getWordsByList } from "../../reducers";
 import shuffle from "shuffle-array";
 

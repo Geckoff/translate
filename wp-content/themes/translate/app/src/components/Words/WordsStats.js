@@ -62,9 +62,8 @@ class WordsStats extends Component {
 															to={`/edit-word/${
 																row.value.id
 															}`}
-															className="btn btn-warning btn-sm"
 														>
-															Edit Word
+                                                            <i className="fa fa-edit"></i>
 														</Link>
 													</div>
                                                     

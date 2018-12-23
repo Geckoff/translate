@@ -5,6 +5,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "bootstrap": "^4.1.3",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1",
     "final-form": "^4.10.0",
     "font-awesome": "^4.7.0",
     "moment": "^2.22.2",
@@ -42,5 +44,6 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "homepage": "/wp-content/themes/translate/app/build/"
 }

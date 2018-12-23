@@ -6,7 +6,6 @@ import {
 } from "../../reducers";
 import { connect } from "react-redux";
 import {SectionHeader} from "../styleComponents/SectionHeader";
-import moment from "moment";
 
 class TestFinishForgot extends Component {
     render() { 
