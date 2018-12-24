@@ -384,25 +384,19 @@ if ( ! class_exists( 'um\core\Roles_Capabilities' ) ) {
 
 
 		/**
-		 * Get editable UM user roles
-		 *
 		 * @return array
 		 */
 		function get_editable_user_roles() {
-			$default_roles = array( 'subscriber' );
-
 			// User has roles so look for a UM Role one
-			$um_roles_keys = get_option( 'um_roles', array() );
+			$um_roles_keys = get_option( 'um_roles' );
 
-			if ( ! empty( $um_roles_keys ) && is_array( $um_roles_keys ) ) {
+			if ( ! empty( $um_roles_keys ) ) {
 				$um_roles_keys = array_map( function( $item ) {
 					return 'um_' . $item;
 				}, $um_roles_keys );
-
-				return array_merge( $um_roles_keys, $default_roles );
 			}
 
-			return $default_roles;
+			return array_merge( $um_roles_keys, array( 'subscriber' ) );
 		}
 
 
@@ -424,7 +418,6 @@ if ( ! class_exists( 'um\core\Roles_Capabilities' ) ) {
 				$um_roles_keys = array_map( function( $item ) {
 					return 'um_' . $item;
 				}, $um_roles_keys );
-
 			}
 
 			$orders = array();
@@ -532,11 +525,8 @@ if ( ! class_exists( 'um\core\Roles_Capabilities' ) ) {
 			foreach ( $role_data as $key=>$value ) {
 				if ( strpos( $key, '_um_' ) === 0 )
 					$key = str_replace( '_um_', '', $key );
-				$temp[ $key ] = $value;
+				$temp[$key] = $value;
 			}
-
-			$temp = apply_filters( 'um_change_role_data', $temp, $roleID );
-
 			return $temp;
 		}
 
@@ -581,37 +571,24 @@ if ( ! class_exists( 'um\core\Roles_Capabilities' ) ) {
 		 * @return bool|int
 		 */
 		function um_current_user_can( $cap, $user_id ) {
-			if ( ! is_user_logged_in() ) {
+			if ( ! is_user_logged_in() )
 				return false;
-			}
 
 			$return = 1;
 
 			um_fetch_user( get_current_user_id() );
 
 			$current_user_roles = UM()->roles()->get_all_user_roles( $user_id );
-
 			switch( $cap ) {
 				case 'edit':
-
-					if ( get_current_user_id() == $user_id ) {
-						if ( um_user( 'can_edit_profile' ) ) {
-							$return = 1;
-						} else {
-							$return = 0;
-						}
-					} else {
-						if ( ! um_user( 'can_edit_everyone' ) ) {
-							$return = 0;
-						} else {
-							if ( um_user( 'can_edit_roles' ) && ( empty( $current_user_roles ) || count( array_intersect( $current_user_roles, um_user( 'can_edit_roles' ) ) ) <= 0 ) ) {
-								$return = 0;
-							} else {
-								$return = 1;
-							}
-						}
-					}
-
+					if ( get_current_user_id() == $user_id && um_user( 'can_edit_profile' ) )
+						$return = 1;
+					elseif ( ! um_user( 'can_edit_everyone' ) )
+						$return = 0;
+					elseif ( get_current_user_id() == $user_id && ! um_user( 'can_edit_profile') )
+						$return = 0;
+					elseif ( um_user( 'can_edit_roles' ) && ( empty( $current_user_roles ) || count( array_intersect( $current_user_roles, um_user( 'can_edit_roles' ) ) ) <= 0 ) )
+						$return = 0;
 					break;
 
 				case 'delete':
@@ -641,7 +618,6 @@ if ( ! class_exists( 'um\core\Roles_Capabilities' ) ) {
 
 			$user_id = get_current_user_id();
 			$role = UM()->roles()->get_priority_user_role( $user_id );
-
 			$permissions = $this->role_data( $role );
 
 			/**
@@ -670,9 +646,6 @@ if ( ! class_exists( 'um\core\Roles_Capabilities' ) ) {
 
 			if ( isset( $permissions[ $permission ] ) && is_serialized( $permissions[ $permission ] ) )
 				return unserialize( $permissions[ $permission ] );
-
-			if ( isset( $permissions[ $permission ] ) && is_array( $permissions[ $permission ] ) )
-				return $permissions[ $permission ];
 
 			if ( isset( $permissions[ $permission ] ) && $permissions[ $permission ] == 1 )
 				return true;

@@ -4,9 +4,9 @@ Plugin URI: https://ultimatemember.com/
 Contributors: ultimatemember, champsupertramp, nsinelnikov
 Donate link: 
 Tags: community, member, membership, user-profile, user-registration
-Requires at least: 4.7
+Requires at least: 4.1
 Tested up to: 4.9
-Stable tag: 2.0.29
+Stable tag: 2.0.13
 License: GNU Version 2 or Any Later Version
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -58,18 +58,12 @@ Ultimate Member has a range of extensions that allow you to extend the power of 
 * [Notices](https://ultimatemember.com/extensions/notices/) - Alert users to important information using conditional notices
 * [Profile Completeness](https://ultimatemember.com/extensions/profile-completeness/) - Encourage or force users to complete their profiles with the profile completeness extension
 * [Friends](https://ultimatemember.com/extensions/friends/) - Allows users to become friends by sending & accepting/rejecting friend requests
-* [User Photos](https://ultimatemember.com/extensions/user-photos/) - Allow users to upload photos to their profile
-* [Groups](https://ultimatemember.com/extensions/groups/) - Allow users to create and join groups around shared topics, interests etc.
 
 = Free Extensions =
 
 * [Terms & Conditions](https://ultimatemember.com/extensions/terms-conditions/) - Add a terms and condition checkbox to your registration forms & require users to agree to your T&Cs before registering on your site.
 * [Google reCAPTCHA](https://ultimatemember.com/extensions/google-recaptcha/) - Stop bots on your registration & login forms with Google reCAPTCHA
 * [Online Users](https://ultimatemember.com/extensions/online-users/) - Display what users are online with this extension
-
-= Theme =
-
-Our official [theme](https://ultimatemember.com/theme/) is purpose built for websites that have logged in and out users. The [theme](https://ultimatemember.com/theme/) has deep integration with Ultimate Member plugin and the extensions, different header designs for logged-in/out users and works alongside the Beaver Builder and Elementor page builders.
 
 = Development * Translations =
 
@@ -136,160 +130,6 @@ The plugin works with popular caching plugins by automatically excluding Ultimat
 == Changelog ==
 
 = Important: UM2.0+ is a significant update to the code base from 1.3.88. Please make sure you take a full-site backup with restore point before updating the plugin =
-
-= 2.0.29: October 8, 2018 =
-
-* Bugfixes:
-  - Fixed User Profile Posts pagination
-
-= 2.0.28: October 5, 2018 =
-
-* Bugfixes:
-  - Fixed Email notifications
-  - Fixed Download files/images for multisites
-  - Fixed Profile/Cover image for multisites
-  - Fixed XSS vulnerabilities (detected by @Serhack)
-  - Fixed trim fields on submit forms
-  - Fixed submitted info
-
-= 2.0.27: October 2, 2018 =
-
-* Bugfixes:
-  - Fixed files class
-
-= 2.0.26: October 2, 2018 =
-
-* Enhancements:
-  - New files/images downloading process
-  - Added dependencies with User Photos and Groups extensions
-
-* Bugfixes:
-  - File/Image email placeholders after registration form submitting
-  - File/Image forms fields values on submit/edit
-  - Fixed multisite file/image upload process
-  - Fixed clearing old user sessions after the changing a password
-  - Made reset password process via WP native functions
-
-= 2.0.25: August 20, 2018 =
-
-* Enhancements:
-  - Upgrade minified scripts
-
-= 2.0.24: August 15, 2018 =
-
-* Bugfixes:
-  - WP native AJAX using
-  - Force purge temp files dir
-
-= 2.0.23: August 10, 2018 =
-
-* Bugfixes:
-  - Fixed File/Image uploader
-
-= 2.0.22: August 9, 2018 =
-
-* Enhancements:
-  - Added an ability to filter user's profile slug "um_change_user_profile_slug"
-  - Added an ability to filter pages for exclude restriction content settings "um_exclude_posts_from_privacy"
-
-* Bugfixes:
-  - Fixed callback functions in member directory search
-  - Fixed Profile Privacy Settings for different languages
-  - Fixed security vulnerabilities (File/Image uploader)
-  - Fixed security vulnerabilities (HTML arguments)
-  - Fixed search in members directory for some cases, when metadata format isn't correct
-  - Fixed some cases in conditional logic
-  - Fixed WP Capabilities list for Gravity Forms
-  - Fixed View Profile capabilities
-
-* Deprecated:
-  - Filters "um_before_user_upload", "um_after_user_upload"
-
-= 2.0.21: July 9, 2018 =
-
-* Bugfixes:
-  - Fixed search in members directory by User Tags field (other case)
-
-= 2.0.20: July 6, 2018 =
-
-* Bugfixes:
-  - Fixed search in members directory by User Tags field
-
-= 2.0.19: July 5, 2018 =
-
-* Bugfixes:
-  - Fixed few JS file's full versions
-  - Fixed search in members directory by multiselect/radio/checkbox field
-  - Fixed first activation role metadata reset
-
-= 2.0.18: July 4, 2018 =
-
-* Enhancements:
-  - Added an ability to create different email templates for each site on multisites installs
-  - Added major version notice
-  - Added an ability to make Profile Form visible for 2 or more roles
-  - Added ability to dismiss some UM notices
-  - Redesign some parts of field's conditional logic settings
-
-* Bugfixes:
-  - Fixed PHP memory limit issue on some installs. Created pseudo-constructor
-  - Disabled email notification to user, which wasn't approved about delete their account
-  - Fixed profile tabs privacy
-  - Fixed default avatars and Gravatar displaying
-  - Fixed get current URL function
-  - Fixed admin bar displaying
-  - Fixed members directory search
-  - Fixed nav-menu items restriction handlers
-  - Fixed user displaying on multisite (added 404 error in some cases)
-  - Fixed XSS at wp-admin settings screen
-  - Fixed user's "user_login" permalinks
-  - Fixed user's capabilities ("Edit", "Delete" user) and profile actions displaying
-  - Fixed field's conditional logic
-  - Fixed issue with account button ID's duplicates
-
-* Deprecated:
-  - REST API user's key option;
-
-= 2.0.17: May 30, 2018 =
-
-* Enhancements:
-  - Added UM dashboard widget for getting latest extension's upgrades
-
-* Bugfixes:
-  - Fixed User Profile restriction when the user isn't logged in
-  - Fixed Profile Tabs displaying on desktop/mobile
-  - Fixed set user status after registration on some installs
-  - Fixed PHP memory limit issue on some installs with small PHP memory limit
-  - Fixed PHP validation on submit UM Forms with conditional fields logic
-
-= 2.0.16: May 23, 2018 =
-
-* Bugfixes:
-  - Fixed Profile Tabs issues
-
-= 2.0.15: May 22, 2018 =
-
-* Bugfixes:
-  - Fixed GDPR min.js script
-
-= 2.0.14: May 22, 2018 =
-
-* Enhancements:
-  - Added support for GDPR Personal Data Exporter
-  - Added support for GDPR Personal Data Eraser
-  - Added new privacy field to form builder for GDPR consent collection
-  - Added GDPR privacy policy guide text
-  - Added GDPR compatibility on delete user process
-  - Added security to Restricted posts comments
-  - Added security to custom field type `Password`
-  - Deprecated time checking spam bot
-
-* Bugfixes:
-  - Fixed settings tabs for PHP7.1
-  - Fixed issues with Profile Tabs
-  - Fixed User Avatars
-  - Fixed set user status on Registration process
-  - Fixed Account Privacy tab content
 
 = 2.0.13: May 2, 2018 =
 

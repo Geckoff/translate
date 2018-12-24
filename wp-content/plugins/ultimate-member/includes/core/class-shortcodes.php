@@ -265,18 +265,19 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 				unset( $args['theme_file'] );
 				unset( $args['tpl'] );
 
-				$args = apply_filters( 'um_template_load_args', $args, $tpl );
-
 				extract( $args );
 			}
 
 			$file = um_path . "templates/{$tpl}.php";
 			$theme_file = get_stylesheet_directory() . "/ultimate-member/templates/{$tpl}.php";
+
+
 			if ( file_exists( $theme_file ) ) {
 				$file = $theme_file;
 			}
 
 			if ( file_exists( $file ) ) {
+
 				include $file;
 			}
 		}
@@ -382,13 +383,14 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 			ob_start();
 
 			// Hide for logged in users
-			if ( is_user_logged_in() ) {
+			if (is_user_logged_in()) {
 				echo '';
 			} else {
-				echo do_shortcode( wpautop( $content ) );
+				echo do_shortcode(wpautop($content));
 			}
 
-			$output = ob_get_clean();
+			$output = ob_get_contents();
+			ob_end_clean();
 			return $output;
 		}
 
@@ -413,6 +415,8 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 		 * @return string
 		 */
 		function load( $args ) {
+			ob_start();
+
 			$defaults = array();
 			$args = wp_parse_args($args, $defaults);
 
@@ -429,8 +433,6 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 
 			// get data into one global array
 			$post_data = UM()->query()->post_data($this->form_id);
-
-			ob_start();
 
 			/**
 			 * UM hook
@@ -455,7 +457,7 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 			 */
 			$args = apply_filters( 'um_pre_args_setup', $post_data );
 
-			if ( ! isset( $args['template'] ) ) {
+			if (!isset($args['template'])) {
 				$args['template'] = '';
 			}
 
@@ -511,7 +513,6 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 			//not display on admin preview
 			if ( empty( $_POST['act_id'] ) || $_POST['act_id'] != 'um_admin_preview_form' ) {
 				if ( 'register' == $mode && is_user_logged_in() ) {
-					ob_get_clean();
 					return __( 'You are already registered', 'ultimate-member' );
 				}
 			}
@@ -521,20 +522,8 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 				$use_custom = get_post_meta( $this->form_id, "_um_{$mode}_use_custom_settings", true );
 				if ( $use_custom ) { // Custom Form settings
 					$current_user_roles = UM()->roles()->get_all_user_roles( um_profile_id() );
-
-					//backward compatibility between single/multi role form's setting
-					if ( ! empty( $args['role'] ) ) {
-						if ( is_array( $args['role'] ) ) {
-							if ( ! count( array_intersect( $args['role'], $current_user_roles ) ) ) {
-								ob_get_clean();
-								return '';
-							}
-						} else {
-							if ( ! in_array( $args['role'], $current_user_roles ) ) {
-								ob_get_clean();
-								return '';
-							}
-						}
+					if ( ! empty( $args['role'] ) && ! in_array( $args['role'], $current_user_roles ) ) {
+						return '';
 					}
 				}
 			}
@@ -627,7 +616,8 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 			 */
 			do_action( 'um_after_everything_output' );
 
-			$output = ob_get_clean();
+			$output = ob_get_contents();
+			ob_end_clean();
 			return $output;
 		}
 
@@ -996,7 +986,10 @@ if ( ! class_exists( 'um\core\Shortcodes' ) ) {
 			$this->load_template( 'searchform' );
 
 			// get the buffer
-			$template = ob_get_clean();
+			$template = ob_get_contents();
+
+			// clear the buffer
+			ob_end_clean();
 
 			return $template;
 		}

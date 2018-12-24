@@ -244,7 +244,7 @@ function UM_Rows_Refresh(){
 	UM_Add_Icon();
 	
 	jQuery.ajax({
-		url: wp.ajax.settings.url,
+		url: um_admin_dragdrop_data.ajax_url,
 		type: 'POST',
 		data: jQuery( '.um_update_order' ).serialize(),
 		success: function(){

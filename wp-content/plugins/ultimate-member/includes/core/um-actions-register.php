@@ -54,11 +54,10 @@ function um_after_insert_user( $user_id, $args ) {
 	//clear Users cached queue
 	UM()->user()->remove_cached_queue();
 
-	um_fetch_user( $user_id );
 	if ( ! empty( $args['submitted'] ) ) {
+		um_fetch_user( $user_id );
 		UM()->user()->set_registration_details( $args['submitted'] );
 	}
-    UM()->user()->set_status( um_user( 'status' ) );
 
 	/**
 	 * UM hook
@@ -104,7 +103,7 @@ function um_after_insert_user( $user_id, $args ) {
 	 */
 	do_action( 'um_registration_complete', $user_id, $args );
 }
-add_action( 'um_user_register', 'um_after_insert_user', 1, 2 );
+add_action( 'um_user_register', 'um_after_insert_user', 10, 2 );
 
 
 /**
@@ -119,7 +118,7 @@ function um_send_registration_notification( $user_id, $args ) {
 	$emails = um_multi_admin_email();
 	if ( ! empty( $emails ) ) {
 		foreach ( $emails as $email ) {
-			if ( um_user( 'account_status' ) != 'pending' ) {
+			if ( um_user( 'status' ) != 'pending' ) {
 				UM()->mail()->send( $email, 'notification_new_user', array( 'admin' => true ) );
 			} else {
 				UM()->mail()->send( $email, 'notification_review', array( 'admin' => true ) );
@@ -137,7 +136,7 @@ add_action( 'um_registration_complete', 'um_send_registration_notification', 10,
  * @param $args
  */
 function um_check_user_status( $user_id, $args ) {
-	$status = um_user( 'account_status' );
+	$status = um_user( 'status' );
 
 	/**
 	 * UM hook
@@ -369,30 +368,6 @@ function um_submit_form_register( $args ) {
 	$args['submitted'] = array_merge( $args['submitted'], $credentials );
 	$args = array_merge( $args, $credentials );
 
-	//get user role from global or form's settings
-	$user_role = UM()->form()->assigned_role( UM()->form()->form_id );
-
-	//get user role from field Role dropdown or radio
-	if ( isset( $args['role'] ) ) {
-		global $wp_roles;
-		$um_roles = get_option( 'um_roles' );
-
-		if ( ! empty( $um_roles ) ) {
-			$role_keys = array_map( function( $item ) {
-				return 'um_' . $item;
-			}, get_option( 'um_roles' ) );
-		} else {
-			$role_keys = array();
-		}
-
-		$exclude_roles = array_diff( array_keys( $wp_roles->roles ), array_merge( $role_keys, array( 'subscriber' ) ) );
-
-		//if role is properly set it
-		if ( ! in_array( $args['role'], $exclude_roles ) ) {
-			$user_role = $args['role'];
-		}
-	}
-
 	/**
 	 * UM hook
 	 *
@@ -415,7 +390,7 @@ function um_submit_form_register( $args ) {
 	 * }
 	 * ?>
 	 */
-	$user_role = apply_filters( 'um_registration_user_role', $user_role, $args );
+	$user_role = apply_filters( 'um_registration_user_role', UM()->form()->assigned_role( UM()->form()->form_id ), $args );
 
 	$userdata = array(
 		'user_login'	=> $user_login,
@@ -585,12 +560,12 @@ function um_add_submit_button_to_register( $args ) {
 
 		<?php if ( isset($args['secondary_btn']) && $args['secondary_btn'] != 0 ) { ?>
 
-			<div class="um-left um-half"><input type="submit" value="<?php esc_attr_e( $primary_btn_word,'ultimate-member' ) ?>" class="um-button" id="um-submit-btn" /></div>
-			<div class="um-right um-half"><a href="<?php echo esc_attr( $secondary_btn_url ); ?>" class="um-button um-alt"><?php esc_attr_e( $secondary_btn_word,'ultimate-member'); ?></a></div>
+			<div class="um-left um-half"><input type="submit" value="<?php echo __( $primary_btn_word,'ultimate-member'); ?>" class="um-button" id="um-submit-btn" /></div>
+			<div class="um-right um-half"><a href="<?php echo $secondary_btn_url; ?>" class="um-button um-alt"><?php echo __( $secondary_btn_word,'ultimate-member'); ?></a></div>
 
 		<?php } else { ?>
 
-			<div class="um-center"><input type="submit" value="<?php esc_attr_e( $primary_btn_word,'ultimate-member' ) ?>" class="um-button" id="um-submit-btn" /></div>
+			<div class="um-center"><input type="submit" value="<?php echo __( $primary_btn_word,'ultimate-member'); ?>" class="um-button" id="um-submit-btn" /></div>
 
 		<?php } ?>
 
@@ -637,7 +612,7 @@ function um_registration_save_files( $user_id, $args ) {
 			if ( isset( $args['submitted'][$key] ) ) {
 
 				if ( isset( $fields[$key]['type'] ) && in_array( $fields[$key]['type'], array( 'image', 'file' ) ) &&
-				     ( um_is_temp_file( $args['submitted'][$key] ) || $args['submitted'][$key] == 'empty_file' )
+				     ( um_is_temp_upload( $args['submitted'][$key] ) || $args['submitted'][$key] == 'empty_file' )
 				) {
 
 					$files[$key] = $args['submitted'][$key];
@@ -670,8 +645,50 @@ function um_registration_save_files( $user_id, $args ) {
 	 */
 	$files = apply_filters( 'um_user_pre_updating_files_array', $files );
 
-	if ( ! empty( $files ) ) {
-		UM()->uploader()->move_temporary_files( $user_id, $files );
+	if ( !empty( $files ) ) {
+		/**
+		 * UM hook
+		 *
+		 * @type action
+		 * @title um_before_user_upload
+		 * @description Before file uploaded on complete UM user registration.
+		 * @input_vars
+		 * [{"var":"$user_id","type":"int","desc":"User ID"},
+		 * {"var":"$files","type":"array","desc":"Files data"}]
+		 * @change_log
+		 * ["Since: 2.0"]
+		 * @usage add_action( 'um_before_user_upload', 'function_name', 10, 2 );
+		 * @example
+		 * <?php
+		 * add_action( 'um_before_user_upload', 'my_before_user_upload', 10, 2 );
+		 * function my_before_user_upload( $user_id, $files ) {
+		 *     // your code here
+		 * }
+		 * ?>
+		 */
+		do_action( 'um_before_user_upload', $user_id, $files );
+		UM()->user()->update_files( $files );
+		/**
+		 * UM hook
+		 *
+		 * @type action
+		 * @title um_after_user_upload
+		 * @description After complete UM user registration and file uploaded.
+		 * @input_vars
+		 * [{"var":"$user_id","type":"int","desc":"User ID"},
+		 * {"var":"$files","type":"array","desc":"Files data"}]
+		 * @change_log
+		 * ["Since: 2.0"]
+		 * @usage add_action( 'um_after_user_upload', 'function_name', 10, 2 );
+		 * @example
+		 * <?php
+		 * add_action( 'um_after_user_upload', 'my_after_user_upload', 10, 2 );
+		 * function my_after_user_upload( $user_id, $files ) {
+		 *     // your code here
+		 * }
+		 * ?>
+		 */
+		do_action( 'um_after_user_upload', $user_id, $files );
 	}
 }
 add_action( 'um_registration_set_extra_data', 'um_registration_save_files', 10, 2 );
@@ -709,17 +726,3 @@ function um_registration_set_profile_full_name( $user_id, $args ) {
 	do_action( 'um_update_profile_full_name', $user_id, $args );
 }
 add_action( 'um_registration_set_extra_data', 'um_registration_set_profile_full_name', 10, 2 );
-
-
-/**
- *  Redirect from default registration to UM registration page
- */
-function um_form_register_redirect() {
-	$page_id = UM()->options()->get( UM()->options()->get_core_page_id( 'register' ) );
-	$register_post = get_post( $page_id );
-	if ( ! empty( $register_post ) ) {
-		wp_safe_redirect( get_permalink( $page_id ) );
-		exit();
-	}
-}
-add_action( 'login_form_register', 'um_form_register_redirect', 10 );

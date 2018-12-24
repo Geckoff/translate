@@ -10,5 +10,4 @@
     Template Name: Application
 */
 
-
 require_once "app/build/index.html";

@@ -617,7 +617,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 							'id'            => 'email_html',
 							'type'          => 'checkbox',
 							'label'         => __( 'Use HTML for E-mails?','ultimate-member' ),
-							'tooltip'       => __( 'If you plan use e-mails with HTML, please make sure that this option is enabled. Otherwise, HTML will be displayed as plain text.','ultimate-member'),
+							'tooltip'   => __('If you enable HTML for e-mails, you can customize the HTML e-mail templates found in <strong>templates/email</strong> folder.','ultimate-member'),
 						)
 					)
 				),
@@ -1034,6 +1034,11 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 							)
 						),
 						array(
+							'id'       		=> 'um_allow_tracking',
+							'type'     		=> 'checkbox',
+							'label'   		=> __( 'Allow Tracking','ultimate-member' ),
+						),
+						array(
 							'id'       		=> 'uninstall_on_delete',
 							'type'     		=> 'checkbox',
 							'label'   		=> __( 'Remove Data on Uninstall?', 'ultimate-member' ),
@@ -1170,7 +1175,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 			 */
 			do_action( "um_settings_page_before_" . $current_tab . "_" . $current_subtab . "_content" );
 
-			if ( in_array( $current_tab, apply_filters('um_settings_custom_tabs', array( 'licenses', 'install_info' ) ) ) || in_array( $current_subtab, apply_filters('um_settings_custom_subtabs', array() ) ) ) {
+			if ( 'licenses' == $current_tab || 'install_info' == $current_tab ) {
 
 				/**
 				 * UM hook
@@ -1192,14 +1197,12 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 				do_action( "um_settings_page_" . $current_tab . "_" . $current_subtab . "_before_section" );
 
 				$section_fields = $this->get_section_fields( $current_tab, $current_subtab );
-				$settings_section = $this->render_settings_section( $section_fields, $current_tab, $current_subtab );
 
 				/**
 				 * UM hook
 				 *
 				 * @type filter
 				 * @title um_settings_section_{$current_tab}_{$current_subtab}_content
-				 *
 				 * @description Render settings section
 				 * @input_vars
 				 * [{"var":"$content","type":"string","desc":"Section content"},
@@ -1217,7 +1220,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 				 * ?>
 				 */
 				echo apply_filters( 'um_settings_section_' . $current_tab . '_' . $current_subtab . '_content',
-					$settings_section,
+					$this->render_settings_section( $section_fields, $current_tab, $current_subtab ),
 					$section_fields
 				);
 
@@ -1255,7 +1258,6 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 					do_action( "um_settings_page_" . $current_tab . "_" . $current_subtab . "_before_section" );
 
 					$section_fields = $this->get_section_fields( $current_tab, $current_subtab );
-					$settings_section = $this->render_settings_section( $section_fields, $current_tab, $current_subtab );
 
 					/**
 					 * UM hook
@@ -1279,7 +1281,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 					 * ?>
 					 */
 					echo apply_filters( 'um_settings_section_' . $current_tab . '_' . $current_subtab . '_content',
-						$settings_section,
+						$this->render_settings_section( $section_fields, $current_tab, $current_subtab ),
 						$section_fields
 					);
 					?>
@@ -1687,9 +1689,8 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 			$email_key = empty( $_GET['email'] ) ? '' : urldecode( $_GET['email'] );
 			$emails = UM()->config()->email_notifications;
 
-			if ( empty( $email_key ) || empty( $emails[ $email_key ] ) ) {
+			if ( empty( $email_key ) || empty( $emails[$email_key] ) )
 				return $section;
-			}
 
 			$in_theme = UM()->mail()->template_in_theme( $email_key );
 
@@ -1718,7 +1719,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 				array(
 					'id'            => 'um_email_template',
 					'type'          => 'hidden',
-					'value'         => $email_key,
+					'value' 		=> $email_key,
 				),
 				array(
 					'id'            => $email_key . '_on',
@@ -2011,7 +2012,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Settings' ) ) {
 							$license_status = null;
 
 						}
-
+                           
 						?>
 
 						<tr class="um-settings-line">
@@ -2180,10 +2181,12 @@ Cache User Profile:			<?php if( UM()->options()->get( 'um_profile_object_cache_s
 Generate Slugs on Directories:	<?php if( UM()->options()->get( 'um_generate_slug_in_directory' ) == 1 ){ echo "No"; }else{ echo "Yes"; } echo "\n"; ?>
 Rewrite Rules: 				<?php if( UM()->options()->get( 'um_flush_stop' ) == 1 ){ echo "No"; }else{ echo "Yes"; } echo "\n"; ?>
 Force UTF-8 Encoding: 		<?php if( UM()->options()->get( 'um_force_utf8_strings' ) == 1 ){ echo "Yes"; }else{ echo "No"; } echo "\n"; ?>
+Time Check Security: 			<?php if( UM()->options()->get( 'enable_timebot' ) == 1 ){ echo "Yes"; }else{ echo "No"; } echo "\n"; ?>
 JS/CSS Compression: 			<?php if ( defined('SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) { echo "Yes"; }else{ echo "No"; } echo "\n"; ?>
 <?php if( is_multisite() ): ?>
     Network Structure:			<?php echo UM()->options()->get( 'network_permalink_structure' ). "\n"; ?>
 <?php endif; ?>
+Nav Menu Settings: 			<?php if( UM()->options()->get( 'disable_menu' ) == 0 ){ echo "Yes"; }else{ echo "No"; } echo "\n"; ?>
 Port Forwarding in URL: 		<?php if( UM()->options()->get( 'um_port_forwarding_url' ) == 1 ){ echo "Yes"; }else{ echo "No"; } echo "\n"; ?>
 Exclude CSS/JS on Home: 		<?php if( UM()->options()->get( 'js_css_exlcude_home' ) == 1 ){ echo "Yes"; }else{ echo "No"; } echo "\n"; ?>
 
@@ -2380,7 +2383,6 @@ SOAP Client:              			<?php echo ( class_exists( 'SoapClient' ) ) ? 'Your
 SUHOSIN:                  			<?php echo ( extension_loaded( 'suhosin' ) ) ? 'Your server has SUHOSIN installed.' : 'Your server does not have SUHOSIN installed.'; ?><?php echo "\n"; ?>
 GD Library:               			<?php echo ( extension_loaded( 'gd' ) && function_exists('gd_info') ) ? 'PHP GD library is installed on your web server.' : 'PHP GD library is NOT installed on your web server.'; ?><?php echo "\n"; ?>
 Mail:                     			<?php echo ( function_exists('mail') ) ? 'PHP mail function exist on your web server.' : 'PHP mail function doesn\'t exist on your web server.'; ?><?php echo "\n"; ?>
-Exif:				          <?php echo ( extension_loaded( 'exif' ) && function_exists('exif_imagetype') ) ? 'PHP Exif library is installed on your web server.' : 'PHP Exif library is NOT installed on your web server.'; ?><?php echo "\n"; ?>
 
 
 --- Session Configurations ---
@@ -2522,16 +2524,18 @@ Use Only Cookies:         			<?php echo ini_get( 'session.use_only_cookies' ) ? 
 		 */
 		function save_email_templates( $settings ) {
 
-			if ( empty( $settings['um_email_template'] ) ) {
+			if ( empty( $settings['um_email_template'] ) )
 				return $settings;
-			}
 
 			$template = $settings['um_email_template'];
-			$content = stripslashes( $settings[ $template ] );
+			$content = stripslashes( $settings[$template] );
 
 			$theme_template_path = UM()->mail()->get_template_file( 'theme', $template );
 
-			UM()->mail()->copy_email_template( $template );
+			$in_theme = UM()->mail()->template_in_theme( $template );
+			if ( ! $in_theme ) {
+				UM()->mail()->copy_email_template( $template );
+			}
 
 			$fp = fopen( $theme_template_path, "w" );
 			$result = fputs( $fp, $content );
@@ -2539,7 +2543,7 @@ Use Only Cookies:         			<?php echo ini_get( 'session.use_only_cookies' ) ? 
 
 			if ( $result !== false ) {
 				unset( $settings['um_email_template'] );
-				unset( $settings[ $template ] );
+				unset( $settings[$template] );
 			}
 
 			return $settings;

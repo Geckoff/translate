@@ -1,4 +1,7 @@
-<?php if ( ! defined( 'ABSPATH' ) ) exit;
+<?php
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Array2XML {
 
@@ -130,3 +133,4 @@ class Array2XML {
         return preg_match($pattern, $tag, $matches) && $matches[0] == $tag;
     }
 }
+?>

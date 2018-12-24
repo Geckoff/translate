@@ -167,27 +167,27 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 		function um_admin_pre_save_field_to_form( $array ){
 			unset( $array['conditions'] );
 			if ( isset($array['conditional_field']) && !empty( $array['conditional_action'] ) && !empty( $array['conditional_operator'] ) ) {
-				$array['conditional_value'] = isset( $array['conditional_value'] ) ? $array['conditional_value'] : '';
+				$array['conditional_value'] = ! empty( $array['conditional_value'] ) ? $array['conditional_value'] : '';
 				$array['conditions'][] = array( $array['conditional_action'], $array['conditional_field'], $array['conditional_operator'], $array['conditional_value'] );
 			}
 
 			if ( isset($array['conditional_field1']) && !empty( $array['conditional_action1'] ) && !empty( $array['conditional_operator1'] ) ) {
-				$array['conditional_value1'] = isset( $array['conditional_value1'] ) ? $array['conditional_value1'] : '';
+				$array['conditional_value1'] = ! empty( $array['conditional_value1'] ) ? $array['conditional_value1'] : '';
 				$array['conditions'][] = array( $array['conditional_action1'], $array['conditional_field1'], $array['conditional_operator1'], $array['conditional_value1'] );
 			}
 
 			if ( isset($array['conditional_field2']) && !empty( $array['conditional_action2'] ) && !empty( $array['conditional_operator2'] ) ) {
-				$array['conditional_value2'] = isset( $array['conditional_value2'] ) ? $array['conditional_value2'] : '';
+				$array['conditional_value2'] = ! empty( $array['conditional_value2'] ) ? $array['conditional_value2'] : '';
 				$array['conditions'][] = array( $array['conditional_action2'], $array['conditional_field2'], $array['conditional_operator2'], $array['conditional_value2'] );
 			}
 
 			if ( isset($array['conditional_field3']) && !empty( $array['conditional_action3'] ) && !empty( $array['conditional_operator3'] ) ) {
-				$array['conditional_value3'] = isset( $array['conditional_value3'] ) ? $array['conditional_value3'] : '';
+				$array['conditional_value3'] = ! empty( $array['conditional_value3'] ) ? $array['conditional_value3'] : '';
 				$array['conditions'][] = array( $array['conditional_action3'], $array['conditional_field3'], $array['conditional_operator3'], $array['conditional_value3'] );
 			}
 
 			if ( isset($array['conditional_field4']) && !empty( $array['conditional_action4'] ) && !empty( $array['conditional_operator4'] ) ) {
-				$array['conditional_value4'] = isset( $array['conditional_value4'] ) ? $array['conditional_value4'] : '';
+				$array['conditional_value4'] = ! empty( $array['conditional_value4'] ) ? $array['conditional_value4'] : '';
 				$array['conditions'][] = array( $array['conditional_action4'], $array['conditional_field4'], $array['conditional_operator4'], $array['conditional_value4'] );
 			}
 
@@ -230,22 +230,11 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 				<?php } ?>
 
 				<div class="um-admin-btn-content">
-                    <div class="um-admin-cur-condition-template">
 
-						<?php $metabox->field_input( '_conditional_action', $form_id ); ?>
-						<?php $metabox->field_input( '_conditional_field', $form_id ); ?>
-						<?php $metabox->field_input( '_conditional_operator', $form_id ); ?>
-						<?php $metabox->field_input( '_conditional_value', $form_id ); ?>
-
-                        <p><a href="#" class="um-admin-remove-condition button um-admin-tipsy-n" title="Remove condition"><i class="um-icon-close" style="margin-right:0!important"></i></a></p>
-
-                        <div class="um-admin-clear"></div>
-                    </div>
-                    <p><a href="#" class="um-admin-new-condition button button-primary um-admin-tipsy-n" title="Add new condition"><?php _e( 'Add new rule', 'ultimate-member' ); ?></a></p>
-                    <p class="um-admin-reset-conditions"><a href="#" class="button"><?php _e( 'Reset all rules', 'ultimate-member' ); ?></a></p>
+					<p class="um-admin-reset-conditions"><a href="#" class="button button-primary"><?php _e( 'Reset all rules', 'ultimate-member' ); ?></a></p>
 					<div class="um-admin-clear"></div>
 
-					<?php if ( isset( $edit_array['conditions'] ) && count( $edit_array['conditions'] ) != 0 ) {
+					<?php if ( isset( $edit_array['conditions'] ) ) {
 
 						foreach ( $edit_array['conditions'] as $k => $arr ) {
 
@@ -258,7 +247,11 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 								<?php $metabox->field_input( '_conditional_operator' . $k, $form_id ); ?>
 								<?php $metabox->field_input( '_conditional_value' . $k, $form_id ); ?>
 
-                                <p><a href="#" class="um-admin-remove-condition button um-admin-tipsy-n" title="Remove condition"><i class="um-icon-close" style="margin-right:0!important"></i></a></p>
+								<?php if ( $k == '' ) { ?>
+									<p><a href="#" class="um-admin-new-condition button um-admin-tipsy-n" title="Add new condition"><i class="um-icon-plus" style="margin-right:0!important"></i></a></p>
+								<?php } else { ?>
+									<p><a href="#" class="um-admin-remove-condition button um-admin-tipsy-n" title="Remove condition"><i class="um-icon-close" style="margin-right:0!important"></i></a></p>
+								<?php } ?>
 
 								<div class="um-admin-clear"></div>
 							</div>
@@ -275,13 +268,15 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 							<?php $metabox->field_input( '_conditional_operator', $form_id ); ?>
 							<?php $metabox->field_input( '_conditional_value', $form_id ); ?>
 
-                            <p><a href="#" class="um-admin-remove-condition button um-admin-tipsy-n" title="Remove condition"><i class="um-icon-close" style="margin-right:0!important"></i></a></p>
+							<p><a href="#" class="um-admin-new-condition button um-admin-tipsy-n" title="Add new condition"><i class="um-icon-plus" style="margin-right:0!important"></i></a></p>
 
 							<div class="um-admin-clear"></div>
 						</div>
 
 					<?php } ?>
+
 				</div>
+
 			</div>
 
 			<?php
@@ -305,7 +300,8 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 
 			$this->show_builder();
 
-			$output = ob_get_clean();
+			$output = ob_get_contents();
+			ob_end_clean();
 
 			if(is_array($output)){ print_r($output); }else{ echo $output; } die;
 		}
@@ -663,7 +659,6 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 			$output['error'] = apply_filters( 'um_admin_field_update_error_handling', $output['error'], $array );
 
 			extract( $array['post'] );
-
 			if ( empty( $output['error'] ) ){
 
 				$save = array();
@@ -816,7 +811,9 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 					 */
 					do_action( "um_admin_ajax_modal_content__hook_{$act_id}" );
 
-					$output = ob_get_clean();
+					$output = ob_get_contents();
+					ob_end_clean();
+
 					break;
 
 				case 'um_admin_fonticon_selector':
@@ -833,7 +830,8 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 						<?php } ?>
 					</div><div class="um-admin-clear"></div>
 
-					<?php $output = ob_get_clean();
+					<?php $output = ob_get_contents();
+					ob_end_clean();
 					break;
 
 				case 'um_admin_show_fields':
@@ -890,7 +888,8 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 
 					</div>
 
-					<?php $output = ob_get_clean();
+					<?php $output = ob_get_contents();
+					ob_end_clean();
 					break;
 
 				case 'um_admin_edit_field_popup':
@@ -968,7 +967,9 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 
 					}
 
-					$output = ob_get_clean();
+					$output = ob_get_contents();
+					ob_end_clean();
+
 					break;
 
 				case 'um_admin_new_field_popup':
@@ -1030,7 +1031,9 @@ if ( ! class_exists( 'um\admin\core\Admin_Builder' ) ) {
 
 					}
 
-					$output = ob_get_clean();
+					$output = ob_get_contents();
+					ob_end_clean();
+
 					break;
 
 				case 'um_admin_preview_form':

@@ -1,4 +1,7 @@
-<?php if ( ! defined( 'ABSPATH' ) ) exit;
+<?php
+
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Modified to remove var

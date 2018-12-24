@@ -10,10 +10,9 @@ function um_admin_update_builder() {
 	jQuery('.tipsy').hide();
 
 	jQuery.ajax({
-		url: wp.ajax.settings.url,
+		url: um_admin_builder_data.ajax_url,
 		type: 'POST',
 		data: {
-			action:'um_update_builder',
 			form_id: form_id
 		},
 		success: function(data){

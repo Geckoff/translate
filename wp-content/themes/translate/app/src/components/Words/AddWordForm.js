@@ -4,6 +4,7 @@ import { getTranslatingWord } from "../../reducers";
 import { getListsCollection } from "../../reducers";
 import {addWordRequest} from "../../actions/words";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -155,7 +156,7 @@ class AddWordForm extends Component {
                                     <strong className="tr-translations-title-lists">Lists</strong>
                                     {data.errors.list0 && <p className="valerror">{data.errors.list0}</p>}
                                 </div>
-                                {listsCollection.map((list, i) => (
+                                {listsCollection.length > 0 ? listsCollection.map((list, i) => (
                                     <div key={i}>
                                         <label>
                                             <Field
@@ -168,7 +169,10 @@ class AddWordForm extends Component {
                                             {list.name}
                                         </label>
                                     </div>
-                                ))}
+                                ))
+                                :
+                                    <p>Please, <Link to="/lists/add">add your first list</Link> to start using the app.</p>
+                                }
                             </div>
                             <div className="submit-block">
                                 <Button

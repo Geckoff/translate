@@ -562,7 +562,6 @@ div.notification-container {
 }
 
 .words-stats .ReactTable .rt-td .stats-table-cell {
-    height: 100%;
     padding: 5px;
 }
 
@@ -579,6 +578,10 @@ div.notification-container {
 .words-stats .ReactTable .rt-thead .rt-th > div {
     word-wrap: break-word;
     white-space: normal;
+}
+
+.ReactTable .-pagination button.-btn {
+    height: auto;
 }
 
 @media (max-width: 1050px) {

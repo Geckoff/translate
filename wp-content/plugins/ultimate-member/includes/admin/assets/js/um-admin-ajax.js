@@ -28,10 +28,11 @@ jQuery(document).ready(function() {
 		jQuery('.tipsy').hide();
 				
 		um_admin_remove_modal();
+		
 		jQuery.ajax({
-			url: wp.ajax.settings.url,
+			url: um_admin_ajax_data.ajax_url,
 			type: 'POST',
-			data: { action:'um_do_ajax_action',act_id : act_id, arg1 : arg1, arg2 : arg2, in_row: in_row, in_sub_row: in_sub_row, in_column: in_column, in_group: in_group },
+			data: { act_id : act_id, arg1 : arg1, arg2 : arg2, in_row: in_row, in_sub_row: in_sub_row, in_column: in_column, in_group: in_group },
 			success: function(data){
 				
 				jQuery('.um-col-demon-settings').data('in_row', '');

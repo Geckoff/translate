@@ -659,8 +659,8 @@ if ( ! class_exists( 'um\core\Builtin' ) ) {
 			 * ?>
 			 */
 			$profile_privacy = apply_filters( 'um_profile_privacy_options', array(
-				'Everyone'  => __( 'Everyone', 'ultimate-member' ),
-				'Only me'   => __( 'Only me', 'ultimate-member' )
+				__( 'Everyone', 'ultimate-member' ),
+				__( 'Only me', 'ultimate-member' )
 			) );
 
 			$this->predefined_fields = array(
@@ -925,7 +925,7 @@ if ( ! class_exists( 'um\core\Builtin' ) ) {
 					'validate' => 'instagram_url',
 					'url_text' => 'Instagram',
 					'advanced' => 'social',
-					'color' => 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)',
+					'color' => '#3f729b',
 					'match' => 'https://instagram.com/',
 				),
 
@@ -1088,6 +1088,13 @@ if ( ! class_exists( 'um\core\Builtin' ) ) {
 					'private_use' => true,
 				),
 
+				'password_reset_text' => array(
+					'title' => __('Password Reset','ultimate-member'),
+					'type' => 'block',
+					'content' => '<div style="text-align:center">' . __('To reset your password, please enter your email address or username below','ultimate-member'). '</div>',
+					'private_use' => true,
+				),
+
 				'username_b' => array(
 					'title' => __('Username or E-mail','ultimate-member'),
 					'metakey' => 'username_b',
@@ -1110,7 +1117,7 @@ if ( ! class_exists( 'um\core\Builtin' ) ) {
 					'required' => 0,
 					'public' => 1,
 					'editable' => 1,
-					'default' => 'Everyone',
+					'default' => __('Everyone','ultimate-member'),
 					'options' => $profile_privacy,
 					'allowclear' => 0,
 					'account_only' => true,
@@ -1245,7 +1252,7 @@ if ( ! class_exists( 'um\core\Builtin' ) ) {
 			 */
 			$fields_without_metakey = apply_filters( 'um_fields_without_metakey', $fields_without_metakey );
 
-			if ( ! $show_all ) {
+			if ( !$show_all ) {
 				$this->fields_dropdown = array('image','file','password','rating');
 				$this->fields_dropdown = array_merge( $this->fields_dropdown, $fields_without_metakey );
 			} else {

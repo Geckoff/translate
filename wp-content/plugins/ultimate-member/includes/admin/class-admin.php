@@ -35,7 +35,6 @@ if ( ! class_exists( 'um\admin\Admin' ) ) {
 
 			add_action( 'um_admin_do_action__user_cache', array( &$this, 'user_cache' ) );
 			add_action( 'um_admin_do_action__purge_temp', array( &$this, 'purge_temp' ) );
-			add_action( 'um_admin_do_action__manual_upgrades_request', array( &$this, 'manual_upgrades_request' ) );
 			add_action( 'um_admin_do_action__duplicate_form', array( &$this, 'duplicate_form' ) );
 			add_action( 'um_admin_do_action__um_language_downloader', array( &$this, 'um_language_downloader' ) );
 			add_action( 'um_admin_do_action__um_hide_locale_notice', array( &$this, 'um_hide_notice' ) );
@@ -43,83 +42,11 @@ if ( ! class_exists( 'um\admin\Admin' ) ) {
 			add_action( 'um_admin_do_action__um_hide_exif_notice', array( &$this, 'um_hide_notice' ) );
 			add_action( 'um_admin_do_action__user_action', array( &$this, 'user_action' ) );
 
-			add_action( 'um_admin_do_action__install_core_pages', array( &$this, 'install_core_pages' ) );
-
 			add_action( 'parent_file', array( &$this, 'parent_file' ), 9 );
 			add_filter( 'gettext', array( &$this, 'gettext' ), 10, 4 );
 			add_filter( 'post_updated_messages', array( &$this, 'post_updated_messages' ) );
-
-
-
-			add_action( 'wp_ajax_um_dynamic_modal_content', array( UM()->builder(), 'dynamic_modal_content' ) );
-			add_action( 'wp_ajax_um_populate_dropdown_options', array( UM()->builder(), 'populate_dropdown_options' ) );
-			add_action( 'wp_ajax_um_update_field', array( UM()->builder(), 'update_field' ) );
-			add_action( 'wp_ajax_um_do_ajax_action', array( UM()->fields(), 'do_ajax_action' ) );
-			add_action( 'wp_ajax_um_update_builder', array( UM()->builder(), 'update_builder' ) );
-			add_action( 'wp_ajax_um_update_order', array( UM()->dragdrop(), 'update_order' ) );
-			add_action( 'wp_ajax_um_rated', array( UM()->admin_menu(), 'ultimatemember_rated' ) );
 		}
 
-
-		function manual_upgrades_request() {
-			if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
-				die();
-			}
-
-			$last_request = get_option( 'um_last_manual_upgrades_request', false );
-
-			if ( empty( $last_request ) || time() > $last_request + DAY_IN_SECONDS ) {
-
-				delete_transient( 'update_plugins' );
-				delete_site_transient( 'update_plugins' );
-
-				UM()->plugin_updater()->um_checklicenses();
-
-				update_option( 'um_last_manual_upgrades_request', time() );
-
-				$url = add_query_arg( array( 'page' => 'ultimatemember', 'update' => 'got_updates' ), admin_url( 'admin.php' ) );
-			} else {
-				$url = add_query_arg( array( 'page' => 'ultimatemember', 'update' => 'often_updates' ), admin_url( 'admin.php' ) );
-			}
-			exit( wp_redirect( $url ) );
-		}
-
-
-		/**
-		 * Core pages installation
-		 */
-		function install_core_pages() {
-			if ( ! is_admin() ) {
-				die();
-			}
-
-			UM()->setup()->install_default_pages();
-
-			//check empty pages in settings
-			$empty_pages = array();
-
-			$pages = UM()->config()->permalinks;
-			if ( $pages && is_array( $pages ) ) {
-				foreach ( $pages as $slug => $page_id ) {
-					$page = get_post( $page_id );
-
-					if ( ! isset( $page->ID ) && in_array( $slug, array_keys( UM()->config()->core_pages ) ) ) {
-						$empty_pages[] = $slug;
-					}
-				}
-			}
-
-			//if there aren't empty pages - then hide pages notice
-			if ( empty( $empty_pages ) ) {
-				$hidden_notices = get_option( 'um_hidden_admin_notices', array() );
-				$hidden_notices[] = 'wrong_pages';
-
-				update_option( 'um_hidden_admin_notices', $hidden_notices );
-			}
-
-			$url = add_query_arg( array( 'page' => 'um_options' ), admin_url( 'admin.php' ) );
-			exit( wp_redirect( $url ) );
-		}
 
 
 		/**

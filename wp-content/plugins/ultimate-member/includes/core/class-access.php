@@ -65,10 +65,6 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 			add_action( 'template_redirect', array( &$this, 'template_redirect' ), 1000 );
 			add_action( 'um_access_check_individual_term_settings', array( &$this, 'um_access_check_individual_term_settings' ) );
 			add_action( 'um_access_check_global_settings', array( &$this, 'um_access_check_global_settings' ) );
-
-			/* Disable comments if user has not permission to access current post */
-			add_filter( 'comments_open', array( $this, 'disable_comments_open' ), 99, 2 );
-			add_filter( 'get_comments_number', array( $this, 'disable_comments_open' ), 99, 2 );
 		}
 
 
@@ -244,10 +240,9 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 			global $post;
 
 			$curr = UM()->permalinks()->get_current_url();
-			$ms_empty_role_access = is_multisite() && is_user_logged_in() && !UM()->roles()->get_priority_user_role( um_user('ID') );
 
 			if ( is_front_page() ) {
-				if ( is_user_logged_in() && !$ms_empty_role_access ) {
+				if ( is_user_logged_in() ) {
 
 					$user_default_homepage = um_user( 'default_homepage' );
 					if ( ! empty( $user_default_homepage ) )
@@ -301,7 +296,7 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 					}
 				}
 			} elseif ( is_category() ) {
-				if ( ! is_user_logged_in() || $ms_empty_role_access ) {
+				if ( ! is_user_logged_in() ) {
 
 					$access = UM()->options()->get( 'accessible' );
 
@@ -325,7 +320,7 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 
 			$access = UM()->options()->get( 'accessible' );
 
-			if ( $access == 2 && ( !is_user_logged_in() || $ms_empty_role_access ) ) {
+			if ( $access == 2 && ! is_user_logged_in() ) {
 
 				//build exclude URLs pages
 				$redirects = array();
@@ -528,24 +523,17 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 		 * @return bool|array
 		 */
 		function get_post_privacy_settings( $post ) {
-			$exclude = false;
-
 			//if logged in administrator all pages are visible
 			if ( current_user_can( 'administrator' ) ) {
-				$exclude = true;
+				return false;
 			}
 
-			//exclude from privacy UM default pages (except Members list and User(Profile) page)
+			//exlude from privacy UM default pages (except Members list and User(Profile) page)
 			if ( ! empty( $post->post_type ) && $post->post_type == 'page' ) {
 				if ( um_is_core_post( $post, 'login' ) || um_is_core_post( $post, 'register' ) ||
 				     um_is_core_post( $post, 'account' ) || um_is_core_post( $post, 'logout' ) ||
-				     um_is_core_post( $post, 'password-reset' ) || ( is_user_logged_in() && um_is_core_post( $post, 'user' ) ) )
-					$exclude = true;
-			}
-
-			$exclude = apply_filters( 'um_exclude_posts_from_privacy', $exclude, $post );
-			if ( $exclude ) {
-				return false;
+				     um_is_core_post( $post, 'password-reset' ) )
+					return false;
 			}
 
 			$restricted_posts = UM()->options()->get( 'restricted_access_post_metabox' );
@@ -947,63 +935,6 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 
 
 		/**
-		 * Disable comments if user has not permission to access this post
-		 * @param mixed $open
-		 * @param int $post_id
-		 * @return boolean
-		 */
-		public function disable_comments_open( $open, $post_id ) {
-
-			static $cache = array();
-
-			if ( isset( $cache[ $post_id ] ) ) {
-				return $cache[ $post_id ] ? $open : false;
-			}
-
-			$post = get_post( $post_id );
-			$restriction = $this->get_post_privacy_settings( $post );
-
-			if ( ! $restriction ) {
-				$cache[ $post_id ] = $open;
-				return $open;
-			}
-
-			if ( '1' == $restriction['_um_accessible'] ) {
-
-				if ( is_user_logged_in() ) {
-					if ( ! current_user_can( 'administrator' ) ) {
-						$open = false;
-					}
-				}
-
-			} elseif ( '2' == $restriction['_um_accessible'] ) {
-				if ( ! is_user_logged_in() ) {
-					$open = false;
-				} else {
-					if ( ! current_user_can( 'administrator' ) ) {
-						$custom_restrict = $this->um_custom_restriction( $restriction );
-
-						if ( empty( $restriction['_um_access_roles'] ) || false === array_search( '1', $restriction['_um_access_roles'] ) ) {
-							if ( ! $custom_restrict ) {
-								$open = false;
-							}
-						} else {
-							$user_can = $this->user_can( get_current_user_id(), $restriction['_um_access_roles'] );
-
-							if ( ! isset( $user_can ) || ! $user_can || ! $custom_restrict ) {
-								$open = false;
-							}
-						}
-					}
-				}
-			}
-
-			$cache[ $post_id ] = $open;
-			return $open;
-		}
-
-
-		/**
 		 * Protect Post Types in menu query
 		 * Restrict content new logic
 		 * @param $menu_items
@@ -1029,22 +960,19 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 					}
 
 					//post is private
-					if ( '0' == $restriction['_um_accessible'] ) {
-						$filtered_items[] = $menu_item;
-						continue;
-					} elseif ( '1' == $restriction['_um_accessible'] ) {
+					if ( '1' == $restriction['_um_accessible'] ) {
 						//if post for not logged in users and user is not logged in
 						if ( ! is_user_logged_in() ) {
 							$filtered_items[] = $menu_item;
 							continue;
 						} else {
 
-							if ( current_user_can( 'administrator' ) ) {
-								$filtered_items[] = $menu_item;
-								continue;
-							}
+                            if ( current_user_can( 'administrator' ) ) {
+                                $filtered_items[] = $menu_item;
+                                continue;
+                            }
 
-							//if not single query when exclude if set _um_access_hide_from_queries
+						    //if not single query when exclude if set _um_access_hide_from_queries
 							if ( empty( $restriction['_um_access_hide_from_queries'] ) ) {
 								$filtered_items[] = $menu_item;
 								continue;
@@ -1054,10 +982,10 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 						//if post for logged in users and user is not logged in
 						if ( is_user_logged_in() ) {
 
-							if ( current_user_can( 'administrator' ) ) {
-								$filtered_items[] = $menu_item;
-								continue;
-							}
+                            if ( current_user_can( 'administrator' ) ) {
+                                $filtered_items[] = $menu_item;
+                                continue;
+                            }
 
 							$custom_restrict = $this->um_custom_restriction( $restriction );
 
@@ -1088,6 +1016,8 @@ if ( ! class_exists( 'um\core\Access' ) ) {
 							}
 						}
 					}
+
+					continue;
 				}
 
 				//add all other posts

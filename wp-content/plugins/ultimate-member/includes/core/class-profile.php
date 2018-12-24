@@ -76,7 +76,7 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 		/**
 		 * All tab data
 		 *
-		 * @return array
+		 * @return mixed|void
 		 */
 		function tabs() {
 
@@ -118,19 +118,10 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 
 			// disable private tabs
 			if ( ! is_admin() ) {
-				if ( is_user_logged_in() ) {
-					$user_id = um_user('ID');
-					um_fetch_user( get_current_user_id() );
-				}
-
 				foreach ( $tabs as $id => $tab ) {
 					if ( ! $this->can_view_tab( $id ) ) {
-						unset( $tabs[ $id ] );
+						unset( $tabs[$id] );
 					}
-				}
-
-				if ( is_user_logged_in() ) {
-					um_fetch_user( $user_id );
 				}
 			}
 
@@ -141,17 +132,14 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 		/**
 		 * Tabs that are active
 		 *
-		 * @return array
+		 * @return mixed|void
 		 */
 		function tabs_active() {
 			$tabs = $this->tabs();
-
-			foreach ( $tabs as $id => $info ) {
-				if ( ! UM()->options()->get( 'profile_tab_' . $id ) && ! isset( $info['_builtin'] ) && ! isset( $info['custom'] ) ) {
+			foreach( $tabs as $id => $info ) {
+				if ( ! UM()->options()->get('profile_tab_'.$id) && !isset( $info['_builtin'] ) && !isset( $info['custom'] ) )
 					unset( $tabs[ $id ] );
-				}
 			}
-
 			return $tabs;
 		}
 
@@ -161,7 +149,7 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 		 *
 		 * @return array
 		 */
-		function tabs_primary() {
+		function tabs_primary(){
 			$tabs = $this->tabs();
 			$primary = array();
 			foreach ( $tabs as $id => $info ) {
@@ -178,7 +166,7 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 		 *
 		 * @return string
 		 */
-		function tabs_enabled() {
+		function tabs_enabled(){
 			$tabs = $this->tabs();
 			foreach( $tabs as $id => $info ){
 				if ( isset( $info['name'] ) ) {
@@ -217,38 +205,28 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 		 * @return bool
 		 */
 		function can_view_tab( $tab ) {
-
-			$target_id = UM()->user()->target_id;
-			if ( empty( $target_id ) ) {
-				return true;
-			}
-
+			$privacy  = intval( UM()->options()->get( 'profile_tab_' . $tab . '_privacy' ) );
 			$can_view = false;
 
-			$privacy = intval( UM()->options()->get( 'profile_tab_' . $tab . '_privacy' ) );
-			switch ( $privacy ) {
-				case 0:
-					$can_view = true;
-					break;
-
+			switch( $privacy ) {
 				case 1:
-					$can_view = ! is_user_logged_in();
+					$can_view = is_user_logged_in() ? false : true;
 					break;
 
 				case 2:
-					$can_view = is_user_logged_in();
+					$can_view = is_user_logged_in() ? true : false;
 					break;
 
 				case 3:
-					$can_view = is_user_logged_in() && get_current_user_id() === $target_id;
+					$can_view = get_current_user_id() == um_user( 'ID' ) ? true : false;
 					break;
 
 				case 4:
-					if ( is_user_logged_in() ) {
-						$roles = (array) UM()->options()->get( 'profile_tab_' . $tab . '_roles' );
-
-						$current_user_roles = um_user( 'roles' );
-						if ( ! empty( $current_user_roles ) && count( array_intersect( $current_user_roles, $roles ) ) > 0 ) {
+					$can_view = false;
+					if( is_user_logged_in() ) {
+						$roles = UM()->options()->get( 'profile_tab_' . $tab . '_roles' );
+						if( is_array( $roles )
+						    && in_array( UM()->user()->get_role(), $roles ) ) {
 							$can_view = true;
 						}
 					}
@@ -266,7 +244,7 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 		/**
 		 * Get active_tab
 		 *
-		 * @return string
+		 * @return mixed|void
 		 */
 		function active_tab() {
 
@@ -306,7 +284,7 @@ if ( ! class_exists( 'um\core\Profile' ) ) {
 		/**
 		 * Get active active_subnav
 		 *
-		 * @return string|null
+		 * @return mixed|null
 		 */
 		function active_subnav() {
 

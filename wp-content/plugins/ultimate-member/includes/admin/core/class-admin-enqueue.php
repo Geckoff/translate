@@ -57,7 +57,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 		 * Load js for Add/Edit User form
 		 */
 		function load_role_wrapper() {
-			wp_register_script( 'um_admin_role_wrapper', $this->js_url . 'um-admin-role-wrapper.js', '', ultimatemember_version, true );
+			wp_register_script( 'um_admin_role_wrapper', $this->js_url . 'um-admin-role-wrapper.js', '', '', true );
 			wp_enqueue_script( 'um_admin_role_wrapper' );
 
 			$localize_roles_data =  get_option( 'um_roles' );
@@ -156,6 +156,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 			wp_enqueue_script( 'um_admin_settings' );
 
 			$localize_data = array(
+				'delete_email_template' => UM()->get_ajax_route( 'um\core\Mail', 'delete_email_template' ),
 				'onbeforeunload_text' => __( 'Are sure, maybe some settings not saved', 'ultimate-member' ),
 				'texts' => array(
 					'remove' => __( 'Remove', 'ultimate-member' ),
@@ -174,8 +175,14 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 			wp_register_style( 'um_admin_modal', $this->css_url . 'um-admin-modal.css' );
 			wp_enqueue_style( 'um_admin_modal' );
 
-			wp_register_script( 'um_admin_modal', $this->js_url . 'um-admin-modal.js', array('jquery', 'wp-util'), '', true );
+			wp_register_script( 'um_admin_modal', $this->js_url . 'um-admin-modal.js', '', '', true );
 			wp_enqueue_script( 'um_admin_modal' );
+
+			$localize_data = array(
+				'ajax_url' => UM()->get_ajax_route( 'um\admin\core\Admin_Builder', 'dynamic_modal_content' ),
+				'dropdown_ajax_url' => UM()->get_ajax_route( 'um\admin\core\Admin_Builder', 'populate_dropdown_options' ),
+			);
+			wp_localize_script( 'um_admin_modal', 'um_admin_modal_data', $localize_data );
 		}
 
 
@@ -183,8 +190,14 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 		 * Field Processing
 		 */
 		function load_field() {
-			wp_register_script( 'um_admin_field', $this->js_url . 'um-admin-field.js', array('jquery', 'wp-util'), '', true );
+			wp_register_script( 'um_admin_field', $this->js_url . 'um-admin-field.js', '', '', true );
 			wp_enqueue_script( 'um_admin_field' );
+
+			$localize_data = array(
+				'ajax_url' => UM()->get_ajax_route( 'um\admin\core\Admin_Builder', 'update_field' ),
+				'do_ajax_url' => UM()->get_ajax_route( 'um\core\Fields', 'do_ajax_action' ),
+			);
+			wp_localize_script( 'um_admin_field', 'um_admin_field_data', $localize_data );
 		}
 
 
@@ -192,7 +205,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 		 * Load Builder
 		 */
 		function load_builder() {
-			wp_register_script( 'um_admin_builder', $this->js_url . 'um-admin-builder.js', array('jquery', 'wp-util'), '', true );
+			wp_register_script( 'um_admin_builder', $this->js_url . 'um-admin-builder.js', '', '', true );
 			wp_enqueue_script( 'um_admin_builder' );
 
 			//hide footer text on add/edit UM Forms
@@ -207,12 +220,19 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 			}
 
 			$localize_data = array(
+				'ajax_url' => UM()->get_ajax_route( 'um\admin\core\Admin_Builder', 'update_builder' ),
 				'hide_footer' => $hide_footer,
 			);
 			wp_localize_script( 'um_admin_builder', 'um_admin_builder_data', $localize_data );
 
-			wp_register_script( 'um_admin_dragdrop', $this->js_url . 'um-admin-dragdrop.js', array('jquery', 'wp-util'), '', true );
+			wp_register_script( 'um_admin_dragdrop', $this->js_url . 'um-admin-dragdrop.js', '', '', true );
 			wp_enqueue_script( 'um_admin_dragdrop' );
+
+
+			$localize_data = array(
+				'ajax_url' => UM()->get_ajax_route( 'um\admin\core\Admin_DragDrop', 'update_order' ),
+			);
+			wp_localize_script( 'um_admin_dragdrop', 'um_admin_dragdrop_data', $localize_data );
 
 
 			wp_register_style( 'um_admin_builder', $this->css_url . 'um-admin-builder.css' );
@@ -273,10 +293,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 		/**
 		 * Load global css
 		 */
-		function load_global_scripts() {
-			wp_register_script( 'um_admin_global', $this->js_url . 'um-admin-global.js', array('jquery'), ultimatemember_version, true );
-			wp_enqueue_script( 'um_admin_global' );
-
+		function load_global_css() {
 			wp_register_style( 'um_admin_global', $this->css_url . 'um-admin-global.css' );
 			wp_enqueue_style( 'um_admin_global' );
 		}
@@ -286,7 +303,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 		 * Load jQuery custom code
 		 */
 		function load_custom_scripts() {
-			wp_register_script( 'um_admin_scripts', $this->js_url . 'um-admin-scripts.js',  array('jquery','wp-util', 'wp-color-picker'), '', true );
+			wp_register_script( 'um_admin_scripts', $this->js_url . 'um-admin-scripts.js', '', '', true );
 			wp_enqueue_script( 'um_admin_scripts' );
 		}
 
@@ -304,8 +321,13 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 		 * Load AJAX
 		 */
 		function load_ajax_js() {
-			wp_register_script( 'um_admin_ajax', $this->js_url . 'um-admin-ajax.js', array('jquery','wp-util'), '', true );
+			wp_register_script( 'um_admin_ajax', $this->js_url . 'um-admin-ajax.js', '', '', true );
 			wp_enqueue_script( 'um_admin_ajax' );
+
+			$localize_data = array(
+				'ajax_url' => UM()->get_ajax_route( 'um\core\Fields', 'do_ajax_action' ),
+			);
+			wp_localize_script( 'um_admin_ajax', 'um_admin_ajax_data', $localize_data );
 		}
 
 
@@ -335,12 +357,11 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
 			 * ?>
 			 */
 			$localize_data = apply_filters('um_admin_enqueue_localize_data', array(
-					'ajaxurl'   => admin_url( 'admin-ajax.php' ),
-					'nonce'     => wp_create_nonce( "um-admin-nonce" )
+					'ajaxurl' => admin_url( 'admin-ajax.php' )
 				)
 			);
 
-			wp_localize_script( 'um_admin_global', 'um_admin_scripts', $localize_data );
+			wp_localize_script( 'um_admin_scripts', 'um_admin_scripts', $localize_data );
 		}
 
 
@@ -370,7 +391,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
                 }*/
 
 				$this->load_functions();
-				$this->load_global_scripts();
+				$this->load_global_css();
 				$this->load_form();
 				$this->load_forms();
 				$this->load_modal();
@@ -403,8 +424,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Enqueue' ) ) {
             
 			} else {
 
-				$this->load_global_scripts();
-				$this->load_localize_scripts();
+				$this->load_global_css();
 
 			}
 

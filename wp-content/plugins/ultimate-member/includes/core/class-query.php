@@ -68,7 +68,8 @@ if ( ! class_exists( 'um\core\Query' ) ) {
 			 */
 			do_action( "um_ajax_load_posts__{$hook}", $args );
 
-			$output = ob_get_clean();
+			$output = ob_get_contents();
+			ob_end_clean();
 
 			die( $output );
 		}

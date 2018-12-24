@@ -29,25 +29,18 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 
 			add_action( 'admin_init', array( &$this, 'create_list' ), 10 );
 			add_action( 'admin_notices', array( &$this, 'render_notices' ), 1 );
-
-			add_action( 'wp_ajax_um_dismiss_notice', array( &$this, 'dismiss_notice' ) );
 		}
 
 
 		function create_list() {
 			$this->old_extensions_notice();
-			$this->install_core_page_notice();
-			$this->exif_extension_notice();
+			$this->main_notices();
 			$this->localize_note();
 			$this->show_update_messages();
 			$this->check_wrong_install_folder();
-			$this->admin_notice_opt_in();
+			$this->admin_notice_tracking();
 			$this->need_upgrade();
 			$this->check_wrong_licenses();
-
-			$this->reviews_notice();
-
-			//$this->future_changed();
 
 			/**
 			 * UM hook
@@ -142,7 +135,8 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 
 			$admin_notices = $this->get_admin_notices();
 
-			$hidden = get_option( 'um_hidden_admin_notices', array() );
+			$hidden = get_user_meta( get_current_user_id(), 'um_hidden_admin_notices' );
+			$hidden = empty( $hidden ) ? array() : $hidden;
 
 			uasort( $admin_notices, array( &$this, 'notice_priority_sort' ) );
 
@@ -192,11 +186,9 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 
 			$class = ! empty( $notice_data['class'] ) ? $notice_data['class'] : 'updated';
 
-			$dismissible = ! empty( $admin_notices[ $key ]['dismissible'] );
-
 			ob_start(); ?>
 
-			<div class="<?php echo esc_attr( $class ) ?> um-admin-notice notice <?php echo $dismissible ? 'is-dismissible' : '' ?>" data-key="<?php echo $key ?>">
+			<div class="<?php echo esc_attr( $class ) ?> um-admin-notice">
 				<?php echo ! empty( $notice_data['message'] ) ? $notice_data['message'] : '' ?>
 			</div>
 
@@ -233,32 +225,9 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 		function old_extensions_notice() {
 			$show = false;
 
-			$old_extensions = array(
-				'bbpress',
-				'followers',
-				'friends',
-				'instagram',
-				'mailchimp',
-				'messaging',
-				'mycred',
-				'notices',
-				'notifications',
-				'online',
-				'private-content',
-				'profile-completeness',
-				'recaptcha',
-				'reviews',
-				'social-activity',
-				'social-login',
-				'terms-conditions',
-				'user-tags',
-				'verified-users',
-				'woocommerce',
-			);
-
 			$slugs = array_map( function( $item ) {
 				return 'um-' . $item . '/um-' . $item . '.php';
-			}, $old_extensions );
+			}, array_keys( UM()->dependencies()->ext_required_version ) );
 
 			$active_plugins = UM()->dependencies()->get_active_plugins();
 			foreach ( $slugs as $slug ) {
@@ -283,40 +252,40 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 
 
 		/**
-		 * Regarding page setup
-		 */
-		function install_core_page_notice() {
-			$pages = UM()->config()->permalinks;
+		* Show main notices
+		*/
+		function main_notices() {
 
+			$hide_exif_notice = get_option( 'um_hide_exif_notice' );
+
+			if ( ! extension_loaded( 'exif' ) && ! $hide_exif_notice ) {
+				$this->add_notice( 'exif_disabled', array(
+					'class'     => 'updated',
+					'message'   => '<p>' . sprintf(__( 'Exif is not enabled on your server. Mobile photo uploads will not be rotated correctly until you enable the exif extension. <a href="%s">Hide this notice</a>', 'ultimate-member' ), add_query_arg('um_adm_action', 'um_hide_exif_notice') ) . '</p>',
+				), 10 );
+			}
+
+			// Regarding page setup
+			$pages = UM()->config()->permalinks;
 			if ( $pages && is_array( $pages ) ) {
 
+				$err = false;
+
 				foreach ( $pages as $slug => $page_id ) {
+
 					$page = get_post( $page_id );
 
-					if ( ! isset( $page->ID ) && in_array( $slug, array_keys( UM()->config()->core_pages ) ) ) {
-
-						ob_start(); ?>
-
-						<p>
-							<?php printf( __( 'One or more of your %s pages are not correctly setup. Please visit <strong>%s > Settings</strong> to re-assign your missing pages.', 'ultimate-member' ), ultimatemember_plugin_name, ultimatemember_plugin_name ); ?>
-						</p>
-
-						<p>
-							<a href="<?php echo esc_attr( add_query_arg( 'um_adm_action', 'install_core_pages' ) ); ?>" class="button button-primary"><?php _e( 'Setup Pages', 'ultimate-member' ) ?></a>
-							&nbsp;
-							<a href="javascript:void(0);" class="button-secondary um_secondary_dimiss"><?php _e( 'No thanks', 'ultimate-member' ) ?></a>
-						</p>
-
-						<?php $message = ob_get_clean();
-
-						$this->add_notice( 'wrong_pages', array(
-							'class'         => 'updated',
-							'message'       => $message,
-							'dismissible'   => true
-						), 20 );
-
-						break;
+					if ( ! isset( $page->ID ) && in_array( $slug, array( 'user', 'account', 'members', 'register', 'login', 'logout', 'password-reset' ) ) ) {
+						$err = true;
 					}
+
+				}
+
+				if ( $err ) {
+					$this->add_notice( 'wrong_pages', array(
+						'class'     => 'updated',
+						'message'   => '<p>' . __( 'One or more of your Ultimate Member pages are not correctly setup. Please visit <strong>Ultimate Member > Settings</strong> to re-assign your missing pages.', 'ultimate-member' ) . '</p>',
+					), 20 );
 				}
 
 				if ( isset( $pages['user'] ) ) {
@@ -339,21 +308,6 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 					}
 				}
 
-			}
-		}
-
-
-		/**
-		* EXIF library notice
-		*/
-		function exif_extension_notice() {
-			$hide_exif_notice = get_option( 'um_hide_exif_notice' );
-
-			if ( ! extension_loaded( 'exif' ) && ! $hide_exif_notice ) {
-				$this->add_notice( 'exif_disabled', array(
-					'class'     => 'updated',
-					'message'   => '<p>' . sprintf(__( 'Exif is not enabled on your server. Mobile photo uploads will not be rotated correctly until you enable the exif extension. <a href="%s">Hide this notice</a>', 'ultimate-member' ), add_query_arg('um_adm_action', 'um_hide_exif_notice') ) . '</p>',
-				), 10 );
 			}
 		}
 
@@ -443,14 +397,6 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 					$messages[0]['content'] = __( 'Your user cache is now removed.', 'ultimate-member' );
 					break;
 
-				case 'got_updates':
-					$messages[0]['content'] = __( 'You got the latest upgrades.', 'ultimate-member' );
-					break;
-
-				case 'often_updates':
-					$messages[0]['err_content'] = __( 'Try again later. You can run this action once daily.', 'ultimate-member' );
-					break;
-
 				case 'form_duplicated':
 					$messages[0]['content'] = __( 'The form has been duplicated successfully.', 'ultimate-member' );
 					break;
@@ -515,37 +461,36 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 		/**
 		 * Show admin notices
 		 */
-		public function admin_notice_opt_in() {
+		public function admin_notice_tracking() {
 
-			if ( ! current_user_can( 'manage_options' ) ) {
+			if ( ! current_user_can( 'manage_options' ) )
 				return;
-			}
 
-			//backward compatibility
 			$hide_notice = get_option( 'um_tracking_notice' );
 
-			if ( $hide_notice ) {
+			if ( $hide_notice )
 				return;
-			}
+
+			$optin_url  =  esc_url( add_query_arg( 'um_adm_action', 'opt_into_tracking' ) );
+			$optout_url =  esc_url( add_query_arg( 'um_adm_action', 'opt_out_of_tracking' ) );
 
 			ob_start(); ?>
 
 			<p>
-				<?php printf( __( 'Thanks for installing <strong>%s</strong>! We hope you like the plugin.  To fund full-time development and support of the plugin we also sell extensions. If you subscribe to our mailing list we will send you a 20%% discount code for our <a href="%s" target="_blank">extensions bundle</a>.', 'ultimate-member' ), ultimatemember_plugin_name, 'https://ultimatemember.com/core-extensions-bundle/' ); ?>
+				<?php printf( __( 'Thanks for installing <strong>%s</strong>! The core plugin is free but we also sell extensions which allow us to continue developing and supporting the plugin full time. If you subscribe to our mailing list (no spam) we will email you a 20%% discount code which you can use to purchase the <a href="%s" target="_blank">extensions bundle</a>.', 'ultimate-member' ), ultimatemember_plugin_name, 'https://ultimatemember.com/core-extensions-bundle/' ); ?>
 			</p>
 
 			<p>
-				<a href="http://ultimatemember.com/discount/" target="_blank" id="um_opt_in_start" class="button button-primary"><?php _e( 'Claim 20% discount code', 'ultimate-member' ) ?></a>
+				<a href="<?php echo esc_url( $optin_url ) ?>" class="button button-primary"><?php _e( 'Subscribe to mailing list', 'ultimate-member' ) ?></a>
 				&nbsp;
-				<a href="javascript:void(0);" class="button-secondary um_opt_in_link"><?php _e( 'No thanks', 'ultimate-member' ) ?></a>
+				<a href="<?php echo esc_url( $optout_url ) ?>" class="button-secondary"><?php _e( 'No thanks', 'ultimate-member' ) ?></a>
 			</p>
 
 			<?php $message = ob_get_clean();
 
-			$this->add_notice( 'opt_in_notice', array(
+			$this->add_notice( 'invalid_dir', array(
 				'class'     => 'updated',
 				'message'   => $message,
-				'dismissible' => true
 			), 2 );
 		}
 
@@ -574,7 +519,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 			if ( ! empty(  $arr_inactive_license_keys ) ) {
 				$this->add_notice( 'license_key', array(
 					'class'     => 'error',
-					'message'   => '<p>' . sprintf( __( 'There are %d inactive %s license keys for this site. This site is not authorized to get plugin updates. You can active this site on <a href="%s">www.ultimatemember.com</a>.', 'ultimate-member' ), count( $arr_inactive_license_keys ) , ultimatemember_plugin_name, 'https://ultimatemember.com' ) . '</p>',
+					'message'   => '<p>' . sprintf( __( 'There are %d inactive %s license keys for this site. This site is not authorized to get plugin updates. You can active this site on <a href="%s">www.UltimateMember.com</a>.', 'ultimate-member' ), count( $arr_inactive_license_keys ) , ultimatemember_plugin_name, 'https://ultimatemember.com' ) . '</p>',
 				), 3 );
 			}
 
@@ -619,109 +564,5 @@ if ( ! class_exists( 'um\admin\core\Admin_Notices' ) ) {
 			}
 		}
 
-
-		/**
-		 *
-		 */
-		function reviews_notice() {
-
-			$first_activation_date = get_option( 'um_first_activation_date', false );
-
-			if ( empty( $first_activation_date ) ) {
-				return;
-			}
-
-			if ( $first_activation_date + 2*WEEK_IN_SECONDS > time() ) {
-				return;
-			}
-
-			ob_start(); ?>
-
-			<div id="um_start_review_notice">
-				<p>
-					<?php printf( __( 'Hey there! It\'s been one month since you installed %s. How have you found the plugin so far?', 'ultimate-member' ), ultimatemember_plugin_name ) ?>
-				</p>
-				<p>
-					<a href="javascript:void(0);" id="um_add_review_love"><?php _e( 'I love it!', 'ultimate-member' ) ?></a>&nbsp;|&nbsp;
-					<a href="javascript:void(0);" id="um_add_review_good"><?php _e('It\'s good but could be better', 'ultimate-member' ) ?></a>&nbsp;|&nbsp;
-					<a href="javascript:void(0);" id="um_add_review_bad"><?php _e('I don\'t like the plugin', 'ultimate-member' ) ?></a>
-				</p>
-			</div>
-			<div class="um_hidden_notice" data-key="love">
-				<p>
-					<?php printf( __( 'Great! We\'re happy to hear that you love the plugin. It would be amazing if you could let others know why you like %s by leaving a review of the plugin. This will help %s to grow and become more popular and would be massively appreciated by us!' ), ultimatemember_plugin_name, ultimatemember_plugin_name ); ?>
-				</p>
-
-				<p>
-					<a href="https://wordpress.org/support/plugin/ultimate-member/reviews/?rate=5#new-post" target="_blank" class="button button-primary um_review_link"><?php _e( 'Leave Review', 'ultimate-member' ) ?></a>
-				</p>
-			</div>
-			<div class="um_hidden_notice" data-key="good">
-				<p>
-					<?php _e( 'We\'re glad to hear that you like the plugin but we would love to get your feedback so we can make the plugin better.' ); ?>
-				</p>
-
-				<p>
-					<a href="https://ultimatemember.com/feedback/" target="_blank" class="button button-primary um_review_link"><?php _e( 'Provide Feedback', 'ultimate-member' ) ?></a>
-				</p>
-			</div>
-			<div class="um_hidden_notice" data-key="bad">
-				<p>
-					<?php printf( __( 'We\'re sorry to hear that. If you\'re having the issue with the plugin you can create a topic on our <a href="%s" target="_blank">support forum</a> and we will try and help you out with the issue. Alternatively if you have an idea on how we can make the plugin better or want to tell us what you don\'t like about the plugin you can tell us know by giving us feedback.' ), 'https://wordpress.org/support/plugin/ultimate-member' ); ?>
-				</p>
-
-				<p>
-					<a href="https://ultimatemember.com/feedback/" target="_blank" class="button button-primary um_review_link"><?php _e( 'Provide Feedback', 'ultimate-member' ) ?></a>
-				</p>
-			</div>
-
-			<?php $message = ob_get_clean();
-
-			$this->add_notice( 'reviews_notice', array(
-				'class'     => 'updated',
-				'message'   => $message,
-				'dismissible' => true
-			), 1 );
-		}
-
-
-		/**
-		 * Check Future Changes notice
-		 */
-		function future_changed() {
-
-			ob_start(); ?>
-
-			<p>
-				<?php printf( __( '<strong>%s</strong> future plans! Detailed future list is <a href="%s" target="_blank">here</a>', 'ultimate-member' ), ultimatemember_plugin_name, '#' ); ?>
-			</p>
-
-			<?php $message = ob_get_clean();
-
-			$this->add_notice( 'future_changes', array(
-				'class'         => 'updated',
-				'message'       => $message,
-			), 2 );
-		}
-
-
-		function dismiss_notice() {
-			$nonce = isset( $_POST["nonce"] ) ? $_POST["nonce"] : "";
-			if ( ! wp_verify_nonce( $nonce, "um-admin-nonce" ) ) {
-				wp_send_json_error( esc_js( __( "Wrong Nonce", 'ultimate-member' ) ) );
-			}
-
-
-			if ( empty( $_POST['key'] ) ) {
-				wp_send_json_error( __( 'Wrong Data', 'ultimate-member' ) );
-			}
-
-			$hidden_notices = get_option( 'um_hidden_admin_notices', array() );
-			$hidden_notices[] = $_POST['key'];
-
-			update_option( 'um_hidden_admin_notices', $hidden_notices );
-
-			wp_send_json_success();
-		}
 	}
 }

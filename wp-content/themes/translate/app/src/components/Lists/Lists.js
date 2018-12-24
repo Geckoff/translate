@@ -33,7 +33,7 @@ class Lists extends Component {
             <Fragment>
                 <SectionHeader title="Lists" />
                 <div className="spe-section lists">
-                    {this.props.listsCollection.map((list, i) => (
+                    {this.props.listsCollection.length > 0 ? this.props.listsCollection.map((list, i) => (
                         <div key={i} className="lists-list-single">
                             <div className="lists-list-name">
                                 <p className="single-list-title">{list.name}</p>
@@ -46,7 +46,9 @@ class Lists extends Component {
                                 <Link className="btn btn-primary" to={`/words-list/${list.id}`}>See Words</Link>
                             </div>
                         </div>
-                    ))}        
+                    )) :
+                        <p>Please, <Link to="/lists/add">add your first list</Link> to start using the app.</p>
+                    }        
                 </div>
                 <div className="lists-list-bottom">
                     <div className="random-words-block">

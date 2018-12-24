@@ -115,14 +115,6 @@ if ( ! class_exists( 'um\core\Plugin_Updater' ) ) {
 					'key'   => 'woocommerce',
 					'title' => 'Woocommerce',
 				),
-				'um-user-photos/um-user-photos.php'                     => array(
-					'key'   => 'user_photos',
-					'title' => 'User Photos',
-				),
-				'um-private-content/um-private-content.php'             => array(
-					'key'   => 'private_content',
-					'title' => 'Private Content',
-				),
 			);
 
 			$the_plugs = get_option( 'active_plugins' );
@@ -171,7 +163,7 @@ if ( ! class_exists( 'um\core\Plugin_Updater' ) ) {
 
 			$api_params['active_extensions'] = array();
 			foreach ( $exts as $slug => $data ) {
-				$plugin_data = get_plugin_data( WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $slug );
+				$plugin_data = get_plugin_data( ABSPATH . "wp-content/plugins/{$slug}" );
 
 				$api_params['active_extensions'][$slug] = array(
 					'slug'      => $slug,
@@ -184,7 +176,7 @@ if ( ! class_exists( 'um\core\Plugin_Updater' ) ) {
 			$request = wp_remote_post(
 				'https://ultimatemember.com/',
 				array(
-					'timeout'   => 45,
+					'timeout'   => 15,
 					'sslverify' => false,
 					'body'      => $api_params
 				)
@@ -252,7 +244,7 @@ if ( ! class_exists( 'um\core\Plugin_Updater' ) ) {
 			$exts = $this->um_get_active_plugins();
 			foreach ( $exts as $slug => $data ) {
 
-				$plugin_data = get_plugin_data( WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $slug );
+				$plugin_data = get_plugin_data( ABSPATH . "wp-content/plugins/{$slug}" );
 
 				//if response for current product isn't empty check for override
 				if ( ! empty( $_transient_data->response ) && ! empty( $_transient_data->response[ $slug ] ) )
@@ -339,7 +331,7 @@ if ( ! class_exists( 'um\core\Plugin_Updater' ) ) {
 			$url = get_site_url( get_current_blog_id() );
 			$domain  = strtolower( urlencode( rtrim( $url, '/' ) ) );
 
-			$plugin_data = get_plugin_data( WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $slug );
+			$plugin_data = get_plugin_data( ABSPATH . "wp-content/plugins/{$slug}" );
 
 			$api_params = array(
 				'action'        => 'get_last_version',

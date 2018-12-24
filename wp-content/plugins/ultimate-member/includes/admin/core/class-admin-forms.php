@@ -272,21 +272,20 @@ if ( ! class_exists( 'um\admin\core\Admin_Forms' ) ) {
 			 * @input_vars
 			 * [{"var":"$html","type":"string","desc":"Field's HTML"},
 			 * {"var":"$data","type":"array","desc":"Field's data"},
-			 * {"var":"$form_data","type":"array","desc":"Form data"},
-			 * {"var":"$admin_form","type":"object","desc":"Admin_Forms class object"}]
+			 * {"var":"$form_data","type":"array","desc":"Form data"}]
 			 * @change_log
 			 * ["Since: 2.0"]
-			 * @usage add_filter( 'um_render_field_type_{$type}', 'function_name', 10, 4 );
+			 * @usage add_filter( 'um_render_field_type_{$type}', 'function_name', 10, 3 );
 			 * @example
 			 * <?php
-			 * add_filter( 'um_render_field_type_{$type}', 'my_render_field_type', 10, 4 );
-			 * function my_render_field_type( $html, $data, $form_data, $admin_form ) {
+			 * add_filter( 'um_render_field_type_{$type}', 'my_render_field_type', 10, 3 );
+			 * function my_render_field_type( $html, $data, $form_data ) {
 			 *     // your code here
 			 *     return $html;
 			 * }
 			 * ?>
 			 */
-			return apply_filters( 'um_render_field_type_' . $data['type'], '', $data, $this->form_data, $this );
+			return apply_filters( 'um_render_field_type_' . $data['type'], '', $data, $this->form_data );
 		}
 
 
@@ -349,8 +348,6 @@ if ( ! class_exists( 'um\admin\core\Admin_Forms' ) ) {
 
 
 		/**
-		 * Render text field
-		 *
 		 * @param $field_data
 		 *
 		 * @return bool|string
@@ -651,6 +648,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Forms' ) ) {
 			);
 
 			$html = ob_get_clean();
+
 			return $html;
 		}
 
@@ -733,17 +731,15 @@ if ( ! class_exists( 'um\admin\core\Admin_Forms' ) ) {
 			$value = $this->get_field_value( $field_data );
 
 			$options = '';
-			if ( ! empty( $field_data['options'] ) ) {
-				foreach ( $field_data['options'] as $key => $option ) {
-					if ( ! empty( $field_data['multi'] ) ) {
+			foreach ( $field_data['options'] as $key=>$option ) {
+				if ( ! empty( $field_data['multi'] ) ) {
 
-						if ( ! is_array( $value ) || empty( $value ) )
-							$value = array();
+					if ( ! is_array( $value ) || empty( $value ) )
+						$value = array();
 
-						$options .= '<option value="' . $key . '" ' . selected( in_array( $key, $value ), true, false ) . '>' . esc_html( $option ) . '</option>';
-					} else {
-						$options .= '<option value="' . $key . '" ' . selected( (string)$key == $value, true, false ) . '>' . esc_html( $option ) . '</option>';
-					}
+					$options .= '<option value="' . $key . '" ' . selected( in_array( $key, $value ), true, false ) . '>' . $option . '</option>';
+				} else {
+					$options .= '<option value="' . $key . '" ' . selected( (string)$key == $value, true, false ) . '>' . $option . '</option>';
 				}
 			}
 
@@ -1044,6 +1040,11 @@ if ( ! class_exists( 'um\admin\core\Admin_Forms' ) ) {
 			ob_start(); ?>
 
 			<div class="email_template_wrapper <?php echo $field_data['in_theme'] ? 'in_theme' : '' ?>" data-key="<?php echo $field_data['id'] ?>" style="position: relative;">
+				<!--                <input type="button" class="reset_email_template button" value="--><?php //_e( 'Reset Template to Default', 'ultimate-member' ) ?><!--" />-->
+				<!--<div class="copy_button_overlay">
+                    <span><?php /*_e( 'Currently UM use default Email Template, you can edit this template after then you copy in to theme', 'ultimate-member' ) */?></span>
+                    <input type="button" class="copy_email_template button" value="<?php /*_e( 'Copy Template to Theme', 'ultimate-member' ) */?>" />
+                </div>-->
 
 				<?php wp_editor( $value,
 					$id,
@@ -1056,7 +1057,7 @@ if ( ! class_exists( 'um\admin\core\Admin_Forms' ) ) {
 						'editor_class'  => $class
 					)
 				); ?>
-				<span class="description">For default text for plain-text emails please see this <a href="https://docs.ultimatemember.com/article/1342-plain-text-email-default-templates#<?php echo $field_data['id'] ?>" target="_blank">doc</a></span>
+
 			</div>
 
 			<?php $html = ob_get_clean();

@@ -39,7 +39,6 @@ if ( ! class_exists( 'um\core\User' ) ) {
 			add_action( 'init',  array( &$this, 'set' ), 1 );
 
 			$this->preview = false;
-			$this->send_mail_on_delete = true;
 
 			// a list of keys that should never be in wp_usermeta
 			$this->update_user_keys = array(
@@ -55,8 +54,6 @@ if ( ! class_exists( 'um\core\User' ) ) {
 
 			// When the cache should be cleared
 			add_action('um_delete_user_hook', array(&$this, 'remove_cached_queue') );
-			add_action('um_delete_user', array( &$this, 'remove_cache' ), 10, 1 );
-
 			add_action('um_after_user_status_is_changed_hook', array(&$this, 'remove_cached_queue') );
 
 			// When user cache should be cleared
@@ -86,73 +83,6 @@ if ( ! class_exists( 'um\core\User' ) ) {
 			add_action( 'wpmu_activate_user', array( &$this, 'add_um_role_wpmu_new_user' ), 10, 1 );
 
 			add_action( 'init', array( &$this, 'check_membership' ), 10 );
-
-			add_action( 'delete_user', array( &$this, 'delete_user_handler' ), 10, 1 );
-			add_action( 'wpmu_delete_user', array( &$this, 'delete_user_handler' ), 10, 1 );
-		}
-
-
-		/**
-		 * @param $user_id
-		 */
-		function delete_user_handler( $user_id ) {
-
-			um_fetch_user( $user_id );
-
-			/**
-			 * UM hook
-			 *
-			 * @type action
-			 * @title um_delete_user_hook
-			 * @description On delete user
-			 * @change_log
-			 * ["Since: 2.0"]
-			 * @usage add_action( 'um_delete_user_hook', 'function_name', 10 );
-			 * @example
-			 * <?php
-			 * add_action( 'um_delete_user_hook', 'my_delete_user', 10 );
-			 * function my_delete_user() {
-			 *     // your code here
-			 * }
-			 * ?>
-			 */
-			do_action( 'um_delete_user_hook' );
-
-			/**
-			 * UM hook
-			 *
-			 * @type action
-			 * @title um_delete_user
-			 * @description On delete user
-			 * @input_vars
-			 * [{"var":"$user_id","type":"int","desc":"User ID"}]
-			 * @change_log
-			 * ["Since: 2.0"]
-			 * @usage add_action( 'um_delete_user', 'function_name', 10, 1 );
-			 * @example
-			 * <?php
-			 * add_action( 'um_delete_user', 'my_delete_user', 10, 1 );
-			 * function my_delete_user( $user_id ) {
-			 *     // your code here
-			 * }
-			 * ?>
-			 */
-			do_action( 'um_delete_user', um_user( 'ID' ) );
-
-			// send email notifications
-			if ( $this->send_mail_on_delete ) {
-				UM()->mail()->send( um_user( 'user_email' ), 'deletion_email' );
-
-				$emails = um_multi_admin_email();
-				if ( ! empty( $emails ) ) {
-					foreach ( $emails as $email ) {
-						UM()->mail()->send( $email, 'notification_deletion', array( 'admin' => true ) );
-					}
-				}
-			}
-
-			// remove uploads
-			UM()->files()->remove_dir( UM()->uploader()->get_upload_base_dir() . um_user( 'ID' ) . DIRECTORY_SEPARATOR );
 		}
 
 
@@ -313,10 +243,7 @@ if ( ! class_exists( 'um\core\User' ) ) {
 
 
 		/**
-		 * Generate User Profile Slug and seve to meta
-		 *
-		 * @param int $user_id
-		 * @param bool $force
+		 * @param $user_id
 		 */
 		function generate_profile_slug( $user_id, $force = false ) {
 			$userdata = get_userdata( $user_id );
@@ -408,8 +335,6 @@ if ( ! class_exists( 'um\core\User' ) ) {
 
 				$user_in_url = trim( $user_in_url, $separate );
 			}
-
-			$user_in_url = apply_filters( 'um_change_user_profile_slug', $user_in_url, $user_id );
 
 			if ( $force || empty( $current_profile_slug ) || $current_profile_slug != $user_in_url ) {
 				update_user_meta( $user_id, "um_user_profile_url_slug_{$permalink_base}", $user_in_url );
@@ -965,20 +890,6 @@ if ( ! class_exists( 'um\core\User' ) ) {
 				unset( $submitted['confirm_user_password'] );
 			}
 
-			//remove all password field values from submitted details
-			$password_fields = array();
-			foreach ( $submitted as $k => $v ) {
-				if ( UM()->fields()->get_field_type( $k ) == 'password' ) {
-					$password_fields[] = $k;
-					$password_fields[] = 'confirm_' . $k;
-				}
-			}
-
-			foreach ( $password_fields as $pw_field ) {
-				unset( $submitted[ $pw_field ] );
-			}
-
-
 			/**
 			 * UM hook
 			 *
@@ -1136,6 +1047,15 @@ if ( ! class_exists( 'um\core\User' ) ) {
 
 
 		/**
+		 * Set user's hash for password reset
+		 */
+		function password_reset_hash() {
+			$this->profile['reset_pass_hash'] = UM()->validation()->generate();
+			$this->update_usermeta_info('reset_pass_hash');
+		}
+
+
+		/**
 		 * Set user's hash
 		 */
 		function assign_secretkey() {
@@ -1185,8 +1105,7 @@ if ( ! class_exists( 'um\core\User' ) ) {
 		 * Password reset email
 		 */
 		function password_reset() {
-			$userdata = get_userdata( um_user('ID') );
-			get_password_reset_key( $userdata );
+			$this->password_reset_hash();
 			UM()->mail()->send( um_user('user_email'), 'resetpw_email' );
 		}
 
@@ -1214,26 +1133,16 @@ if ( ! class_exists( 'um\core\User' ) ) {
 		?>
 		 *
 		 */
-		function approve( $repeat = true ) {
+		function approve() {
 			$user_id = um_user('ID');
-
-			if ( ! $repeat ) {
-				$status = get_user_meta( $user_id, 'account_status', true );
-				if ( 'approved' === $status ) {
-					return;
-				}
-			}
-
 			delete_option( "um_cache_userdata_{$user_id}" );
 
 			if ( um_user('account_status') == 'awaiting_admin_review' ) {
-				$userdata = get_userdata( $user_id );
-				get_password_reset_key( $userdata );
+				$this->password_reset_hash();
 				UM()->mail()->send( um_user('user_email'), 'approved_email' );
 
 			} else {
-				$userdata = get_userdata( $user_id );
-				get_password_reset_key( $userdata );
+				$this->password_reset_hash();
 				UM()->mail()->send( um_user('user_email'), 'welcome_email');
 			}
 
@@ -1365,14 +1274,59 @@ if ( ! class_exists( 'um\core\User' ) ) {
 		 * @param bool $send_mail
 		 */
 		function delete( $send_mail = true ) {
+			/**
+			 * UM hook
+			 *
+			 * @type action
+			 * @title um_delete_user_hook
+			 * @description On delete user
+			 * @change_log
+			 * ["Since: 2.0"]
+			 * @usage add_action( 'um_delete_user_hook', 'function_name', 10 );
+			 * @example
+			 * <?php
+			 * add_action( 'um_delete_user_hook', 'my_delete_user', 10 );
+			 * function my_delete_user() {
+			 *     // your code here
+			 * }
+			 * ?>
+			 */
+			do_action( 'um_delete_user_hook' );
+			/**
+			 * UM hook
+			 *
+			 * @type action
+			 * @title um_delete_user
+			 * @description On delete user
+			 * @input_vars
+			 * [{"var":"$user_id","type":"int","desc":"User ID"}]
+			 * @change_log
+			 * ["Since: 2.0"]
+			 * @usage add_action( 'um_delete_user', 'function_name', 10, 1 );
+			 * @example
+			 * <?php
+			 * add_action( 'um_delete_user', 'my_delete_user', 10, 1 );
+			 * function my_delete_user( $user_id ) {
+			 *     // your code here
+			 * }
+			 * ?>
+			 */
+			do_action( 'um_delete_user', um_user( 'ID' ) );
 
-			$this->send_mail_on_delete = $send_mail;
-			//don't send email notification to not approved user
-			if ( 'approved' != um_user( 'account_status' ) ) {
-				$this->send_mail_on_delete = false;
+			// send email notifications
+			if ( $send_mail ) {
+				UM()->mail()->send( um_user( 'user_email' ), 'deletion_email' );
+
+				$emails = um_multi_admin_email();
+				if ( ! empty( $emails ) ) {
+					foreach ( $emails as $email ) {
+						UM()->mail()->send( $email, 'notification_deletion', array( 'admin' => true ) );
+					}
+				}
 			}
 
-			$this->delete_user_handler( um_user( 'ID' ) );
+			// remove uploads
+			UM()->files()->remove_dir( um_user_uploads_dir() );
 
 			// remove user
 			if ( is_multisite() ) {
@@ -1474,7 +1428,6 @@ if ( ! class_exists( 'um\core\User' ) ) {
 		function get_admin_actions() {
 			$items = array();
 			$actions = array();
-
 			/**
 			 * UM hook
 			 *
@@ -1496,16 +1449,12 @@ if ( ! class_exists( 'um\core\User' ) ) {
 			 * }
 			 * ?>
 			 */
-			$actions = apply_filters( 'um_admin_user_actions_hook', $actions );
-			if ( ! isset( $actions ) || empty( $actions ) ) {
-				return false;
-			}
-
-			foreach ( $actions as $id => $arr ) {
-				$url = add_query_arg( array( 'um_action' => $id, 'uid' => um_profile_id() ) );
-				/*$url = add_query_arg( 'um_action', $id );
-				$url = add_query_arg( 'uid', um_profile_id(), $url );*/
-				$items[] = '<a href="' . $url .'" class="real_url ' . esc_attr( $id ) . '-item">' . $arr['label'] . '</a>';
+			$actions = apply_filters('um_admin_user_actions_hook', $actions );
+			if ( !isset( $actions ) || empty( $actions ) ) return false;
+			foreach($actions as $id => $arr ) {
+				$url = add_query_arg('um_action', $id );
+				$url = add_query_arg('uid', um_profile_id(), $url );
+				$items[] = '<a href="' . $url .'" class="real_url '.$id.'-item">' . $arr['label'] . '</a>';
 			}
 			return $items;
 		}
@@ -1579,7 +1528,7 @@ if ( ! class_exists( 'um\core\User' ) ) {
 		 * @param $user_id
 		 * @param $case
 		 *
-		 * @return bool
+		 * @return bool|mixed|void
 		 */
 		function is_private_case( $user_id, $case ) {
 			$privacy = get_user_meta( $user_id, 'profile_privacy', true );
@@ -1662,37 +1611,38 @@ if ( ! class_exists( 'um\core\User' ) ) {
 			 * }
 			 * ?>
 			 */
-			$changes = apply_filters( 'um_before_update_profile', $changes, $args['ID'] );
+			$changes = apply_filters('um_before_update_profile', $changes, $this->id );
 
+			// save or update profile meta
 			foreach ( $changes as $key => $value ) {
 				if ( ! in_array( $key, $this->update_user_keys ) ) {
+
 					update_user_meta( $this->id, $key, $value );
+
 				} else {
-					$args[ $key ] = esc_attr( $changes[ $key ] );
+
+					$args[$key] = esc_attr( $changes[$key] );
+
 				}
+
 			}
-
-
 			// update user
 			if ( count( $args ) > 1 ) {
-				//if isset roles argument validate role to properly for security reasons
-				if ( isset( $args['role'] ) ) {
-					global $wp_roles;
-					$um_roles = get_option( 'um_roles' );
+				global $wp_roles;
+				$um_roles = get_option( 'um_roles' );
 
-					if ( ! empty( $um_roles ) ) {
-						$role_keys = array_map( function( $item ) {
-							return 'um_' . $item;
-						}, get_option( 'um_roles' ) );
-					} else {
-						$role_keys = array();
-					}
+				if ( ! empty( $um_roles ) ) {
+					$role_keys = array_map( function( $item ) {
+						return 'um_' . $item;
+					}, get_option( 'um_roles' ) );
+				} else {
+					$role_keys = array();
+				}
 
-					$exclude_roles = array_diff( array_keys( $wp_roles->roles ), array_merge( $role_keys, array( 'subscriber' ) ) );
+				$exclude_roles = array_diff( array_keys( $wp_roles->roles ), array_merge( $role_keys, array( 'subscriber' ) ) );
 
-					if ( in_array( $args['role'], $exclude_roles ) ) {
-						unset( $args['role'] );
-					}
+				if ( isset( $args['role'] ) && in_array( $args['role'], $exclude_roles ) ) {
+					unset( $args['role'] );
 				}
 
 				wp_update_user( $args );
@@ -1890,5 +1840,6 @@ if ( ! class_exists( 'um\core\User' ) ) {
 
 			return $hash_email_address;
 		}
+
 	}
 }

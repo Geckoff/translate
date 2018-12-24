@@ -22,8 +22,11 @@ add_action( 'init', 'um_block_wpadmin_by_user_role', 99 );
  * @return bool
  */
 function um_control_admin_bar( $content ) {
-	if ( is_user_logged_in() && um_user( 'can_not_see_adminbar' ) ) {
-		return false;
+	if ( is_user_logged_in() ) {
+		if ( um_user( 'can_not_see_adminbar' ) ) {
+			return false;
+		}
+		return true;
 	}
 
 	return $content;

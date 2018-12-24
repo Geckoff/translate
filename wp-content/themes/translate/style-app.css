@@ -1,0 +1,13 @@
+.header-iframe {
+    width: 100%;
+    height: 92px;
+    border: none;
+    transition-duration: .1s;
+}
+
+
+
+.iframe-menu-enabled {
+    height: 264px;
+}
+

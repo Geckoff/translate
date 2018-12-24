@@ -146,9 +146,8 @@ add_filter( 'um_profile_field_filter_hook___um_last_login', 'um_profile_field_fi
  * @return mixed|string|void
  */
 function um_profile_field_filter_hook__textarea( $value, $data ) {
-	if ( isset( $data['html'] ) && $data['html'] == 1 ) {
+	if ( isset( $data ) && isset( $data['html'] ) && $data['html'] == 1 )
 		return $value;
-	}
 
 	$value = esc_textarea( $value );
 	$value = preg_replace('$(https?://[a-z0-9_./?=&#-]+)(?![^<>]*>)$i', ' <a href="$1" target="_blank">$1</a> ', $value." ");
@@ -220,37 +219,20 @@ add_filter( 'um_profile_field_filter_hook__date', 'um_profile_field_filter_hook_
  * @param $value
  * @param $data
  *
- * @return string
+ * @return string|void
  */
 function um_profile_field_filter_hook__file( $value, $data ) {
-	$file_type = wp_check_filetype( $value );
-	$uri = UM()->files()->get_download_link( UM()->fields()->set_id, $data['metakey'], um_user( 'ID' ) );
+	$uri = um_user_uploads_uri() . $value;
+	$extension = pathinfo( $uri, PATHINFO_EXTENSION);
 
-	$removed = false;
-	if ( ! file_exists( UM()->uploader()->get_upload_base_dir() . um_user( 'ID' ) . DIRECTORY_SEPARATOR . $value ) ) {
-		if ( is_multisite() ) {
-			//multisite fix for old customers
-			$file_path = str_replace( DIRECTORY_SEPARATOR . 'sites' . DIRECTORY_SEPARATOR . get_current_blog_id() . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, UM()->uploader()->get_upload_base_dir() . um_user( 'ID' ) . DIRECTORY_SEPARATOR . $value );
-			if ( ! file_exists( $file_path ) ) {
-				$removed = true;
-			}
-		} else {
-			$removed = true;
-		}
-	}
-
-	if ( $removed ) {
-		$value = __( 'This file has been removed.', 'ultimate-member' );
+	if ( !file_exists( um_user_uploads_dir() . $value ) ) {
+		$value = __('This file has been removed.');
 	} else {
-		$file_info = um_user( $data['metakey'] . "_metadata" );
-		if ( ! empty( $file_info['original_name'] ) ) {
-			$value = $file_info['original_name'];
-		}
 		$value = '<div class="um-single-file-preview show">
                         <div class="um-single-fileinfo">
-                            <a href="' . esc_attr( $uri )  . '" target="_blank">
-                                <span class="icon" style="background:'. UM()->files()->get_fonticon_bg_by_ext( $file_type['ext'] ) . '"><i class="'. UM()->files()->get_fonticon_by_ext( $file_type['ext'] ) .'"></i></span>
-                                <span class="filename">' . esc_attr( $value ) . '</span>
+                            <a href="' . $uri  . '" target="_blank">
+                                <span class="icon" style="background:'. UM()->files()->get_fonticon_bg_by_ext( $extension ) . '"><i class="'. UM()->files()->get_fonticon_by_ext( $extension ) .'"></i></span>
+                                <span class="filename">' . $value . '</span>
                             </a>
                         </div>
                     </div>';
@@ -270,28 +252,15 @@ add_filter( 'um_profile_field_filter_hook__file', 'um_profile_field_filter_hook_
  * @return string
  */
 function um_profile_field_filter_hook__image( $value, $data ) {
-	$uri = UM()->files()->get_download_link( UM()->fields()->set_id, $data['metakey'], um_user( 'ID' ) );
-	$title = ( isset( $data['title'] ) ) ? $data['title'] : __( 'Untitled photo', 'ultimate-member' );
-
-	$removed = false;
-	if ( ! file_exists( UM()->uploader()->get_upload_base_dir() . um_user( 'ID' ) . DIRECTORY_SEPARATOR . $value ) ) {
-		if ( is_multisite() ) {
-			//multisite fix for old customers
-			$file_path = str_replace( DIRECTORY_SEPARATOR . 'sites' . DIRECTORY_SEPARATOR . get_current_blog_id() . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, UM()->uploader()->get_upload_base_dir() . um_user( 'ID' ) . DIRECTORY_SEPARATOR . $value );
-			if ( ! file_exists( $file_path ) ) {
-				$removed = true;
-			}
-		} else {
-			$removed = true;
-		}
-	}
+	$uri = um_user_uploads_uri() . $value;
+	$title = ( isset( $data['title'] ) ) ? $data['title'] : __('Untitled photo');
 
 	// if value is an image tag
 	if( preg_match( '/\<img.*src=\"([^"]+).*/', $value, $matches ) ) {
 		$uri   = $matches[1];
-		$value = '<div class="um-photo"><a href="#" class="um-photo-modal" data-src="' . esc_attr( $uri ) . '"><img src="' . esc_attr( $uri ) . '" alt="' . esc_attr( $title ) . '" title="' . esc_attr( $title ) . '" class="" /></a></div>';
-	} else if ( ! $removed ) {
-		$value = '<div class="um-photo"><a href="#" class="um-photo-modal" data-src="' . esc_attr( $uri ) . '"><img src="' . esc_attr( $uri ) . '" alt="' . esc_attr( $title ) . '" title="' . esc_attr( $title ) . '" class="" /></a></div>';
+		$value = '<div class="um-photo"><a href="#" class="um-photo-modal" data-src="'.$uri.'"><img src="'. $uri .'" alt="'.$title.'" title="'.$title.'" class="" /></a></div>';
+	} else if ( file_exists( um_user_uploads_dir() . $value ) ) {
+		$value = '<div class="um-photo"><a href="#" class="um-photo-modal" data-src="'.$uri.'"><img src="'. $uri .'" alt="'.$title.'" title="'.$title.'" class="" /></a></div>';
 	} else {
 		$value = '';
 	}
@@ -398,76 +367,18 @@ add_filter( 'um_get_form_fields', 'um_get_form_fields', 99 );
  */
 function um_get_custom_field_array( $array, $fields ) {
 
-	if ( ! empty( $array['conditions'] ) ) {
-		foreach ( $array['conditions'] as $key => $value ) {
-			$condition_metakey = $fields[ $value[1] ]['metakey'];
-			if ( isset( $_POST[ $condition_metakey ] ) ) {
-				$cond_value = ( $fields[ $value[1] ]['type'] == 'radio' ) ? $_POST[ $condition_metakey ][0] : $_POST[ $condition_metakey ];
-				list( $visibility, $parent_key, $op, $parent_value ) = $value;
+	if ( isset( $array['conditions'] ) ) {
+		for ( $a = 0; $a < count( $array['conditions'] ); $a++ ) {
+			if ( isset( $array['conditional_value'] ) || isset( $array['conditional_value' . $a] ) ) {
+				foreach ( $array['conditions'] as $key => $value ) {
+					$condition_metakey = $fields[ $value[1] ]['metakey'];
 
-				if ( $visibility == 'hide' ) {
-					if ( $op == 'empty' ) {
-						if ( empty( $cond_value ) ) {
+					if ( isset( $_POST[ $condition_metakey ] ) ) {
+						$cond_value = ( $fields[ $value[1] ]['type'] == 'radio' ) ? $_POST[ $condition_metakey ][0] : $_POST[ $condition_metakey ];
+
+						if ( isset( $array['conditional_value'] ) && $cond_value !== $array['conditional_value'] ) {
 							$array['required'] = 0;
-						}
-					} elseif ( $op == 'not empty' ) {
-						if ( ! empty( $cond_value ) ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'equals to' ) {
-						if ( $cond_value == $parent_value ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'not equals' ) {
-						if ( $cond_value != $parent_value ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'greater than' ) {
-						if ( $cond_value > $parent_value ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'less than' ) {
-						if ( $cond_value < $parent_value ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'contains' ) {
-						if ( is_string( $cond_value ) && strstr( $cond_value, $parent_value ) ) {
-							$array['required'] = 0;
-						}
-						if( is_array( $cond_value ) && in_array( $parent_value, $cond_value ) ) {
-							$array['required'] = 0;
-						}
-					}
-				} elseif ( $visibility == 'show' ) {
-					if ( $op == 'empty' ) {
-						if ( ! empty( $cond_value ) ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'not empty' ) {
-						if ( empty( $cond_value ) ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'equals to' ) {
-						if ( $cond_value != $parent_value ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'not equals' ) {
-						if ( $cond_value == $parent_value ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'greater than' ) {
-						if ( $cond_value <= $parent_value ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'less than' ) {
-						if ( $cond_value >= $parent_value ) {
-							$array['required'] = 0;
-						}
-					} elseif ( $op == 'contains' ) {
-						if( is_string( $cond_value ) && !strstr( $cond_value, $parent_value ) ) {
-							$array['required'] = 0;
-						}
-						if( is_array( $cond_value ) && !in_array( $parent_value, $cond_value ) ) {
+						} elseif ( isset( $array['conditional_value'.$a] ) && $cond_value !== $array['conditional_value'.$a] ) {
 							$array['required'] = 0;
 						}
 					}
@@ -649,38 +560,16 @@ function um_profile_field_filter_xss_validation( $value, $data, $type = '' ) {
 
 		if( 'text' == $type && ! in_array( $data['validate'], array( 'unique_email' ) ) || 'password' == $type ) {
 			$value = esc_attr( $value );
-		} elseif( $type == 'url' ) {
+		}elseif( $type == 'url' ) {
 			$value = esc_url( $value );
-		} elseif ( 'textarea' == $type ) {
-			if ( empty( $data['html'] ) ) {
-				$value =  wp_kses_post( $value );
-			}
+		}  elseif ( 'textarea' == $type ){
+			$value =  wp_kses_post( $value );
 		}
 	}
 
 	return $value;
 }
 add_filter( 'um_profile_field_filter_hook__','um_profile_field_filter_xss_validation', 10, 3 );
-
-
-/**
- * Trim All form POST submitted data
- *
- * @param $post_form
- * @param $mode
- *
- * @return mixed
- */
-function um_submit_form_data_trim_fields( $post_form, $mode ) {
-	foreach ( $post_form as $key => $field ) {
-		if ( is_string( $field ) ) {
-			$post_form[ $key ] = trim( $field );
-		}
-	}
-
-	return $post_form;
-}
-add_filter( 'um_submit_form_data', 'um_submit_form_data_trim_fields', 9, 2 );
 
 
 /**

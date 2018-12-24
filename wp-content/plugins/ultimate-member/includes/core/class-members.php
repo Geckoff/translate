@@ -88,13 +88,13 @@ if ( ! class_exists( 'um\core\Members' ) ) {
 			return $string;
 		}
 
+
 		/**
-		 * Prepare filter data
+		 * Show filter
 		 *
 		 * @param $filter
-		 * @return array
 		 */
-		function prepare_filter( $filter ) {
+		function show_filter( $filter ) {
 			$fields = UM()->builtin()->all_user_fields;
 
 			if ( isset( $fields[ $filter ] ) ) {
@@ -198,9 +198,6 @@ if ( ! class_exists( 'um\core\Members' ) ) {
 			$attrs = apply_filters( 'um_search_fields', $attrs );
 
 			if ( $type == 'select' ) {
-				if( isset($attrs) && is_array( $attrs['options'] ) ){
-					asort( $attrs['options'] );
-				}
 				/**
 				 * UM hook
 				 *
@@ -225,32 +222,15 @@ if ( ! class_exists( 'um\core\Members' ) ) {
 				$attrs = apply_filters( 'um_search_select_fields', $attrs );
 			}
 
-			return compact( 'type', 'attrs' );
-		}
-
-		/**
-		 * Show filter
-		 *
-		 * @param $filter
-		 */
-		function show_filter( $filter ) {
-			/**
-			 * @var $type
-			 * @var $attrs
-			 */
-			extract( $this->prepare_filter( $filter ) );
-
 			switch ( $type ) {
 
 				case 'select':
-					/*if( isset($attrs) && is_array( $attrs['options'] ) ){
-						asort( $attrs['options'] );
-					}*/
+
 					?>
 
-                    <select name="<?php echo $filter; ?>" id="<?php echo $filter; ?>" class="um-s1" style="width: 100%" data-placeholder="<?php echo __( stripslashes( $attrs['label'] ), 'ultimate-member' ); ?>" <?php if ( ! empty( $attrs['custom_dropdown_options_source'] ) ) { ?> data-um-parent="<?php echo $attrs['parent_dropdown_relationship']; ?>" data-mebers-directory="yes"  data-um-ajax-source="<?php echo $attrs['custom_dropdown_options_source'] ?>"<?php } ?>>
+					<select name="<?php echo $filter; ?>" id="<?php echo $filter; ?>" class="um-s1" style="width: 100%" data-placeholder="<?php echo __( stripslashes( $attrs['label'] ), 'ultimate-member' ); ?>" <?php if ( ! empty( $attrs['custom_dropdown_options_source'] ) ) { ?> data-um-ajax-source="<?php echo $attrs['custom_dropdown_options_source'] ?>"<?php } ?>>
 
-                        <option></option>
+						<option></option>
 
 						<?php foreach ( $attrs['options'] as $k => $v ) {
 
@@ -264,14 +244,13 @@ if ( ! class_exists( 'um\core\Members' ) ) {
 							if ( isset( $attrs['custom'] ) )
 								$opt = $k;
 
-
 							?>
 
-                            <option value="<?php echo $opt; ?>" <?php um_select_if_in_query_params( $filter, $opt ); ?> <?php selected( isset( $_GET[$filter] ) && $_GET[$filter] == $v ) ?>><?php echo __( $v, 'ultimate-member'); ?></option>
+							<option value="<?php echo $opt; ?>" <?php um_select_if_in_query_params( $filter, $opt ); ?>><?php echo __( $v, 'ultimate-member'); ?></option>
 
 						<?php } ?>
 
-                    </select>
+					</select>
 
 					<?php
 
@@ -281,7 +260,7 @@ if ( ! class_exists( 'um\core\Members' ) ) {
 
 					?>
 
-                    <input type="text" autocomplete="off" name="<?php echo $filter; ?>" id="<?php echo $filter; ?>" placeholder="<?php echo isset( $attrs['label'] ) ? __( $attrs['label'], 'ultimate-member') : ''; ?>" value='<?php echo esc_attr( um_queried_search_value(  $filter, false ) ); ?>' />
+					<input type="text" autocomplete="off" name="<?php echo $filter; ?>" id="<?php echo $filter; ?>" placeholder="<?php echo isset( $attrs['label'] ) ? __( $attrs['label'], 'ultimate-member') : ''; ?>" value='<?php echo esc_attr( um_queried_search_value(  $filter, false ) ); ?>' />
 
 					<?php
 

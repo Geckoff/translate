@@ -9,3 +9,33 @@
  License:      GNU General Public License v2 or later
  License URI:  http://www.gnu.org/licenses/gpl-2.0.html
 */
+
+#logo-navigation {
+    display: flex;
+    justify-content: space-between;
+}
+
+body.page-id-83 { overflow: hidden; }
+
+#nav .menu-item,
+#mobile-nav .menu-item {
+    display: none
+}
+
+body.logged-in #nav .menu-item#menu-item-109,
+body.logged-in #nav .menu-item#menu-item-105,
+body.logged-in #nav .menu-item#menu-item-106,
+body.logged-in #mobile-nav .menu-item.menu-item-109,
+body.logged-in #mobile-nav .menu-item.menu-item-105,
+body.logged-in #mobile-nav .menu-item.menu-item-106 {
+    display: block;
+}
+
+body:not(.logged-in) #nav .menu-item#menu-item-109,
+body:not(.logged-in) #nav .menu-item#menu-item-107,
+body:not(.logged-in) #nav .menu-item#menu-item-108,
+body:not(.logged-in) #mobile-nav .menu-item.menu-item-109,
+body:not(.logged-in) #mobile-nav .menu-item.menu-item-107,
+body:not(.logged-in) #mobile-nav .menu-item.menu-item-108 {
+    display: block;
+}

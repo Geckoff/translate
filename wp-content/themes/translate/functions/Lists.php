@@ -169,10 +169,15 @@ class Lists extends TranslateAjax {
     public function getAllLists() {
         $ids = $this->list_ids_array;
         if ($this->isAllListsBelong($ids)) {
-            $cats = get_categories([
-                "hide_empty" => 0,
-                'include' => $ids
-            ]);
+            if (count($ids) > 0) {
+                $cats = get_categories([
+                    "hide_empty" => 0,
+                    'include' => $ids
+                ]);
+            }
+            else {
+                $cats = [];   
+            }
             if (count($cats) > 0) {
                 $cats_return = [];
                 foreach($cats as $cat) {
@@ -186,7 +191,7 @@ class Lists extends TranslateAjax {
                 echo json_encode($cats_return);
             }   
             else {
-                throw new Error('no categories');    
+                echo json_encode($cats);   
             }    
         } 
         else {
