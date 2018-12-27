@@ -39,3 +39,27 @@ body:not(.logged-in) #mobile-nav .menu-item.menu-item-107,
 body:not(.logged-in) #mobile-nav .menu-item.menu-item-108 {
     display: block;
 }
+
+#profile-header-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#profile-header-block .profile-header-block-avatar {
+    width: 53px;
+    height: 53px;
+}
+
+#profile-header-block .profile-header-block-avatar > img {
+    border-radius: 50%;
+}
+
+#profile-header-block .profile-header-block-name {
+    font: 13px Montserrat, Arial, Helvetica, sans-serif;
+    margin-right: 10px;
+}
+
+#profile-header-block .profile-header-block-name .profile-header-block-name-hello {
+    font-weight: bold;
+}

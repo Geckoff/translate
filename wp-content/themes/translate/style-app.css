@@ -5,9 +5,36 @@
     transition-duration: .1s;
 }
 
-
-
 .iframe-menu-enabled {
     height: 264px;
+}
+
+#root {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+@media (max-width: 1199px) {
+    #root {
+        width: 960px;
+    }   
+}
+
+@media (max-width: 959px) {
+    #root {
+        width: 768px;
+    }   
+}
+
+@media (max-width: 767px) {
+    #root {
+        width: 420px;
+    }   
+}
+
+@media (max-width: 479px) {
+    #root {
+        width: 300px;
+    }   
 }
 

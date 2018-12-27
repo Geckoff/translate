@@ -1,3 +1,19 @@
+<?php 
+/**
+* Redirect from words posts
+**/
+if (is_singular()) {
+	global $post;
+	$post_type = get_post_type($post->ID);
+	if ($post_type == 'words') {
+		header('Location: /application', true, 301);
+	}
+}
+if (is_category()) {
+	header('Location: /application', true, 301);
+}
+?>
+
 <?php global $minti_data; ?>
 
 <?php
@@ -69,7 +85,7 @@ if (is_user_logged_in()) {
 			<?php if (is_user_logged_in()): ?>		
 			<div id="profile-header-block">
 				<div class="profile-header-block-name">
-					Hello, <?=$user_name ?>
+					Hello, <span class="profile-header-block-name-hello"><?=$user_name ?></span>
 				</div>
 				<div class="profile-header-block-avatar">
 					<?= get_avatar(get_current_user_id());  ?>
