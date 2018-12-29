@@ -1,4 +1,11 @@
 <?php
+ini_set('display_errors', 1); 
+ini_set('display_startup_errors', 1); 
+ini_set('error_log', "phperrors.log"); 
+error_reporting(E_ALL);
+
+mail('andrei@insightdesigns.com', 'test', 'test');
+
 header("Access-Control-Allow-Origin: *");
 /**
  * Front to the WordPress application. This file doesn't do anything, but loads

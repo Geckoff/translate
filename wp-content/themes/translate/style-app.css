@@ -1,3 +1,7 @@
+body {
+    background-color: #1b1b1b!important;
+}
+
 div, p, span, h1, h2, h3, h4, button, input, select {
     font-family: Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif!important;
 }
@@ -9,13 +13,25 @@ div, p, span, h1, h2, h3, h4, button, input, select {
     transition-duration: .1s;
 }
 
+.footer-iframe {
+    width: 100%;  
+    border: none; 
+    height: 252px;
+}
+
 .iframe-menu-enabled {
     height: 264px;
+}
+
+.root-wrapper {
+    background: #fff;  
+    padding-bottom: 30px;
 }
 
 #root {
     width: 1200px;
     margin: 0 auto;
+    background: #fff;
 }
 
 .menu a {
@@ -45,18 +61,50 @@ div.menu, div.main-section {
 @media (max-width: 959px) {
     #root {
         width: 768px;
-    }   
+    }  
+    
+    .spe-section.lists .lists-buttons .btn-warning {
+        margin-bottom: 10px;
+    }
 }
 
 @media (max-width: 767px) {
     #root {
         width: 420px;
     }   
+
+    .footer-iframe {
+        height: 407px;
+    }
+
+    div.App {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .App > div.menu {
+        flex-basis: 100%;
+        border-left: none;
+        border-top: 2px solid #ccc;
+        margin-top: 22px;
+        padding-top: 30px;
+    }
+
+    .App > div.main-section {
+        flex-basis: 100%;
+    }
+
+    div.menu, div.main-section {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 @media (max-width: 479px) {
     #root {
         width: 300px;
     }   
+
+
 }
 

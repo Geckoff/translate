@@ -8,10 +8,10 @@
   "runtime~main.js": "/wp-content/themes/translate/app/build/static/js/runtime~main.55ba3715.js",
   "runtime~main.js.map": "/wp-content/themes/translate/app/build/static/js/runtime~main.55ba3715.js.map",
   "static/media/font-awesome.min.css": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.fee66e71.woff",
-  "static/media/notifications.css": "/wp-content/themes/translate/app/build/static/media/notification.651771e1.woff",
-  "static/css/main.4c48999c.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/main.4c48999c.chunk.css.map",
+  "static/media/notifications.css": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg",
   "static/css/1.ec78556d.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css.map",
+  "static/css/main.4c48999c.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/main.4c48999c.chunk.css.map",
   "index.html": "/wp-content/themes/translate/app/build/index.html",
-  "precache-manifest.53a2d8e2e252b4c7f16890668133d6f6.js": "/wp-content/themes/translate/app/build/precache-manifest.53a2d8e2e252b4c7f16890668133d6f6.js",
+  "precache-manifest.9c632e5ec68e344f79d88d3f07e81059.js": "/wp-content/themes/translate/app/build/precache-manifest.9c632e5ec68e344f79d88d3f07e81059.js",
   "service-worker.js": "/wp-content/themes/translate/app/build/service-worker.js"
 }

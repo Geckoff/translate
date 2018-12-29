@@ -18,7 +18,8 @@
 body.page-id-83 { overflow: hidden; }
 
 #nav .menu-item,
-#mobile-nav .menu-item {
+#mobile-nav .menu-item,
+#menu-nav-menu .menu-item {
     display: none
 }
 
@@ -27,7 +28,10 @@ body.logged-in #nav .menu-item#menu-item-105,
 body.logged-in #nav .menu-item#menu-item-106,
 body.logged-in #mobile-nav .menu-item.menu-item-109,
 body.logged-in #mobile-nav .menu-item.menu-item-105,
-body.logged-in #mobile-nav .menu-item.menu-item-106 {
+body.logged-in #mobile-nav .menu-item.menu-item-106,
+body.logged-in #menu-nav-menu .menu-item.menu-item-109,
+body.logged-in #menu-nav-menu .menu-item.menu-item-105,
+body.logged-in #menu-nav-menu .menu-item.menu-item-106 {
     display: block;
 }
 
@@ -36,7 +40,10 @@ body:not(.logged-in) #nav .menu-item#menu-item-107,
 body:not(.logged-in) #nav .menu-item#menu-item-108,
 body:not(.logged-in) #mobile-nav .menu-item.menu-item-109,
 body:not(.logged-in) #mobile-nav .menu-item.menu-item-107,
-body:not(.logged-in) #mobile-nav .menu-item.menu-item-108 {
+body:not(.logged-in) #mobile-nav .menu-item.menu-item-108,
+body:not(.logged-in) #menu-nav-menu .menu-item.menu-item-109,
+body:not(.logged-in) #menu-nav-menu .menu-item.menu-item-107,
+body:not(.logged-in) #menu-nav-menu .menu-item.menu-item-108 {
     display: block;
 }
 
@@ -67,4 +74,18 @@ body:not(.logged-in) #mobile-nav .menu-item.menu-item-108 {
 
 .header-v1 #navigation > ul > li > a {
     font-size: 15px;
+}
+
+footer#footer {
+    padding: 35px 0 0px 0;
+    font-family: Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif!important;
+}
+
+.page-id-127 .site-wrapper.wrapall > * {
+    display: none!important;
+}
+
+.page-id-127 .site-wrapper.wrapall > #footer,
+.page-id-127 .site-wrapper.wrapall > #copyright {
+    display: block!important;
 }
