@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
-    "bootstrap": "^4.1.3",
+    "bootstrap": "^4.2.1",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
     "final-form": "^4.10.0",
@@ -24,6 +24,7 @@
     "react-router-last-location": "^1.1.0",
     "react-scripts": "2.1.0",
     "react-slidedown": "^2.0.5",
+    "react-sticky": "^6.0.3",
     "react-table": "^6.8.6",
     "redux": "^4.0.1",
     "redux-actions": "^2.6.4",

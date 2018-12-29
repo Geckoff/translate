@@ -33,7 +33,7 @@ export function* deleteWordSaga({ payload }) {
         }));
         const singleList = yield select(getSingleList);
         if (singleList) {
-            yield put(fetchWordsByListRequest({lists: [singleList.id]}));    
+            yield put(fetchWordsByListRequest(singleList.id));    
         }
     } catch (error) {
         yield put(deleteWordFailure(error));

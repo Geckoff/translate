@@ -47,8 +47,8 @@ body:not(.logged-in) #mobile-nav .menu-item.menu-item-108 {
 }
 
 #profile-header-block .profile-header-block-avatar {
-    width: 53px;
-    height: 53px;
+    width: 45px;
+    height: 45px;
 }
 
 #profile-header-block .profile-header-block-avatar > img {
@@ -56,10 +56,15 @@ body:not(.logged-in) #mobile-nav .menu-item.menu-item-108 {
 }
 
 #profile-header-block .profile-header-block-name {
-    font: 13px Montserrat, Arial, Helvetica, sans-serif;
+    font: 400 13px Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif;
     margin-right: 10px;
+    font-size: 15px;
 }
 
 #profile-header-block .profile-header-block-name .profile-header-block-name-hello {
     font-weight: bold;
+}
+
+.header-v1 #navigation > ul > li > a {
+    font-size: 15px;
 }

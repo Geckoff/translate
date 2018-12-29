@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import {translateWordRequest} from "../../actions/words";
 import { getTranslatingWord } from "../../reducers";
 import { Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 
 class TranslateForm extends Component {
 

@@ -23,18 +23,18 @@ code {
 }
 
 .App  > .menu {
-    flex-basis: 20%;
+    flex-basis: 15%;
     order: 2;
     border-left: 2px solid #ccc;
 }
 
 .App  > .main-section {
-    flex-basis: 80%;
+    flex-basis: 85%;
     order: 1;
 }
 
 .menu {
-    padding: 10px;
+    padding: 15px;
 }
 
 .menu a {
@@ -44,7 +44,7 @@ code {
 }
 
 .main-section {
-    padding: 10px;
+    padding: 15px;
 }
 
 .section-title h3 {
@@ -145,12 +145,15 @@ code {
 }
 
 .words-list {
-    width: 100%;
-    margin-top: 20px;    
+    width: 100%;    
 }
 
 .words-list-buttons {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    z-index: 100;
+    background: #fff;
 }
 
 .words-list-buttons button {

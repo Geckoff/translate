@@ -44,7 +44,7 @@ export function* editWordSaga({ payload }) {
         if (singleList) {
             const singleListWords = yield select(getWordsByList);
             if (checkIfIdInList(payload.id, singleListWords)) {            
-                yield put(fetchWordsByListRequest({lists: [singleList.id]})); // fetch list of words if the word is a part of the list
+                yield put(fetchWordsByListRequest(singleList.id)); // fetch list of words if the word is a part of the list
             }
         }       
 
