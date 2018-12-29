@@ -147,8 +147,8 @@ class WordsList extends Component {
                     <div className="spe-section words-list">
                         {testInProgress ?
                             <Sticky>
-                                {({ style }) =>                     
-                                <div style={style} className="words-list-buttons">
+                                {({ style, isSticky }) =>                     
+                                <div style={style} className={isSticky ? "words-list-buttons words-list-buttons-sticky" : "words-list-buttons"}>
                                     <Fragment>
                                         <Button bsStyle="danger" onClick={cancelTest}>Cancel Test</Button>  
                                         <Button bsStyle="success" onClick={this.handleFinishTest}>Finish Test</Button>                      

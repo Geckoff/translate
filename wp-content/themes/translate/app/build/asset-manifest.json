@@ -1,17 +1,17 @@
 {
   "main.css": "/wp-content/themes/translate/app/build/static/css/main.4c48999c.chunk.css",
-  "main.js": "/wp-content/themes/translate/app/build/static/js/main.d9d4325a.chunk.js",
-  "main.js.map": "/wp-content/themes/translate/app/build/static/js/main.d9d4325a.chunk.js.map",
+  "main.js": "/wp-content/themes/translate/app/build/static/js/main.2152d9aa.chunk.js",
+  "main.js.map": "/wp-content/themes/translate/app/build/static/js/main.2152d9aa.chunk.js.map",
   "static/css/1.ec78556d.chunk.css": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css",
   "static/js/1.671bd3c4.chunk.js": "/wp-content/themes/translate/app/build/static/js/1.671bd3c4.chunk.js",
   "static/js/1.671bd3c4.chunk.js.map": "/wp-content/themes/translate/app/build/static/js/1.671bd3c4.chunk.js.map",
   "runtime~main.js": "/wp-content/themes/translate/app/build/static/js/runtime~main.55ba3715.js",
   "runtime~main.js.map": "/wp-content/themes/translate/app/build/static/js/runtime~main.55ba3715.js.map",
   "static/media/font-awesome.min.css": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.fee66e71.woff",
-  "static/media/notifications.css": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg",
+  "static/media/notifications.css": "/wp-content/themes/translate/app/build/static/media/notification.0b4ac1dc.ttf",
   "static/css/1.ec78556d.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css.map",
   "static/css/main.4c48999c.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/main.4c48999c.chunk.css.map",
   "index.html": "/wp-content/themes/translate/app/build/index.html",
-  "precache-manifest.9c632e5ec68e344f79d88d3f07e81059.js": "/wp-content/themes/translate/app/build/precache-manifest.9c632e5ec68e344f79d88d3f07e81059.js",
+  "precache-manifest.a67a480f75344f2f9be69ccbb3c6bebc.js": "/wp-content/themes/translate/app/build/precache-manifest.a67a480f75344f2f9be69ccbb3c6bebc.js",
   "service-worker.js": "/wp-content/themes/translate/app/build/service-worker.js"
 }

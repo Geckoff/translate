@@ -47,28 +47,28 @@ body:not(.logged-in) #menu-nav-menu .menu-item.menu-item-108 {
     display: block;
 }
 
-#profile-header-block {
+.profile-header-block {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#profile-header-block .profile-header-block-avatar {
+.profile-header-block .profile-header-block-avatar {
     width: 45px;
     height: 45px;
 }
 
-#profile-header-block .profile-header-block-avatar > img {
+.profile-header-block .profile-header-block-avatar > img {
     border-radius: 50%;
 }
 
-#profile-header-block .profile-header-block-name {
+.profile-header-block .profile-header-block-name {
     font: 400 13px Arial, Helvetica, sans-serif, Arial, Helvetica, sans-serif;
     margin-right: 10px;
     font-size: 15px;
 }
 
-#profile-header-block .profile-header-block-name .profile-header-block-name-hello {
+.profile-header-block .profile-header-block-name .profile-header-block-name-hello {
     font-weight: bold;
 }
 
@@ -88,4 +88,35 @@ footer#footer {
 .page-id-127 .site-wrapper.wrapall > #footer,
 .page-id-127 .site-wrapper.wrapall > #copyright {
     display: block!important;
+}
+
+@media (max-width: 1199px) {
+
+}
+
+@media (max-width: 959px) {
+    #mobile-navigation .profile-header-block {
+        margin-top: 15px;
+        color: #bbbbbb;
+        margin-bottom: -14px;
+    }
+
+    #mobile-navigation .profile-header-block .profile-header-block-name {
+        font-size: 14px;
+    }
+
+    #mobile-navigation .profile-header-block .profile-header-block-avatar {
+        width: 41px;
+        height: 41px;
+    }
+}
+
+@media (max-width: 767px) {
+    #mobile-header .logo a {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 479px) {
+
 }

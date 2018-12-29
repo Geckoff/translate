@@ -83,7 +83,7 @@ if (is_user_logged_in()) {
 			</div>
 
 			<?php if (is_user_logged_in()): ?>		
-			<div id="profile-header-block">
+			<div class="profile-header-block">
 				<div class="profile-header-block-name">
 					Hello, <span class="profile-header-block-name-hello"><?=$user_name ?></span>
 				</div>
@@ -167,6 +167,7 @@ if (is_user_logged_in()) {
 					<a href="<?php echo esc_url(home_url()); ?>/"><?php esc_html(bloginfo('name')); ?></a>
 				<?php } ?>
 			</div>
+			
 			<a href="#" id="mobile-navigation-btn"><i class="fa fa-bars"></i></a>
 			<?php if (class_exists('Woocommerce')) { ?>
 				<?php if($minti_data['switch_shoppingicon'] == 1) { ?>
@@ -181,6 +182,17 @@ if (is_user_logged_in()) {
 <div id="mobile-navigation">
 	<div class="container">
 		<div class="sixteen columns">
+			<?php if (is_user_logged_in()): ?>		
+				<div class="profile-header-block">
+					<div class="profile-header-block-name">
+						Hello, <span class="profile-header-block-name-hello"><?=$user_name ?></span>
+					</div>
+					<div class="profile-header-block-avatar">
+						<?= get_avatar(get_current_user_id());  ?>
+					</div>
+				</div>
+			<?php endif; ?>	
+
 			<?php wp_nav_menu(array('theme_location' => 'main_navigation', 'menu_id' => 'mobile-nav')); ?>
 			
 			<?php if($minti_data['switch_searchformmobile'] == 1) { ?>
