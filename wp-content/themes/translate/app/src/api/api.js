@@ -11,9 +11,7 @@ if (process.env.hasOwnProperty('REACT_APP_BASEURL')) {
 }
 else if (window.hasOwnProperty("userData")) {
     [baseUrl, security, userId] = window.userData;
-} else {
-    [baseUrl, security, userId] = ['http://translate.local:8888/proxy', 'molochko1999', 1];
-}
+} 
 
 const instance = axios.create({
     baseURL: baseUrl,
@@ -36,11 +34,6 @@ const initData = {
  * @return void
  */
 export const apiRequest = (action, data = {}) => {
-    console.log({
-        ...initData,
-        action,   
-        data
-    });
     const submitData = stringify({
         ...initData,
         action,   

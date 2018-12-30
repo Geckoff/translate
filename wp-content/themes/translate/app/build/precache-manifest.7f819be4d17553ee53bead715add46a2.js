@@ -4,16 +4,16 @@ self.__precacheManifest = [
     "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.674f50d2.eot"
   },
   {
-    "revision": "2152d9aa6ee5ee08d9f2",
+    "revision": "dc1df86f09b89d3a856e",
     "url": "/wp-content/themes/translate/app/build/static/css/main.4c48999c.chunk.css"
   },
   {
-    "revision": "0b4ac1dc75df35e169b70d7719afe4cc",
-    "url": "/wp-content/themes/translate/app/build/static/media/notification.0b4ac1dc.ttf"
+    "revision": "651771e1df95c807c99608188d0a4287",
+    "url": "/wp-content/themes/translate/app/build/static/media/notification.651771e1.woff"
   },
   {
-    "revision": "671bd3c4500afc51bf08",
-    "url": "/wp-content/themes/translate/app/build/static/js/1.671bd3c4.chunk.js"
+    "revision": "9b58293ebe776a398fd3",
+    "url": "/wp-content/themes/translate/app/build/static/js/1.9b58293e.chunk.js"
   },
   {
     "revision": "55ba3715a0b4f17a0943",
@@ -28,8 +28,8 @@ self.__precacheManifest = [
     "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.fee66e71.woff"
   },
   {
-    "revision": "2152d9aa6ee5ee08d9f2",
-    "url": "/wp-content/themes/translate/app/build/static/js/main.2152d9aa.chunk.js"
+    "revision": "dc1df86f09b89d3a856e",
+    "url": "/wp-content/themes/translate/app/build/static/js/main.dc1df86f.chunk.js"
   },
   {
     "revision": "b06871f281fee6b241d60582ae9369b9",
@@ -40,23 +40,23 @@ self.__precacheManifest = [
     "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.912ec66d.svg"
   },
   {
-    "revision": "651771e1df95c807c99608188d0a4287",
-    "url": "/wp-content/themes/translate/app/build/static/media/notification.651771e1.woff"
-  },
-  {
-    "revision": "5bee74caefdf9d0a834915f6c8eeb259",
-    "url": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg"
+    "revision": "0b4ac1dc75df35e169b70d7719afe4cc",
+    "url": "/wp-content/themes/translate/app/build/static/media/notification.0b4ac1dc.ttf"
   },
   {
     "revision": "c0d3c94cd6112550c51d7d1ed13b9da1",
     "url": "/wp-content/themes/translate/app/build/static/media/notification.c0d3c94c.eot"
   },
   {
-    "revision": "671bd3c4500afc51bf08",
+    "revision": "5bee74caefdf9d0a834915f6c8eeb259",
+    "url": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg"
+  },
+  {
+    "revision": "9b58293ebe776a398fd3",
     "url": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css"
   },
   {
-    "revision": "4d59a3241f5a8d1f3e4b0c6317019751",
+    "revision": "a5668da32a45748c86cdda1bbc87c6a4",
     "url": "/wp-content/themes/translate/app/build/index.html"
   }
 ];

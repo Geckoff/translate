@@ -3,6 +3,7 @@ import {
     fetchWordsByListSuccess,
     fetchWordsByListFailure
 } from "../../actions/words";
+import {fetchSingleListRequest} from "../../actions/lists";
 import { takeLatest, call, put, select } from "redux-saga/effects";
 import { 
 	getWordsByList,
@@ -23,14 +24,14 @@ import requestFlow from "../request";
 export function* fetchWordsByListSaga({ payload }) {
     try {
         let words = [];
-		if (payload !== 'rand') { // if not random swlwction, fetch by id, otherwise fetch by words quantity
+		if (payload !== 'rand') { // if not random selection, fetch by id, otherwise fetch by words quantity
             words = yield call(requestFlow, getWordsByList, {lists: [payload]}); // payload - {lists: [listId]}
-        } else {
-			
+        } else {			
 			const quant = yield select(getRandWordsQuant); 
 			words = yield call(requestFlow, getWordsByNumber, {words_count: quant});
-		}
+        }        
         yield put({ type: fetchWordsByListSuccess.toString(), payload: words });
+        yield put({ type: fetchSingleListRequest.toString(), payload: payload });
     } catch (error) {
         yield put(fetchWordsByListFailure(error));
     }

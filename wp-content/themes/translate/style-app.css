@@ -58,6 +58,10 @@ div.react-slidedown {
     transition-duration: .2s;
 }
 
+#loading-block .loading-progress {
+    opacity: 0.9;
+}
+
 /* Lists list */
 
 .spe-section.lists .lists-list-single .lists-list-name p {
@@ -80,6 +84,7 @@ div.react-slidedown {
 
 .spe-section.words-list .words-list-table .wordslist-word-single-top .wordslist-word-single-prtranslate {
     color: #676767;
+    padding-right: 40px;
 }
 
 .spe-section.words-list .words-list-table .wordslist-word-single-top .wordslist-word-single-prword > .wordslist-word-single-prword-inner {
@@ -98,6 +103,33 @@ div.react-slidedown {
     color: #777;
 }
 
+/* Words statistics */
+
+.spe-section.words-stats .stats-table-cell.stats-word .stats-word-button {
+    display: flex;
+    align-items: center;
+}
+
+.spe-section.words-stats div.rt-td {
+    display: flex;
+}
+
+.words-stats .ReactTable .rt-td div.stats-table-cell {
+    flex-basis: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.spe-section.words-stats .stats-table-cell.stats-word .stats-word-itself {
+    padding-right: 5px;
+}
+
+.ReactTable .rt-thead .rt-th {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 1199px) {
     #root {
         width: 960px;
@@ -111,6 +143,14 @@ div.react-slidedown {
     
     .spe-section.lists .lists-buttons .btn-warning {
         margin-bottom: 10px;
+    }
+
+    .spe-section.words-list .words-list-table .wordslist-word-single-top .wordslist-word-single-prword {
+        flex-basis: 47%;
+    }
+
+    .spe-section.words-list .words-list-table .wordslist-word-single-top .wordslist-word-single-prtranslate {
+        flex-basis: 53%;
     }
 }
 
@@ -131,13 +171,19 @@ div.react-slidedown {
     .App > div.menu {
         flex-basis: 100%;
         border-left: none;
-        border-top: 2px solid #ccc;
-        margin-top: 22px;
+        border-bottom: 2px solid #ccc;
         padding-top: 30px;
+        display: flex;
+        padding-bottom: 6px;
+    }
+
+    .App > div.menu > a {
+        margin-right: 25px;
     }
 
     .App > div.main-section {
         flex-basis: 100%;
+        order: 3
     }
 
     div.menu, div.main-section {
@@ -151,6 +197,64 @@ div.react-slidedown {
 
     div.test-curtain.no-test-started {
         transform: translate(310px)!important;
+    }
+
+    div.add-word-page {
+        flex-wrap: wrap;
+    }
+
+    div.add-word-page .translate-form-wrapper {
+        flex-basis: 100%;
+        padding-right: 0;
+    }
+
+    div.add-word-page .add-form-wrapper {
+        flex-basis: 100%;
+        margin-top: 15px;
+    }
+
+    .spe-section.words-list-test-results .wordslist-word-single .test-result-top .test-result.translation {
+        float: none;
+        margin-bottom: 3px;
+    }
+
+    .spe-section.words-list-test-results .wordslist-word-single .test-result-top .btn {
+        float: left;
+        margin-right: 8px;
+    }
+
+    .spe-section.words-list-test-results .wordslist-word-single .test-result-top .test-times-forgot {
+        float: left;
+    }
+
+    .spe-section.words-list-test-results .wordslist-word-single .test-result-bottom .wordslist-word-single-sectrans-block {
+        margin-top: 3px;
+    }
+
+    .spe-section.words-list .words-list-table .wordslist-word-single-top .wordslist-word-single-prword {
+        flex-basis: 45%;
+    }
+
+    .spe-section.words-list .words-list-table .wordslist-word-single-top .wordslist-word-single-prtranslate {
+        flex-basis: 55%;
+    }
+
+    div.words-stats {
+        font-size: 13px;
+    }
+    
+    .spe-section.words-stats .stats-table-cell.stats-word .stats-word-button {
+        font-size: 16px;
+    }
+
+    .words-stats .ReactTable .rt-thead .rt-th>div {
+        font-size: 12px!important;
+    }
+}
+
+@media (max-width: 500px) {
+    .words-stats .ReactTable .rt-td div.stats-table-cell.stats-word {
+        display: flex;
     }
 }
 
@@ -255,6 +359,22 @@ div.react-slidedown {
 
     .wordslist-word-single .wordslist-word-single-bottom .wordslist-word-single-bottom-right .wordslist-word-single-stats .wordslist-word-single-stats-name {
         width: auto;
+    }
+
+    .add-form-wrapper.edit-form-wrapper > .btn.btn-warning {
+        margin-top: 21px; 
+    }
+
+    .spe-section.words-list .words-list-table .wordslist-word-single-top .wordslist-word-single-prword {
+        padding-right: 40px;
+    }
+
+    .words-stats .ReactTable .rt-thead .rt-th>div {
+        font-size: 9px!important;
+    }
+
+    .spe-section.words-stats .rt-tbody .rt-tr-group .rt-tr .rt-td:last-of-type {
+        font-size: 10px;
     }
 }
 

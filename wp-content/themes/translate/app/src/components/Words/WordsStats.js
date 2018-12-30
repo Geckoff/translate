@@ -114,7 +114,7 @@ class WordsStats extends Component {
                                             )
                                         },
                                         {
-                                            Header: "Forgot/Ran Ratio",
+                                            Header: "Forg./Ran Ratio",
                                             id: "forgot_ran_ratio",
 											minWidth: 28,
 											headerClassName: 'stats-cell-ratio',
@@ -138,7 +138,7 @@ class WordsStats extends Component {
 														(d.value.times_forgot /
 															d.value.times_ran) *
 															100
-													).toFixed(2)}
+													).toFixed(2)}%
 												</div>
 											)
                                         }

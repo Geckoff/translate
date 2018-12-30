@@ -32,8 +32,9 @@ class WordsList extends Component {
               {singleList} = this.props;
 
         if (!singleList || listId !== singleList.id) {
+            console.log(listId);
             this.props.fetchWordsByListRequest(listId); // fetch list of the words by list id
-            this.props.fetchSingleListRequest(listId);
+            //this.props.fetchSingleListRequest(listId);
         }
 
         this.state = {
@@ -49,8 +50,9 @@ class WordsList extends Component {
               {singleList} = this.props;
         if (nextProps.match.params.id !== listId) {
             if (!singleList || listId !== singleList.id) {
+                console.log('componentWillReceiveProps');
                 this.props.fetchWordsByListRequest(listId); // fetch list of the words by list id
-                this.props.fetchSingleListRequest(listId); // fetch list of the words by list id
+                //this.props.fetchSingleListRequest(listId); // fetch list of the words by list id
             }
         }
         // setting up closeOpen when fetching the list

@@ -5,7 +5,7 @@ class Select extends Component {
         const {children, input} = this.props;
         return(
             <Fragment>
-                <select {...input} name='asd' className="form-label">
+                <select {...input} onChange={this.props.onChange} name='asd' className="form-label">
                     {children}
                 </select>
             </Fragment>
