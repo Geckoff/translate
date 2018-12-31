@@ -327,12 +327,12 @@ code {
 .translation-form-langs {
     display: flex;
     position: relative;
-    margin-bottom: 10px;
+    margin-bottom: 24px;
 }
 
 .translation-form-langs .valerror {
     position: absolute;
-    bottom: -1px;
+    bottom: -17px;
     height: 17px;
 }
 

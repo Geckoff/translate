@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Input from "../Input";
-import Select from "../Select";
+//import Select from "../Select";
 import {Field, Form} from "react-final-form";
 import { connect } from "react-redux";
 import {translateWordRequest} from "../../actions/words";
@@ -41,7 +41,11 @@ class TranslateForm extends Component {
     }
 
     handleOnChangeLangFrom = e => {
-        console.log(e.target.value);
+        this.setState({langFrom: e.target.value});
+    }
+
+    handleOnChangeLangTo = e => {
+        this.setState({langTo: e.target.value});
     }
 
     render() { 
@@ -60,98 +64,20 @@ class TranslateForm extends Component {
                             <div className="translation-form-langs">
                                 <div className="translation-form-lang-picker">
                                     <label>From</label>
-                                    <Field data={data} name="langFrom" onChange={this.handleOnChangeLangFrom} component={Select}>
+                                    <Field data={data} name="langFrom" onChange={this.handleOnChangeLangFrom} component="select">
                                         <option value="en">English</option>
                                         <option value="es">Spanish</option>
                                         <option value="ru">Russian</option> 
-                                        <option value="it">Italian</option> 
-                                        <option value="de">German</option>  
-                                        <option value="fr">French</option>
-                                        <option value="hy">Armenian</option>
-                                        <option value="eu">Basque</option>
-                                        <option value="be">Belarusian</option>
-                                        <option value="bg">Bulgarian</option>
-                                        <option value="hu">Hungarian</option>
-                                        <option value="vi">Vietnamese</option>
-                                        <option value="nl">Dutch</option>
-                                        <option value="da">Danish</option>
-                                        <option value="el">Greek</option>
-                                        <option value="fi">Finnish</option>
-                                        <option value="id">Indonesian</option>
-                                        <option value="ga">Irish</option>
-                                        <option value="is">Icelandic</option>
-                                        <option value="kk">Kazakh</option>
-                                        <option value="ca">Catalan</option>
-                                        <option value="zh">Chinese</option>
-                                        <option value="ko">Korean</option>
-                                        <option value="lv">Latvian</option>
-                                        <option value="lt">Lithuanian</option>
-                                        <option value="lb">Luxembourgish</option>
-                                        <option value="mn">Mongolian</option>
-                                        <option value="no">Norwegian</option>
-                                        <option value="pl">Polish</option>
-                                        <option value="pt">Portuguese</option>
-                                        <option value="ro">Romanian</option>
-                                        <option value="sk">Slovakian</option>
-                                        <option value="sl">Slovenian</option>
-                                        <option value="th">Thai</option>
-                                        <option value="uz">Uzbek</option>
-                                        <option value="uk">Ukrainian</option>
-                                        <option value="hi">Hindi</option>
-                                        <option value="hr">Croatian</option>
-                                        <option value="cs">Czech</option>
-                                        <option value="sv">Swedish</option>
-                                        <option value="gd">Scottish</option>
-                                        <option value="et">Estonian</option>
-                                        <option value="ja">Japanese</option>                                        
+                                        <option value="de">German</option>
                                     </Field>
                                 </div>
                                 <div className="translation-form-lang-picker">
                                     <label>To</label>
-                                    <Field name="langTo" component={Select} initVal='ru'>
+                                    <Field name="langTo" onChange={this.handleOnChangeLangTo} component="select">
                                         <option value="en">English</option>
                                         <option value="es">Spanish</option>
                                         <option value="ru">Russian</option> 
-                                        <option value="it">Italian</option> 
-                                        <option value="de">German</option>  
-                                        <option value="fr">French</option>
-                                        <option value="hy">Armenian</option>
-                                        <option value="eu">Basque</option>
-                                        <option value="be">Belarusian</option>
-                                        <option value="bg">Bulgarian</option>
-                                        <option value="hu">Hungarian</option>
-                                        <option value="vi">Vietnamese</option>
-                                        <option value="nl">Dutch</option>
-                                        <option value="da">Danish</option>
-                                        <option value="el">Greek</option>
-                                        <option value="fi">Finnish</option>
-                                        <option value="id">Indonesian</option>
-                                        <option value="ga">Irish</option>
-                                        <option value="is">Icelandic</option>
-                                        <option value="kk">Kazakh</option>
-                                        <option value="ca">Catalan</option>
-                                        <option value="zh">Chinese</option>
-                                        <option value="ko">Korean</option>
-                                        <option value="lv">Latvian</option>
-                                        <option value="lt">Lithuanian</option>
-                                        <option value="lb">Luxembourgish</option>
-                                        <option value="mn">Mongolian</option>
-                                        <option value="no">Norwegian</option>
-                                        <option value="pl">Polish</option>
-                                        <option value="pt">Portuguese</option>
-                                        <option value="ro">Romanian</option>
-                                        <option value="sk">Slovakian</option>
-                                        <option value="sl">Slovenian</option>
-                                        <option value="th">Thai</option>
-                                        <option value="uz">Uzbek</option>
-                                        <option value="uk">Ukrainian</option>
-                                        <option value="hi">Hindi</option>
-                                        <option value="hr">Croatian</option>
-                                        <option value="cs">Czech</option>
-                                        <option value="sv">Swedish</option>
-                                        <option value="gd">Scottish</option>
-                                        <option value="et">Estonian</option>
-                                        <option value="ja">Japanese</option>
+                                        <option value="de">German</option>
                                     </Field>
                                 </div>
                                 {data.errors.langFrom && <p className="valerror">{data.errors.langFrom}</p>}

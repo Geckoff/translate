@@ -11,8 +11,14 @@ import { addMessage } from "../../actions/messages";
 
 export function* translateWordSaga({ payload }) {
     try {
-        let wordData = yield call(requestFlow, translateDictionary, payload);
-        if (wordData.def.length < 1) {
+        const {langFrom, langTo} = payload;
+        const langFromLangTo = `${langFrom}-${langTo}`;
+        let wordData = null;
+
+        if (langFromLangTo !== 'de-es' && langFromLangTo !== 'es-de' ) {
+            wordData = yield call(requestFlow, translateDictionary, payload);
+        }        
+        if ((langFromLangTo === 'de-es' || langFromLangTo === 'es-de') || wordData.def.length < 1) {
             wordData = yield call(requestFlow, translateTranslator, payload);
             if (wordData.text[0] === payload.word) {
                 yield put(
