@@ -7,7 +7,7 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            rsync -e "ssh -o StrictHostKeyChecking=no" -avz $PATH_TO_WORDPRESS_DIRECTORY_ON_CI $PROD_SERVER:$PATH_TO_WORDPRESS_DIRECTORY_ONSERVER
+            rsync -e "ssh -o StrictHostKeyChecking=no" -avzn $PATH_TO_WORDPRESS_DIRECTORY_ON_CI $PROD_SERVER:$PATH_TO_WORDPRESS_DIRECTORY_ONSERVER
 
 workflows:
   version: 2
