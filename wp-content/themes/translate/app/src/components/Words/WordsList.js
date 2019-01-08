@@ -41,7 +41,8 @@ class WordsList extends Component {
             forgotWords: [],
             allWords: [],
             closeOpen: {},
-            initialClose: true
+            initialClose: true,
+            desktop: window.innerWidth > 1100 ? true : false
         } 
     }
 
@@ -129,6 +130,38 @@ class WordsList extends Component {
         this.setState({closeOpen: {...this.state.closeOpen, [e.currentTarget.dataset.id]: !this.state.closeOpen[e.currentTarget.dataset.id]}})
     }
 
+    // open/close translation curtain depending on if show/hide button was clicked
+    handleShowHide = e => {
+        const button = e.target,
+              curtain = e.target.parentElement.querySelector(".test-curtain");
+        
+        button.classList.toggle('show-hide-button-hidden');
+        button.classList.toggle('show-hide-button-shown');
+
+        if (button.classList.contains('show-hide-button-hidden')) {
+            curtain.style.transform = "translate(0px, 0px)";  
+        }
+        else if (button.classList.contains('show-hide-button-shown')) {
+            const parentWidth = curtain.parentElement.offsetWidth;
+            curtain.style.transform = `translate(${parentWidth}px, 0px)`;     
+        }
+    }
+
+    // change show/hide button state depending on if translation curtain was dragged
+    handleDraggableEvent = (e, data) => {
+        const {node, x} = data,
+              button = node.parentElement.querySelector('.show-hide-button');
+
+        if (x < 1) {
+            button.classList.add('show-hide-button-hidden');
+            button.classList.remove('show-hide-button-shown');
+        }
+        else {
+            button.classList.remove('show-hide-button-hidden');
+            button.classList.add('show-hide-button-shown');  
+        }
+    }
+
     render() { 
         const {
             wordsByList,
@@ -185,18 +218,29 @@ class WordsList extends Component {
                                             </div>
                                         </div>
                                         <div className="wordslist-word-single-prtranslate">
-                                            <Draggable 
-                                                bounds="parent" 
-                                            >
+                                            {
+                                                this.state.desktop ?
+                                                    <Draggable 
+                                                        bounds="parent" 
+                                                        onDrag={this.handleDraggableEvent}
+                                                    >
+                                                        <div className={testInProgress ? 'test-curtain' : 'test-curtain no-test-started'}>
+                                                            <i className="fa fa-chevron-left"></i>
+                                                            <i className="fa fa-chevron-right"></i>
+                                                        </div>
+                                                    </Draggable>
+                                                :
                                                 <div className={testInProgress ? 'test-curtain' : 'test-curtain no-test-started'}>
                                                     <i className="fa fa-chevron-left"></i>
                                                     <i className="fa fa-chevron-right"></i>
-                                                </div>
-                                            </Draggable>
+                                                    
+                                                </div>        
+                                            }
                                             <div className="wordslist-word-single-prtranslate-inner">
                                                 <span>{word.prims_trans}</span>
                                                 {word.prims_trans_pos && <span className="wordslist-word-single-prtranslate-pos">({word.prims_trans_pos})</span>}
-                                            </div>                                    
+                                            </div>     
+                                            {testInProgress && <div onClick={this.handleShowHide} className="show-hide-button show-hide-button-hidden"><i class="fa fa-eye-slash"></i></div> }    
                                         </div>
                                         {!testInProgress && <div className="wordslist-word-single-open" data-id={word.id} onClick={this.handleSlide}>    
                                             <i className={(this.state.initialClose || this.state.closeOpen[word.id]) ? "fa fa-chevron-down" : "fa fa-chevron-up word-desc-opened"}></i>

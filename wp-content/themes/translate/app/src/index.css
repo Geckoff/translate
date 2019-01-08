@@ -587,6 +587,20 @@ div.notification-container {
     height: auto;
 }
 
+.show-hide-button {
+    z-index: 2;
+    position: absolute;
+    top: 0;
+}
+
+.show-hide-button.show-hide-button-hidden {
+    color: red;
+}
+
+.show-hide-button.show-hide-button-shown {
+    color: green;
+}
+
 @media (max-width: 1050px) {
     .words-stats .ReactTable .rt-thead .rt-th > div {
         font-size: 12px;
