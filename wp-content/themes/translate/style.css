@@ -90,6 +90,19 @@ footer#footer {
     display: block!important;
 }
 
+header.header-v1 .logo {
+    width: 300px;
+    margin-top: 15px;
+}
+
+#footer .container .columns:last-of-type img {
+    opacity: 0.15;
+}
+
+.home #fulltitle {
+    display: none;
+}
+
 @media (max-width: 1199px) {
 
 }
@@ -109,6 +122,15 @@ footer#footer {
         width: 41px;
         height: 41px;
     }
+
+    div#mobile-header .logo {
+        width: 300px;
+        margin-top: 15px;
+    }
+
+    div.logo img {
+        max-width: 100%;
+    }
 }
 
 @media (max-width: 767px) {
@@ -118,5 +140,8 @@ footer#footer {
 }
 
 @media (max-width: 479px) {
-
+    div#mobile-header .logo {
+        width: 200px;
+        margin-top: 26px;
+    }
 }
