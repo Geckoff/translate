@@ -103,6 +103,19 @@ div.react-slidedown {
     color: #777;
 }
 
+.show-hide-button {
+    margin-right: -40px;
+}
+
+.show-hide-button:before {
+    content: "";
+    background: #ccc;
+    position: absolute;
+    height: 400px;
+    width: 38px;
+    z-index: -1;
+}
+
 /* Words statistics */
 
 .spe-section.words-stats .stats-table-cell.stats-word .stats-word-button {

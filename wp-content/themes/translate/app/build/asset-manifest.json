@@ -1,17 +1,17 @@
 {
-  "main.css": "/wp-content/themes/translate/app/build/static/css/main.89428b9c.chunk.css",
-  "main.js": "/wp-content/themes/translate/app/build/static/js/main.076eee4b.chunk.js",
-  "main.js.map": "/wp-content/themes/translate/app/build/static/js/main.076eee4b.chunk.js.map",
+  "main.css": "/wp-content/themes/translate/app/build/static/css/main.4c6e065f.chunk.css",
+  "main.js": "/wp-content/themes/translate/app/build/static/js/main.aed44107.chunk.js",
+  "main.js.map": "/wp-content/themes/translate/app/build/static/js/main.aed44107.chunk.js.map",
   "static/css/1.ec78556d.chunk.css": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css",
   "static/js/1.9b58293e.chunk.js": "/wp-content/themes/translate/app/build/static/js/1.9b58293e.chunk.js",
   "static/js/1.9b58293e.chunk.js.map": "/wp-content/themes/translate/app/build/static/js/1.9b58293e.chunk.js.map",
   "runtime~main.js": "/wp-content/themes/translate/app/build/static/js/runtime~main.55ba3715.js",
   "runtime~main.js.map": "/wp-content/themes/translate/app/build/static/js/runtime~main.55ba3715.js.map",
   "static/media/font-awesome.min.css": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.fee66e71.woff",
-  "static/media/notifications.css": "/wp-content/themes/translate/app/build/static/media/notification.c0d3c94c.eot",
+  "static/media/notifications.css": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg",
+  "static/css/main.4c6e065f.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/main.4c6e065f.chunk.css.map",
   "static/css/1.ec78556d.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css.map",
-  "static/css/main.89428b9c.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/main.89428b9c.chunk.css.map",
   "index.html": "/wp-content/themes/translate/app/build/index.html",
-  "precache-manifest.4d24fff8f83c3c0e33d22e65ffb359fb.js": "/wp-content/themes/translate/app/build/precache-manifest.4d24fff8f83c3c0e33d22e65ffb359fb.js",
+  "precache-manifest.fd71b719c62d93010d8b6e22327c1446.js": "/wp-content/themes/translate/app/build/precache-manifest.fd71b719c62d93010d8b6e22327c1446.js",
   "service-worker.js": "/wp-content/themes/translate/app/build/service-worker.js"
 }

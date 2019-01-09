@@ -197,6 +197,12 @@ code {
     font-size: 16px;
 }
 
+.wordslist-word-single-prtranslate {
+    display: flex;
+    align-items: center;
+    justify-content: space-between
+}
+
 .wordslist-word-single-prtranslate-inner {
     padding: 5px;
 }
@@ -589,16 +595,39 @@ div.notification-container {
 
 .show-hide-button {
     z-index: 2;
-    position: absolute;
     top: 0;
+    cursor: pointer;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    background: #efefef;
 }
 
 .show-hide-button.show-hide-button-hidden {
-    color: red;
+
 }
 
 .show-hide-button.show-hide-button-shown {
-    color: green;
+
+}
+
+.show-hide-button i {
+    transition-duration: .3s;
+    color: #777;
+    font-size: 25px;
+    padding: 0 6px;
+}
+
+.show-hide-button.show-hide-button-shown i {
+    color: #28a745;
+}
+
+.show-hide-button.show-hide-button-shown:hover i {
+    color: rgba(40, 167, 69, 0.8);
+}
+
+.show-hide-button i:hover {
+    color: #999;
 }
 
 @media (max-width: 1050px) {

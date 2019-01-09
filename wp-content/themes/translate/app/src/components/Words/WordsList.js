@@ -132,33 +132,43 @@ class WordsList extends Component {
 
     // open/close translation curtain depending on if show/hide button was clicked
     handleShowHide = e => {
-        const button = e.target,
-              curtain = e.target.parentElement.querySelector(".test-curtain");
+        const button = e.currentTarget,
+              buttonIcon = e.currentTarget.querySelector("i"),
+              curtain = e.currentTarget.parentElement.querySelector(".test-curtain");
         
         button.classList.toggle('show-hide-button-hidden');
         button.classList.toggle('show-hide-button-shown');
 
         if (button.classList.contains('show-hide-button-hidden')) {
-            curtain.style.transform = "translate(0px, 0px)";  
+            curtain.style.transform = "translate(0px, 0px)"; 
+            buttonIcon.classList.remove('fa-eye'); 
+            buttonIcon.classList.add('fa-eye-slash'); 
         }
         else if (button.classList.contains('show-hide-button-shown')) {
             const parentWidth = curtain.parentElement.offsetWidth;
-            curtain.style.transform = `translate(${parentWidth}px, 0px)`;     
+            curtain.style.transform = `translate(${parentWidth - 40}px, 0px)`; 
+            buttonIcon.classList.add('fa-eye'); 
+            buttonIcon.classList.remove('fa-eye-slash');     
         }
     }
 
     // change show/hide button state depending on if translation curtain was dragged
     handleDraggableEvent = (e, data) => {
         const {node, x} = data,
-              button = node.parentElement.querySelector('.show-hide-button');
+              button = node.parentElement.querySelector('.show-hide-button'),
+              buttonIcon = node.parentElement.querySelector('.show-hide-button i');
 
         if (x < 1) {
             button.classList.add('show-hide-button-hidden');
             button.classList.remove('show-hide-button-shown');
+            buttonIcon.classList.remove('fa-eye'); 
+            buttonIcon.classList.add('fa-eye-slash'); 
         }
         else {
             button.classList.remove('show-hide-button-hidden');
-            button.classList.add('show-hide-button-shown');  
+            button.classList.add('show-hide-button-shown'); 
+            buttonIcon.classList.add('fa-eye'); 
+            buttonIcon.classList.remove('fa-eye-slash');   
         }
     }
 
@@ -240,7 +250,7 @@ class WordsList extends Component {
                                                 <span>{word.prims_trans}</span>
                                                 {word.prims_trans_pos && <span className="wordslist-word-single-prtranslate-pos">({word.prims_trans_pos})</span>}
                                             </div>     
-                                            {testInProgress && <div onClick={this.handleShowHide} className="show-hide-button show-hide-button-hidden"><i class="fa fa-eye-slash"></i></div> }    
+                                            {testInProgress && <div onClick={this.handleShowHide} className="show-hide-button show-hide-button-hidden"><i className="fa fa-eye-slash"></i></div> }    
                                         </div>
                                         {!testInProgress && <div className="wordslist-word-single-open" data-id={word.id} onClick={this.handleSlide}>    
                                             <i className={(this.state.initialClose || this.state.closeOpen[word.id]) ? "fa fa-chevron-down" : "fa fa-chevron-up word-desc-opened"}></i>

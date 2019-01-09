@@ -1,15 +1,15 @@
 self.__precacheManifest = [
   {
-    "revision": "b06871f281fee6b241d60582ae9369b9",
-    "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.b06871f2.ttf"
+    "revision": "674f50d287a8c48dc19ba404d20fe713",
+    "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.674f50d2.eot"
   },
   {
-    "revision": "076eee4b2579d0fcb885",
-    "url": "/wp-content/themes/translate/app/build/static/css/main.89428b9c.chunk.css"
+    "revision": "aed441078a9422b9acc2",
+    "url": "/wp-content/themes/translate/app/build/static/css/main.4c6e065f.chunk.css"
   },
   {
-    "revision": "c0d3c94cd6112550c51d7d1ed13b9da1",
-    "url": "/wp-content/themes/translate/app/build/static/media/notification.c0d3c94c.eot"
+    "revision": "5bee74caefdf9d0a834915f6c8eeb259",
+    "url": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg"
   },
   {
     "revision": "9b58293ebe776a398fd3",
@@ -28,16 +28,20 @@ self.__precacheManifest = [
     "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.fee66e71.woff"
   },
   {
-    "revision": "076eee4b2579d0fcb885",
-    "url": "/wp-content/themes/translate/app/build/static/js/main.076eee4b.chunk.js"
+    "revision": "aed441078a9422b9acc2",
+    "url": "/wp-content/themes/translate/app/build/static/js/main.aed44107.chunk.js"
   },
   {
-    "revision": "674f50d287a8c48dc19ba404d20fe713",
-    "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.674f50d2.eot"
+    "revision": "b06871f281fee6b241d60582ae9369b9",
+    "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.b06871f2.ttf"
   },
   {
     "revision": "912ec66d7572ff821749319396470bde",
     "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.912ec66d.svg"
+  },
+  {
+    "revision": "c0d3c94cd6112550c51d7d1ed13b9da1",
+    "url": "/wp-content/themes/translate/app/build/static/media/notification.c0d3c94c.eot"
   },
   {
     "revision": "651771e1df95c807c99608188d0a4287",
@@ -48,15 +52,11 @@ self.__precacheManifest = [
     "url": "/wp-content/themes/translate/app/build/static/media/notification.0b4ac1dc.ttf"
   },
   {
-    "revision": "5bee74caefdf9d0a834915f6c8eeb259",
-    "url": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg"
-  },
-  {
     "revision": "9b58293ebe776a398fd3",
     "url": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css"
   },
   {
-    "revision": "3a3cacdddb4f5eebdc9616dba8319778",
+    "revision": "1eee5040e956632998398f70c55bc82d",
     "url": "/wp-content/themes/translate/app/build/index.html"
   }
 ];
