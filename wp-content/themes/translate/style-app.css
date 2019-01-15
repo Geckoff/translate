@@ -149,6 +149,16 @@ div.react-slidedown {
     }   
 }
 
+@media (max-width: 1100px) {
+    .test-curtain .fa {
+        display: none;
+    }
+
+    .test-curtain {
+        background: #efefef!important;
+    }
+}
+
 @media (max-width: 959px) {
     #root {
         width: 768px;

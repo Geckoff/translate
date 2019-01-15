@@ -103,6 +103,37 @@ header.header-v1 .logo {
     display: none;
 }
 
+.homepage-h1 {
+    padding: 46px 0;
+}
+
+.homepage-h1 h1 {
+    font-size: 35px;
+}
+
+.homepage-buttons {
+    padding: 180px 0;
+}
+
+.homepage-buttons h1 {
+    color: #fff;
+    font-size: 65px;
+}
+
+.homepage-buttons .login-button {
+    background: #fff!important;
+    color: #00bac5;
+    border-color: #fff!important;
+}
+
+.homepage-buttons .botton-block {
+    
+}
+
+.homepage-buttons .login-button:hover {
+    color: #00bac5!important;  
+}
+
 @media (max-width: 1199px) {
 
 }
