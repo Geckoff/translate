@@ -126,8 +126,9 @@ header.header-v1 .logo {
     border-color: #fff!important;
 }
 
-.homepage-buttons .botton-block {
-    
+div.homepage-buttons a.button {
+    width: 300px;
+    margin: 0 auto!important;
 }
 
 .homepage-buttons .login-button:hover {
