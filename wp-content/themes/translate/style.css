@@ -169,12 +169,34 @@ div.homepage-buttons a.button {
     #mobile-header .logo a {
         font-size: 15px;
     }
+
+    .homepage-buttons h1 {
+        font-size: 50px;
+        line-height: 56px;
+    }
 }
 
 @media (max-width: 479px) {
     div#mobile-header .logo {
         width: 200px;
         margin-top: 26px;
+    }
+
+    .homepage-h1 h1 {
+        font-size: 28px;
+    }
+
+    .homepage-buttons h1 {
+        font-size: 38px;
+        line-height: 47px;
+    }
+
+    div.homepage-buttons a.button {
+        width: 200px;
+    }
+
+    .homepage-buttons {
+        padding: 110px 0;
     }
 }
 
