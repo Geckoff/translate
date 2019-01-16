@@ -48,6 +48,10 @@ class AppRouter extends Component {
         }
     }
 
+    preventScroll = e => {
+        e.preventDefault();
+    }
+
     render() {  
         const {error, isFetching, isNetworkErrorPresent, redirect} = this.props;  
         if (redirect) {
@@ -63,7 +67,7 @@ class AppRouter extends Component {
                         <Link to={'/words-stats' }>Statistics</Link>                        
                         {isFetching && 
                             <Loading domNode={document.querySelector('#loading-block')}>
-                                <div className="loading-progress">
+                                <div onTouchMove={this.preventScroll} className="loading-progress">
                                     <i className="fa fa-spinner fa-spin"></i>
                                 </div>
                             </Loading>

@@ -1,17 +1,17 @@
 {
-  "main.css": "/wp-content/themes/translate/app/build/static/css/main.4c6e065f.chunk.css",
-  "main.js": "/wp-content/themes/translate/app/build/static/js/main.9ea38765.chunk.js",
-  "main.js.map": "/wp-content/themes/translate/app/build/static/js/main.9ea38765.chunk.js.map",
+  "main.css": "/wp-content/themes/translate/app/build/static/css/main.0c53c7a3.chunk.css",
+  "main.js": "/wp-content/themes/translate/app/build/static/js/main.96d95bac.chunk.js",
+  "main.js.map": "/wp-content/themes/translate/app/build/static/js/main.96d95bac.chunk.js.map",
   "static/css/1.ec78556d.chunk.css": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css",
   "static/js/1.9b58293e.chunk.js": "/wp-content/themes/translate/app/build/static/js/1.9b58293e.chunk.js",
   "static/js/1.9b58293e.chunk.js.map": "/wp-content/themes/translate/app/build/static/js/1.9b58293e.chunk.js.map",
   "runtime~main.js": "/wp-content/themes/translate/app/build/static/js/runtime~main.55ba3715.js",
   "runtime~main.js.map": "/wp-content/themes/translate/app/build/static/js/runtime~main.55ba3715.js.map",
   "static/media/font-awesome.min.css": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.fee66e71.woff",
-  "static/media/notifications.css": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg",
+  "static/media/notifications.css": "/wp-content/themes/translate/app/build/static/media/notification.0b4ac1dc.ttf",
   "static/css/1.ec78556d.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css.map",
-  "static/css/main.4c6e065f.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/main.4c6e065f.chunk.css.map",
+  "static/css/main.0c53c7a3.chunk.css.map": "/wp-content/themes/translate/app/build/static/css/main.0c53c7a3.chunk.css.map",
   "index.html": "/wp-content/themes/translate/app/build/index.html",
-  "precache-manifest.2c106c42a75c91cd7b4c4eaa99cb08d7.js": "/wp-content/themes/translate/app/build/precache-manifest.2c106c42a75c91cd7b4c4eaa99cb08d7.js",
+  "precache-manifest.c8d5c4a769c99b6329af06068697532d.js": "/wp-content/themes/translate/app/build/precache-manifest.c8d5c4a769c99b6329af06068697532d.js",
   "service-worker.js": "/wp-content/themes/translate/app/build/service-worker.js"
 }
