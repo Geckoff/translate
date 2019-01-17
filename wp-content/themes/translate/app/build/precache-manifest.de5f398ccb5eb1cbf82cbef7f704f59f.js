@@ -8,8 +8,8 @@ self.__precacheManifest = [
     "url": "/wp-content/themes/translate/app/build/static/css/main.0c53c7a3.chunk.css"
   },
   {
-    "revision": "0b4ac1dc75df35e169b70d7719afe4cc",
-    "url": "/wp-content/themes/translate/app/build/static/media/notification.0b4ac1dc.ttf"
+    "revision": "5bee74caefdf9d0a834915f6c8eeb259",
+    "url": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg"
   },
   {
     "revision": "9b58293ebe776a398fd3",
@@ -40,12 +40,12 @@ self.__precacheManifest = [
     "url": "/wp-content/themes/translate/app/build/static/media/fontawesome-webfont.912ec66d.svg"
   },
   {
-    "revision": "651771e1df95c807c99608188d0a4287",
-    "url": "/wp-content/themes/translate/app/build/static/media/notification.651771e1.woff"
+    "revision": "0b4ac1dc75df35e169b70d7719afe4cc",
+    "url": "/wp-content/themes/translate/app/build/static/media/notification.0b4ac1dc.ttf"
   },
   {
-    "revision": "5bee74caefdf9d0a834915f6c8eeb259",
-    "url": "/wp-content/themes/translate/app/build/static/media/notification.5bee74ca.svg"
+    "revision": "651771e1df95c807c99608188d0a4287",
+    "url": "/wp-content/themes/translate/app/build/static/media/notification.651771e1.woff"
   },
   {
     "revision": "c0d3c94cd6112550c51d7d1ed13b9da1",
@@ -56,7 +56,7 @@ self.__precacheManifest = [
     "url": "/wp-content/themes/translate/app/build/static/css/1.ec78556d.chunk.css"
   },
   {
-    "revision": "504773985958e51bef5a55ea2d7b2957",
+    "revision": "118c03c5d2c21886b25ed7058be6dde8",
     "url": "/wp-content/themes/translate/app/build/index.html"
   }
 ];
